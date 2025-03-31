@@ -1,3 +1,8 @@
+using LogicaAccesoDatos.Repositorios;
+using LogicaNegocio.InterfacesRepositorios;
+using LogicaAplicacion.CasosUso.CUEnvio;
+using LogicaAplicacion.ICasosUso.ICUEnvio;
+
 namespace WebApp
 {
     public class Program
@@ -8,6 +13,14 @@ namespace WebApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddScoped<IRepositorioAgencia, RepositorioAgencia>();
+            builder.Services.AddScoped<IRepositorioEnvio, RepositorioEnvio>();
+            builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
+
+            /*TODO error
+             builder.Services.AddScoped<ICUAltaEnvio, CUAltaEnvio>();
+            builder.Services.AddScoped<ICUEditarEnvio, CUEditarEnvio>();
+             */
 
             var app = builder.Build();
 
