@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DTOs.DTOs
 {
-    internal class DTOLogin
+    public class DTOLogin
     {
     }
 }

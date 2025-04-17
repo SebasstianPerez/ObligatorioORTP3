@@ -8,5 +8,6 @@ namespace LogicaAplicacion.CasosUso.CUUsuaio
 {
     public class CULogin
     {
+
     }
 }
