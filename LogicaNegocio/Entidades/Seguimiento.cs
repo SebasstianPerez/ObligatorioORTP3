@@ -6,7 +6,27 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.Entidades
 {
-    internal class Seguimiento
+    public class Seguimiento
     {
+        public int Id { get; set; }
+        public DateTime Fecha { get; set; }
+        public string? Comentario { get; set; }
+        public Envio Envio { get; set; }
+        public Usuario Empleado { get; set; }
+        public int EnvioId { get; set; }
+        public int EmpleadoId { get; set; }
+
+        public Seguimiento(DateTime fecha, string? comentario, Usuario empleado, Envio envio)
+        {
+            Fecha = fecha;
+            Comentario = comentario;
+            Empleado = empleado;
+            Envio = envio;
+        }
+
+        public Seguimiento()
+        {
+            
+        }
     }
 }

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaAplicacion.ICasosUso.ICUUsuario
+namespace DTOs.DTOs.Usuario
 {
-    public interface ICUEditarEmpleado
+    public class DTOAltaUsuario
     {
+
     }
 }

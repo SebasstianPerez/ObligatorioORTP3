@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DTOs.DTOs.Envio;
+using LogicaAplicacion.ICasosUso.ICUEnvio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +8,11 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso.CUEnvio
 {
-    public class CUIngresarComentario
+    public class CUIngresarComentario : ICUIngresarComentario
     {
+        public void Ejecutar(DTOAltaSeguimiento dto)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
