@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOs", "DTOs\DTOs.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicaAccesoDatos", "LogicaAccesoDatos\LogicaAccesoDatos.csproj", "{C2B307BF-A777-4FD2-B81A-6924F0AAC919}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_Database", "Test_Database\Test_Database.csproj", "{EA0374D3-13C3-47A8-9124-3080ABFBF7C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{C2B307BF-A777-4FD2-B81A-6924F0AAC919}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2B307BF-A777-4FD2-B81A-6924F0AAC919}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2B307BF-A777-4FD2-B81A-6924F0AAC919}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA0374D3-13C3-47A8-9124-3080ABFBF7C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA0374D3-13C3-47A8-9124-3080ABFBF7C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA0374D3-13C3-47A8-9124-3080ABFBF7C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA0374D3-13C3-47A8-9124-3080ABFBF7C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -37,6 +37,17 @@ namespace LogicaAccesoDatos
                     }
            );
 
+            modelBuilder.Entity<Urgente>()
+                .OwnsOne(a => a.DireccionPostal, n =>
+                {
+                    n.Property(p => p.NumCalle).HasColumnName("NumeroPuerta");
+                    n.Property(p => p.Calle).HasColumnName("Calle");
+                    n.Property(p => p.Ciudad).HasColumnName("Ciudad");
+                    n.Property(p => p.CodigoPostal).HasColumnName("CodigoPostal");
+
+                }
+           );
+
             modelBuilder.Entity<Usuario>()
                 .OwnsOne(a => a.NombreCompleto, n =>
                 {
@@ -44,24 +55,42 @@ namespace LogicaAccesoDatos
                     n.Property(p => p.Apellido).HasColumnName("Apellido");
                 });
 
+            
+
+            //Envio
             modelBuilder.Entity<Envio>()
                 .HasDiscriminator<string>("TipoEnvio")
-                .HasValue<Comun>("EnvioComun")
-                .HasValue<Urgente>("EnvioUrgente");
+                .HasValue<Comun>("Comun")
+                .HasValue<Urgente>("Urgente");
             
             modelBuilder.Entity<Envio>()
                 .HasMany(e => e.Seguimiento)
                 .WithOne(s => s.Envio)
                 .HasForeignKey(s => s.EnvioId);
 
-            modelBuilder.Entity<Seguimiento>()
-                .HasOne(s => s.Empleado)
+            modelBuilder.Entity<Envio>()
+                .HasOne(e => e.Empleado)
                 .WithMany()
-                .HasForeignKey(s => s.EmpleadoId);
+                .HasForeignKey("EmpleadoId")
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Envio>()
+                .HasOne(e => e.Cliente)
+                .WithMany()
+                .HasForeignKey("ClienteId")
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Seguimiento>()
+               .HasOne(s => s.Empleado)
+               .WithMany()
+               .HasForeignKey(s => s.EmpleadoId)
+               .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Usuario>()
                 .HasIndex(c => c.Email)
                 .IsUnique();
+
+            
 
             modelBuilder.Entity<Seguimiento>()
                 .HasOne(u => u.Empleado)
