@@ -6,7 +6,18 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.Entidades
 {
-    internal class Comun
+    public class Comun : Envio
     {
+        public Agencia agencia { get; set; }
+
+        public Comun(): base()
+        {
+            
+        }
+
+        public Comun(string numTracking, Usuario empleado, Usuario cliente, double peso, List<Seguimiento> seguimiento, Agencia agencia) : base(numTracking, empleado, cliente, peso, seguimiento)
+        {
+            agencia = agencia;
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace LogicaAplicacion.ICasosUso.ICUEnvio
 {
     public interface ICUFinalizarEnvio
     {
+        void Ejecutar();
     }
 }

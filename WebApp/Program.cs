@@ -2,6 +2,10 @@ using LogicaAccesoDatos.Repositorios;
 using LogicaNegocio.InterfacesRepositorios;
 using LogicaAplicacion.CasosUso.CUEnvio;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
+using LogicaAccesoDatos;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using Microsoft.EntityFrameworkCore;
+using LogicaAplicacion.ICasosUso.ICUUsuario;
 
 namespace WebApp
 {
@@ -11,16 +15,24 @@ namespace WebApp
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
+            var connectionString =
+                builder.Configuration.GetConnectionString("DefaultConnection");
+           
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+                 options.UseSqlServer(connectionString));
+
+            builder.Services.AddControllersWithViews();
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddScoped<IRepositorioAgencia, RepositorioAgencia>();
             builder.Services.AddScoped<IRepositorioEnvio, RepositorioEnvio>();
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
+            builder.Services.AddScoped<IRepositorioSeguimiento, RepositorioSeguimiento>();
 
-            /*TODO error
-             builder.Services.AddScoped<ICUAltaEnvio, CUAltaEnvio>();
-            builder.Services.AddScoped<ICUEditarEnvio, CUEditarEnvio>();
-             */
+            builder.Services.AddScoped<ICUAltaEnvio, CUAltaEnvio>();
 
             var app = builder.Build();
 

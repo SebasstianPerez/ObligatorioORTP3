@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTOs.DTOs.Envio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace LogicaAplicacion.ICasosUso.ICUEnvio
 {
     public interface ICUAltaEnvio
     {
+        void Ejecutar(DTOAltaEnvio dto);
     }
 }

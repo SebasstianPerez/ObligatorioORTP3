@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace DTOs.Mapper
 {
-    internal class UsuarioMapper
+    public class UsuarioMapper
     {
+
     }
 }

@@ -1,0 +1,9 @@
+﻿using System;
+
+namespace LogicaAplicacion.ICasosUso.ICUUsuario
+{
+    public interface ICUEditarUsuario
+    {
+        void Ejecutar(DTOEditarUsuario dto);
+    }
+}

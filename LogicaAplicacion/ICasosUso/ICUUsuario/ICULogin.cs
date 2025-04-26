@@ -1,5 +1,4 @@
-﻿using DTOs.DTOs.DTOLogin;
-
+﻿using DTOs.DTOs.Usuario;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +9,6 @@ namespace LogicaAplicacion.ICasosUso.ICUUsuario
 {
     public interface ICULogin
     {
-        void Login(DTOLogin dto);
+        DTOUsuario Login(DTOLogin dto);
     }
 }

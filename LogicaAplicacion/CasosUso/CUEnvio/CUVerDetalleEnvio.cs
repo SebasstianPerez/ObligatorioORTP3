@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicaAplicacion.ICasosUso.ICUEnvio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso.CUEnvio
 {
-    public class CUVerDetalleEnvio
+    public class CUVerDetalleEnvio : ICUVerDetalleEnvio
     {
+        public DTOEnvio Ejecutar(int EnvioId)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

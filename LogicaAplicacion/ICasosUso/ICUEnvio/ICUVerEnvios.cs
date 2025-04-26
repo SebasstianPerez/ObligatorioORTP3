@@ -8,5 +8,6 @@ namespace LogicaAplicacion.ICasosUso.ICUEnvio
 {
     public interface ICUVerEnvios
     {
+        List<DTOEnvio> Ejecutar();
     }
 }

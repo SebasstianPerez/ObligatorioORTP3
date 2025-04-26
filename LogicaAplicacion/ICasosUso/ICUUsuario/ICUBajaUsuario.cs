@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaNegocio.Entidades
+namespace LogicaAplicacion.ICasosUso.ICUUsuario
 {
-    internal class Administrador
+    public interface ICUBajaUsuario
     {
+        void Ejecutar(int UsuarioId);
     }
 }
