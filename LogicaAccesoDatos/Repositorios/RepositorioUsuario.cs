@@ -20,7 +20,9 @@ namespace LogicaAccesoDatos.Repositorios
 
         public int Add(Usuario item)
         {
-            throw new NotImplementedException();
+            _context.Usuarios.Add(item);
+            _context.SaveChanges();
+            return item.Id;
         }
 
         public void Delete(Usuario item)

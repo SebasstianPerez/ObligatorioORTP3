@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogicaNegocio.VO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,8 +9,8 @@ namespace LogicaNegocio.Entidades
 {
     public class Urgente : Envio
     {
-        public string DireccionPostal { get; set; }
-        public int Eficiencia { get; set; }
+        public DireccionPostal DireccionPostal { get; set; }
+        public int? Eficiencia { get; set; }
         public DateTime HoraSalida { get; set; }
 
         public Urgente() : base()
@@ -17,11 +18,9 @@ namespace LogicaNegocio.Entidades
             
         }
 
-        public Urgente(string numTracking, Usuario empleado, Usuario cliente, double peso, List<Seguimiento> seguimiento, string direccionPostal, int eficiencia, DateTime horaSalida) : base(numTracking, empleado, cliente, peso, seguimiento)
+        public Urgente(string numTracking, Usuario empleado, Usuario cliente, double peso, List<Seguimiento> seguimiento, string tipoEnvio, DireccionPostal direccionPostal, int? eficiencia, DateTime horaSalida) : base(numTracking, empleado, cliente, peso, seguimiento, tipoEnvio)
         {
             DireccionPostal = direccionPostal;
-            Eficiencia = eficiencia;
-            HoraSalida = horaSalida;
         }
     }
 }

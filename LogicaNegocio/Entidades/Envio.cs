@@ -16,8 +16,9 @@ namespace LogicaNegocio.Entidades
         public Estado? Estado { get; set; }
 
         public List<Seguimiento> Seguimiento { get; set; }
+        public string TipoEnvio { get; set; }
 
-        public Envio(string numTracking, Usuario empleado, Usuario cliente, double peso, List<Seguimiento> seguimiento)
+        public Envio(string numTracking, Usuario empleado, Usuario cliente, double peso, List<Seguimiento> seguimiento, string tipoEnvio)
         {
             NumeroTracking = numTracking;
             Empleado = empleado;
@@ -25,7 +26,7 @@ namespace LogicaNegocio.Entidades
             Peso = peso;
             Estado = global::Estado.EN_PROCESO;
             Seguimiento = seguimiento;
-
+            TipoEnvio = tipoEnvio;
         }
 
         public Envio()

@@ -9,6 +9,6 @@ namespace LogicaAplicacion.ICasosUso.ICUUsuario
 {
     public interface ICULogin
     {
-        DTOUsuario Login(DTOLogin dto);
+        DTOUsuario ValidarDatosLogin(DTOLogin dto);
     }
 }

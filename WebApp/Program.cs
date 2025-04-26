@@ -6,6 +6,7 @@ using LogicaAccesoDatos;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.EntityFrameworkCore;
 using LogicaAplicacion.ICasosUso.ICUUsuario;
+using LogicaAplicacion.CasosUso.CUUsuaio;
 
 namespace WebApp
 {
@@ -33,6 +34,9 @@ namespace WebApp
             builder.Services.AddScoped<IRepositorioSeguimiento, RepositorioSeguimiento>();
 
             builder.Services.AddScoped<ICUAltaEnvio, CUAltaEnvio>();
+            builder.Services.AddScoped<ICULogin, CULogin>();
+
+            builder.Services.AddSession();
 
             var app = builder.Build();
 
@@ -46,7 +50,7 @@ namespace WebApp
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
 
             app.UseAuthorization();

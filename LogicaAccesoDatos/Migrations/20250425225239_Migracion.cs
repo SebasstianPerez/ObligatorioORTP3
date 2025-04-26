@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace LogicaAccesoDatos.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class Migracion : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -59,9 +59,12 @@ namespace LogicaAccesoDatos.Migrations
                     ClienteId = table.Column<int>(type: "int", nullable: false),
                     Peso = table.Column<double>(type: "float", nullable: false),
                     Estado = table.Column<int>(type: "int", nullable: true),
-                    TipoEnvio = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    TipoEnvio = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     agenciaId = table.Column<int>(type: "int", nullable: true),
-                    DireccionPostal = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Calle = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NumeroPuerta = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ciudad = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CodigoPostal = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Eficiencia = table.Column<int>(type: "int", nullable: true),
                     HoraSalida = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -85,7 +88,7 @@ namespace LogicaAccesoDatos.Migrations
                         column: x => x.EmpleadoId,
                         principalTable: "Usuarios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -113,7 +116,7 @@ namespace LogicaAccesoDatos.Migrations
                         column: x => x.EmpleadoId,
                         principalTable: "Usuarios",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

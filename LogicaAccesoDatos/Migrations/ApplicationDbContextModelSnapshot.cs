@@ -77,8 +77,8 @@ namespace LogicaAccesoDatos.Migrations
 
                     b.Property<string>("TipoEnvio")
                         .IsRequired()
-                        .HasMaxLength(13)
-                        .HasColumnType("nvarchar(13)");
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.HasKey("Id");
 
@@ -159,24 +159,20 @@ namespace LogicaAccesoDatos.Migrations
 
                     b.HasIndex("agenciaId");
 
-                    b.HasDiscriminator().HasValue("EnvioComun");
+                    b.HasDiscriminator().HasValue("Comun");
                 });
 
             modelBuilder.Entity("LogicaNegocio.Entidades.Urgente", b =>
                 {
                     b.HasBaseType("LogicaNegocio.Entidades.Envio");
 
-                    b.Property<string>("DireccionPostal")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Eficiencia")
+                    b.Property<int?>("Eficiencia")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("HoraSalida")
                         .HasColumnType("datetime2");
 
-                    b.HasDiscriminator().HasValue("EnvioUrgente");
+                    b.HasDiscriminator().HasValue("Urgente");
                 });
 
             modelBuilder.Entity("LogicaNegocio.Entidades.Agencia", b =>
@@ -229,7 +225,7 @@ namespace LogicaAccesoDatos.Migrations
                     b.HasOne("LogicaNegocio.Entidades.Usuario", "Empleado")
                         .WithMany()
                         .HasForeignKey("EmpleadoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Cliente");
@@ -242,7 +238,7 @@ namespace LogicaAccesoDatos.Migrations
                     b.HasOne("LogicaNegocio.Entidades.Usuario", "Empleado")
                         .WithMany()
                         .HasForeignKey("EmpleadoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("LogicaNegocio.Entidades.Envio", "Envio")
@@ -294,6 +290,45 @@ namespace LogicaAccesoDatos.Migrations
                         .IsRequired();
 
                     b.Navigation("agencia");
+                });
+
+            modelBuilder.Entity("LogicaNegocio.Entidades.Urgente", b =>
+                {
+                    b.OwnsOne("LogicaNegocio.VO.DireccionPostal", "DireccionPostal", b1 =>
+                        {
+                            b1.Property<int>("UrgenteId")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Calle")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Calle");
+
+                            b1.Property<string>("Ciudad")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("Ciudad");
+
+                            b1.Property<string>("CodigoPostal")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("CodigoPostal");
+
+                            b1.Property<string>("NumCalle")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)")
+                                .HasColumnName("NumeroPuerta");
+
+                            b1.HasKey("UrgenteId");
+
+                            b1.ToTable("Envios");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UrgenteId");
+                        });
+
+                    b.Navigation("DireccionPostal")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("LogicaNegocio.Entidades.Envio", b =>

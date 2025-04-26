@@ -19,7 +19,7 @@ namespace LogicaAplicacion.CasosUso.CUUsuaio
             _repositorioUsuario = repositorioUsuario;
         }
 
-        public DTOUsuario Login(DTOLogin dto)
+        public DTOUsuario ValidarDatosLogin(DTOLogin dto)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace LogicaAplicacion.CasosUso.CUUsuaio
 
                 //TODO HASHING CRYPTO Utilities
                 if (usuario is null)
-                    throw new Exception("Usuario no encontrado");
+                    throw new Exception("Email no encontrado");
 
                 if (usuario.Contrasena != dto.Contrasena)
                     throw new Exception("Contraeña invalida");
@@ -41,7 +41,7 @@ namespace LogicaAplicacion.CasosUso.CUUsuaio
             }
             catch (Exception ex)
             {
-                throw new Exception("Error de credenciales: "+ex);
+                throw new Exception(ex.Message);
             }
         }
     }
