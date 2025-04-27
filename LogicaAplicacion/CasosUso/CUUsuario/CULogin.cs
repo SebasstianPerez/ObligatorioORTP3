@@ -19,7 +19,7 @@ namespace LogicaAplicacion.CasosUso.CUUsuaio
             _repositorioUsuario = repositorioUsuario;
         }
 
-        public DTOUsuario ValidarDatosLogin(DTOLogin dto)
+        public DTOLoginResponse ValidarDatosLogin(DTOLoginRequest dto)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace LogicaAplicacion.CasosUso.CUUsuaio
                     throw new Exception("Contraeña invalida");
 
                 //devolver dto con id y rol para el cliente
-                DTOUsuario ret = new();
+                DTOLoginResponse ret = new();
                 ret.ID = usuario.Id;
                 ret.Rol = usuario.Rol;
 

@@ -39,6 +39,11 @@ namespace LogicaAccesoDatos.Repositorios
             throw new NotImplementedException();
         }
 
+        public List<Agencia> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
         public int Update(Agencia item)
         {
             throw new NotImplementedException();

@@ -16,6 +16,6 @@ namespace LogicaNegocio.InterfacesRepositorios
 
         T findById(int id);
 
-        List<T> findAll();
+        List<T> GetAll();
     }
 }

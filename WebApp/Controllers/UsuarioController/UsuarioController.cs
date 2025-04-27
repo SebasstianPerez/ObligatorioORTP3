@@ -1,6 +1,8 @@
 ﻿using DTOs.DTOs.Usuario;
 using LogicaAplicacion.ICasosUso.ICUUsuario;
+using LogicaNegocio.Entidades;
 using Microsoft.AspNetCore.Mvc;
+using WebApp.Filtros;
 
 namespace WebApp.Controllers.UsuarioController
 {
@@ -12,30 +14,34 @@ namespace WebApp.Controllers.UsuarioController
         //private readonly ICURecuperarContrasena _cuRecuperarContrasena;
         private readonly ICUBajaUsuario _cUBajaUsuario;
         private readonly ICUEditarUsuario _cuEditarUsuario;
+        private readonly ICUGetUsuarios _cuGetUsuarios;
 
-        public UsuarioController(ICULogin cuLogin)
+        public UsuarioController(ICULogin cuLogin, ICUAltaUsuario cUAltaUsuario, ICUGetUsuarios cuGetUsuarios)
         {
             _cuLogin = cuLogin;
+            _cUAltaUsuario = cUAltaUsuario;
+            _cuGetUsuarios = cuGetUsuarios;
         }
 
         public IActionResult Index()
         {
-            return View("Login");
+            var usuarios = _cuGetUsuarios.Ejecutar();
+            return View(usuarios);
         }
 
         public IActionResult Login()
         {
-            var model = new DTOLogin();
+            DTOLoginRequest model = new();
 
             return View(model);
         }
 
         [HttpPost]
-        public IActionResult Login(DTOLogin dto)
+        public IActionResult Login(DTOLoginRequest dto)
         {
             try
             {
-                DTOUsuario dtoUsuario = _cuLogin.ValidarDatosLogin(dto);
+                DTOLoginResponse dtoUsuario = _cuLogin.ValidarDatosLogin(dto);
 
                 HttpContext.Session.SetInt32("UsuarioID", (int)(dtoUsuario.ID));
                 HttpContext.Session.SetString("UsuarioRol", dtoUsuario.Rol);
@@ -49,6 +55,45 @@ namespace WebApp.Controllers.UsuarioController
             }
         }
 
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("UsuarioID");
+            HttpContext.Session.Remove("UsuarioRol");
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [AdminAuth]
+        public IActionResult Create()
+        {
+            var model = new DTOCreateRequest();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult Create(DTOCreateRequest dto)
+        {
+            try
+            {
+                int? logId = HttpContext.Session.GetInt32("UsuarioID");
+                if (logId == null)
+                {
+                    ViewBag.ErrorMessage = "No se ha iniciado sesión";
+                    return RedirectToAction("Index", "Home");
+                }
+
+                dto.LogueadoId = (int)logId;
+
+                _cUAltaUsuario.Ejecutar(dto);
+
+                ViewBag.msg = "Usuario creado con éxito";
+            } catch(Exception ex) {
+                ViewBag.ErrorMsg = "Error al crear el usuario: " + ex.Message;
+            }
+
+            return View();
+        }
 
         //TODO CRUD Usuario
     }

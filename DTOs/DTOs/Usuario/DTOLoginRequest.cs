@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DTOs.DTOs.Usuario
 {
-    public class DTOLogin
+    public class DTOLoginRequest
     {
         
         [Required]
@@ -18,6 +18,16 @@ namespace DTOs.DTOs.Usuario
         [DataType(DataType.Password)]
         public string Contrasena { get; set; }
 
+        public DTOLoginRequest()
+        {
+            
+        }
+
+        public DTOLoginRequest(string email, string contrasena)
+        {
+            Email = email;
+            Contrasena = contrasena;
+        }
 
     }
 }
