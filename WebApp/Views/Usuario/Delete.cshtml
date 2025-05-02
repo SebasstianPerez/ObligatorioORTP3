@@ -1,0 +1,14 @@
+﻿@model DTOs.DTOs.Usuario.DTOUsuario;
+
+<h2>¿Estás seguro de que querés eliminar este usuario?</h2>
+
+<p>
+    <strong>Nombre:</strong> @Model.Nombre<br />
+    <strong>Email:</strong> @Model.Email
+</p>
+
+@using (Html.BeginForm("DeleteConfirmed", "Usuario", new { id = Model.Id }, FormMethod.Post))
+{
+    <input type="submit" value="Eliminar" class="btn btn-danger" />
+    @Html.ActionLink("Cancelar", "Index", null, new { @class = "btn btn-secondary" })
+}

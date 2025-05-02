@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTOs.DTOs.Usuario;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace LogicaAplicacion.ICasosUso.ICUUsuario
 {
     public interface ICUBajaUsuario
     {
-        void Ejecutar(int UsuarioId);
+        void Ejecutar(DTODelete dto);
     }
 }
