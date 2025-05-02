@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.ICasosUso.ICUUsuario
 {
-    public interface ICUAltaUsuario
+    public interface ICUGetUsuarios
     {
-        public void Ejecutar(DTOCreateRequest dto);
+        public List<DTOListUsuarios> Ejecutar();
     }
 }

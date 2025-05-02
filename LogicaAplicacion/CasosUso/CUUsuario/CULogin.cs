@@ -2,6 +2,7 @@
 using LogicaAplicacion.ICasosUso.ICUUsuario;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
+using Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,21 +20,20 @@ namespace LogicaAplicacion.CasosUso.CUUsuaio
             _repositorioUsuario = repositorioUsuario;
         }
 
-        public DTOUsuario ValidarDatosLogin(DTOLogin dto)
+        public DTOLoginResponse ValidarDatosLogin(DTOLoginRequest dto)
         {
             try
             {
                 Usuario usuario = _repositorioUsuario.FindByEmail(dto.Email);
 
-                //TODO HASHING CRYPTO Utilities
                 if (usuario is null)
-                    throw new Exception("Email no encontrado");
+                    throw new Exception("Email no encontrado");                
 
-                if (usuario.Contrasena != dto.Contrasena)
+                if (!Crypto.VerifyPasswordConBcrypt(dto.Contrasena, usuario.Contrasena))
                     throw new Exception("Contraeña invalida");
 
                 //devolver dto con id y rol para el cliente
-                DTOUsuario ret = new();
+                DTOLoginResponse ret = new();
                 ret.ID = usuario.Id;
                 ret.Rol = usuario.Rol;
 

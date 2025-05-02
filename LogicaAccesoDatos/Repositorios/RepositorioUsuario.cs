@@ -30,7 +30,7 @@ namespace LogicaAccesoDatos.Repositorios
             throw new NotImplementedException();
         }
 
-        public List<Usuario> findAll()
+        public List<Usuario> GetAll()
         {
             throw new NotImplementedException();
         }

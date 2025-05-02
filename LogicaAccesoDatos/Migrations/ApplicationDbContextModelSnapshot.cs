@@ -51,6 +51,37 @@ namespace LogicaAccesoDatos.Migrations
                     b.ToTable("Agencias");
                 });
 
+            modelBuilder.Entity("LogicaNegocio.Entidades.Auditoria", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Accion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Data")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Entidad")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("EntidadId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Fecha")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LogueadoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Auditorias");
+                });
+
             modelBuilder.Entity("LogicaNegocio.Entidades.Envio", b =>
                 {
                     b.Property<int>("Id")

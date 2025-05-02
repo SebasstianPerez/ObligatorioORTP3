@@ -30,6 +30,11 @@ namespace LogicaAccesoDatos.Repositorios
             throw new NotImplementedException();
         }
 
+        public List<Seguimiento> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
         public int Update(Seguimiento item)
         {
             throw new NotImplementedException();

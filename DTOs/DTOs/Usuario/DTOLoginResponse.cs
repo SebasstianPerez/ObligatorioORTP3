@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace DTOs.DTOs.Usuario
 {
-    public class DTOUsuario
+    public class DTOLoginResponse
     {
         public int ID { get; set; }
         public string Rol { get; set; }
 
-        public DTOUsuario() { }
+        public DTOLoginResponse() { }
 
-        public DTOUsuario(int iD, string rol)
+        public DTOLoginResponse(int iD, string rol)
         {
             ID = iD;
             Rol = rol;

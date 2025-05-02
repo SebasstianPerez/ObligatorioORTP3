@@ -7,6 +7,9 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using Microsoft.EntityFrameworkCore;
 using LogicaAplicacion.ICasosUso.ICUUsuario;
 using LogicaAplicacion.CasosUso.CUUsuaio;
+using LogicaAplicacion.CasosUso.CUUsuario;
+using LogicaAplicacion.ICasosUso.ICUAuditoria;
+using LogicaAplicacion.CasosUso.CUAuditoria;
 
 namespace WebApp
 {
@@ -32,9 +35,13 @@ namespace WebApp
             builder.Services.AddScoped<IRepositorioEnvio, RepositorioEnvio>();
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
             builder.Services.AddScoped<IRepositorioSeguimiento, RepositorioSeguimiento>();
+            builder.Services.AddScoped<IRepositorioAuditoria, RepositorioAuditoria>();
 
             builder.Services.AddScoped<ICUAltaEnvio, CUAltaEnvio>();
+            builder.Services.AddScoped<ICUAltaUsuario, CUAltaUsuario>();
             builder.Services.AddScoped<ICULogin, CULogin>();
+            builder.Services.AddScoped<ICUGetUsuarios, CUGetUsuarios>();
+            builder.Services.AddScoped<ICUAuditar, CUAuditar>();
 
             builder.Services.AddSession();
 

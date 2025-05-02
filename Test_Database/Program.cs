@@ -3,6 +3,7 @@ using LogicaNegocio.Entidades;
 using LogicaNegocio.VO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Utilities;
 
 internal class Program
 {
@@ -15,7 +16,7 @@ internal class Program
 
         using (var _context = serviceProvider.GetRequiredService<ApplicationDbContext>())
         {
-
+            
             /////Usuarios
             
             //Usuario u = new();
@@ -28,14 +29,14 @@ internal class Program
             //_context.SaveChanges();
 
 
-            //Usuario admin = new();
-            //admin.NombreCompleto = new NombreCompleto("Admin", "Admin");
-            //admin.Email = "admin";
-            //admin.Contrasena = "admin";
-            //admin.Rol = "Admin";
+            Usuario admin = new();
+            admin.NombreCompleto = new NombreCompleto("Admin", "Admin");
+            admin.Email = "admin";
+            admin.Contrasena = Crypto.HashPasswordConBcrypt(admin.Contrasena = "admin", 12);
+            admin.Rol = "Admin";
 
-            //_context.Usuarios.Add(admin);
-            //_context.SaveChanges();
+            _context.Usuarios.Add(admin);
+            _context.SaveChanges();
 
 
             //////Agencia
@@ -101,6 +102,8 @@ internal class Program
 
             //_context.Seguimientos.Add(seguimiento);
             //_context.SaveChanges();
+
+            
         }
     }
 }
