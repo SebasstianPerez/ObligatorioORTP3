@@ -1,4 +1,5 @@
-﻿using LogicaNegocio.Entidades;
+﻿using LogicaNegocio.CustomExceptions;
+using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -27,12 +28,21 @@ namespace LogicaAccesoDatos.Repositorios
 
         public void Delete(Usuario item)
         {
-            throw new NotImplementedException();
+            Usuario u = _context.Usuarios.FirstOrDefault(p => p.Id == item.Id);
+            if (u != null)
+            {
+                _context.Usuarios.Remove(u);
+                _context.SaveChanges();
+            } else
+            {
+                throw new UsuarioNoEncontradoException("Usuario no encontrado");
+            }
         }
 
         public List<Usuario> GetAll()
         {
-            throw new NotImplementedException();
+            List<Usuario> usuarios = _context.Usuarios.ToList();
+            return usuarios;
         }
 
         public Usuario FindByEmail(string email)
@@ -43,12 +53,14 @@ namespace LogicaAccesoDatos.Repositorios
 
         public Usuario findById(int id)
         {
-            throw new NotImplementedException();
+            Usuario u = _context.Usuarios.FirstOrDefault(p => p.Id == id);
+            return u;
         }
 
         public int Update(Usuario item)
         {
-            throw new NotImplementedException();
+            _context.SaveChanges();
+             return item.Id;
         }
     }
 }

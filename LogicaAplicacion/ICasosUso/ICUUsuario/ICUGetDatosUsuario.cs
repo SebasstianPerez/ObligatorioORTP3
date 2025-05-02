@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.ICasosUso.ICUUsuario
 {
-    public interface ICUGetUsuarios
+    public interface ICUGetDatosUsuario
     {
-        public List<DTOUsuario> Ejecutar();
+        public DTOUsuario Ejecutar(int id);
     }
 }

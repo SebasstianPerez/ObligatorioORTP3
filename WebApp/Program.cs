@@ -39,8 +39,10 @@ namespace WebApp
 
             builder.Services.AddScoped<ICUAltaEnvio, CUAltaEnvio>();
             builder.Services.AddScoped<ICUAltaUsuario, CUAltaUsuario>();
+            builder.Services.AddScoped<ICUEditarUsuario, CUEditarUsuario>();
             builder.Services.AddScoped<ICULogin, CULogin>();
             builder.Services.AddScoped<ICUGetUsuarios, CUGetUsuarios>();
+            builder.Services.AddScoped<ICUGetDatosUsuario, CUGetDatosUsuario>();
             builder.Services.AddScoped<ICUAuditar, CUAuditar>();
 
             builder.Services.AddSession();
