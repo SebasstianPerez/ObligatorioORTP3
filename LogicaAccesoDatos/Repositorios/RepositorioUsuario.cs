@@ -28,15 +28,8 @@ namespace LogicaAccesoDatos.Repositorios
 
         public void Delete(Usuario item)
         {
-            Usuario u = _context.Usuarios.FirstOrDefault(p => p.Id == item.Id);
-            if (u != null)
-            {
-                _context.Usuarios.Remove(u);
-                _context.SaveChanges();
-            } else
-            {
-                throw new UsuarioNoEncontradoException("Usuario no encontrado");
-            }
+            _context.Usuarios.Remove(item);
+            _context.SaveChanges();
         }
 
         public List<Usuario> GetAll()

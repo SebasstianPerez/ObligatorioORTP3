@@ -15,15 +15,18 @@ namespace WebApp.Controllers.UsuarioController
         private readonly ICUEditarUsuario _cuEditarUsuario;
         private readonly ICUGetUsuarios _cuGetUsuarios;
         private readonly ICUGetDatosUsuario _cuGetDatosUsuario;
+        private readonly ICUBajaUsuario _cuBajaUsuario;
 
         public UsuarioController(ICULogin cuLogin, ICUAltaUsuario cUAltaUsuario, 
-            ICUGetUsuarios cuGetUsuarios, ICUEditarUsuario cuEditarUsuario, ICUGetDatosUsuario cuGetDatosUsuario)
+            ICUGetUsuarios cuGetUsuarios, ICUEditarUsuario cuEditarUsuario, ICUGetDatosUsuario cuGetDatosUsuario,
+            ICUBajaUsuario cuBajaUsuario)
         {
             _cuLogin = cuLogin;
             _cUAltaUsuario = cUAltaUsuario;
             _cuGetUsuarios = cuGetUsuarios;
             _cuEditarUsuario = cuEditarUsuario;
             _cuGetDatosUsuario = cuGetDatosUsuario;
+            _cuBajaUsuario = cuBajaUsuario;
         }
 
         [AdminAuth]
@@ -108,7 +111,7 @@ namespace WebApp.Controllers.UsuarioController
             return View(usuario);
         }
 
-        [HttpPost]
+        [HttpPut]
         [AdminAuth]
         public IActionResult Edit(DTOEditarUsuarioRequest dto)
         {
@@ -131,6 +134,38 @@ namespace WebApp.Controllers.UsuarioController
             {
                 ViewBag.ErrorMsg = "Error al editar el usuario: " + ex.Message;
                 return View();
+            }
+        }
+
+        [HttpGet]
+        [AdminAuth]
+        public IActionResult Delete(int id)
+        {
+            var item = _cuGetDatosUsuario.Ejecutar(id);
+            return View(item); // Mostrás una vista de confirmación
+        }
+
+
+        [AdminAuth]
+        [HttpPost]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            try
+            {
+                DTODelete dto = new DTODelete();
+
+                dto.LogueadoId = (int)HttpContext.Session.GetInt32("UsuarioID");
+                dto.UsuarioId = id;
+
+                _cuBajaUsuario.Ejecutar(dto);
+
+                ViewData["Message"] = "Usuario eliminado con éxito";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewData["Error"] = "Error al eliminar al usuario: " + ex.Message;
+                return RedirectToAction("Index");
             }
         }
     }
