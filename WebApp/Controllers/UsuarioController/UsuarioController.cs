@@ -9,18 +9,21 @@ namespace WebApp.Controllers.UsuarioController
     public class UsuarioController : Controller
     {
         private readonly ICULogin _cuLogin;
-        //private readonly ICULogout _cuLogout;
         private readonly ICUAltaUsuario _cUAltaUsuario;
         //private readonly ICURecuperarContrasena _cuRecuperarContrasena;
         private readonly ICUBajaUsuario _cUBajaUsuario;
         private readonly ICUEditarUsuario _cuEditarUsuario;
         private readonly ICUGetUsuarios _cuGetUsuarios;
+        private readonly ICUGetDatosUsuario _cuGetDatosUsuario;
 
-        public UsuarioController(ICULogin cuLogin, ICUAltaUsuario cUAltaUsuario, ICUGetUsuarios cuGetUsuarios)
+        public UsuarioController(ICULogin cuLogin, ICUAltaUsuario cUAltaUsuario, 
+            ICUGetUsuarios cuGetUsuarios, ICUEditarUsuario cuEditarUsuario, ICUGetDatosUsuario cuGetDatosUsuario)
         {
             _cuLogin = cuLogin;
             _cUAltaUsuario = cUAltaUsuario;
             _cuGetUsuarios = cuGetUsuarios;
+            _cuEditarUsuario = cuEditarUsuario;
+            _cuGetDatosUsuario = cuGetDatosUsuario;
         }
 
         [AdminAuth]
@@ -89,7 +92,8 @@ namespace WebApp.Controllers.UsuarioController
 
                 _cUAltaUsuario.Ejecutar(dto);
 
-                ViewBag.msg = "Usuario creado con éxito";
+                ViewData["Message"] = "Usuario creado con éxito";
+                return RedirectToAction("Index");
             } catch(Exception ex) {
                 ViewBag.ErrorMsg = "Error al crear el usuario: " + ex.Message;
             }
@@ -97,15 +101,37 @@ namespace WebApp.Controllers.UsuarioController
             return View();
         }
 
-        public IActionResult Edit()
+        [AdminAuth]
+        public IActionResult Edit(int id)
         {
-
+            var usuario = _cuGetDatosUsuario.Ejecutar(id);
+            return View(usuario);
         }
 
         [HttpPost]
-        public IActionResult Edit()
+        [AdminAuth]
+        public IActionResult Edit(DTOEditarUsuarioRequest dto)
         {
-            //TODO Editar usuario
+            try
+            {
+                int? logeadoId = HttpContext.Session.GetInt32("UsuarioID");
+                if (logeadoId == null)
+                {
+                    ViewData["ErrorMessage"] = "No se ha iniciado sesión";
+                    return RedirectToAction("Index", "Home");
+                }
+
+                dto.loguadoId = (int)logeadoId;
+                _cuEditarUsuario.Ejecutar(dto);
+
+                ViewData["Message"] = "Usuario editado con éxito";
+                return RedirectToAction("Index");
+
+            } catch(Exception ex)
+            {
+                ViewBag.ErrorMsg = "Error al editar el usuario: " + ex.Message;
+                return View();
+            }
         }
     }
 }

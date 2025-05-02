@@ -4,6 +4,6 @@ namespace LogicaAplicacion.ICasosUso.ICUUsuario
 {
     public interface ICUEditarUsuario
     {
-        void Ejecutar(DTOEditarUsuario dto);
+        void Ejecutar(DTOEditarUsuarioRequest dto);
     }
 }

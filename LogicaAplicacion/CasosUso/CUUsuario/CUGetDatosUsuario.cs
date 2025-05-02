@@ -1,6 +1,7 @@
 ﻿using DTOs.DTOs.Usuario;
 using DTOs.Mapper;
 using LogicaAplicacion.ICasosUso.ICUUsuario;
+using LogicaNegocio.CustomExceptions;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
@@ -11,21 +12,23 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso.CUUsuario
 {
-    public class CUGetUsuarios : ICUGetUsuarios
+    public class CUGetDatosUsuario : ICUGetDatosUsuario
     {
         private readonly IRepositorioUsuario _repositorioUsuario;
 
-        public CUGetUsuarios(IRepositorioUsuario repositorioUsuario)
+        public CUGetDatosUsuario(IRepositorioUsuario repositorioUsuario)
         {
             _repositorioUsuario = repositorioUsuario;
         }
 
-        public List<DTOUsuario> Ejecutar()
+        public DTOUsuario Ejecutar(int id)
         {
-            List<DTOUsuario> ret = new();
-            List<Usuario> usuarios = _repositorioUsuario.GetAll();
+            Usuario u = _repositorioUsuario.findById(id);
 
-            ret = UsuarioMapper.ToListDTOUsuario(usuarios);
+            if (u is null)
+                throw new UsuarioNoEncontradoException("El usuario no existe");
+
+            var ret = UsuarioMapper.ToDTOUsuario(u);
 
             return ret;
         }
