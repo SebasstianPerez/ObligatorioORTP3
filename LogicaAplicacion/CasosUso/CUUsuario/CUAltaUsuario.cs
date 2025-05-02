@@ -4,10 +4,13 @@ using LogicaAplicacion.ICasosUso.ICUUsuario;
 using LogicaNegocio.CustomExceptions;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
+using Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso.CUUsuaio
@@ -15,13 +18,12 @@ namespace LogicaAplicacion.CasosUso.CUUsuaio
     public class CUAltaUsuario : ICUAltaUsuario
     {
         private readonly IRepositorioUsuario _repositorioUsuario;
-        //private readonly IRepositorioAuditoria _repositorioAuditoria;
+        private readonly IRepositorioAuditoria _repositorioAuditoria;
 
-        //TODO Auditoria
-        public CUAltaUsuario(IRepositorioUsuario repositorioUsuario /*, IRepositorioAuditoria repositorioAuditoria*/)
+        public CUAltaUsuario(IRepositorioUsuario repositorioUsuario , IRepositorioAuditoria repositorioAuditoria)
         {
             _repositorioUsuario = repositorioUsuario;
-            //_repositorioAuditoria = repositorioAuditoria;
+            _repositorioAuditoria = repositorioAuditoria;
         }
 
 
@@ -31,13 +33,13 @@ namespace LogicaAplicacion.CasosUso.CUUsuaio
 
             if (Buscado != null)
                 throw new UsuarioNoEncontradoException("Ya existe el email en la base de datos");
+ 
 
             Usuario nuevo = UsuarioMapper.ToUsuario(dto);
             int idUsuario = _repositorioUsuario.Add(nuevo);
 
-            //Auditoria con usuarioId y dto.LogueadoId
+            Auditoria auditoria = new Auditoria("Alta", JsonSerializer.Serialize(nuevo), dto.LogueadoId, "Usuario", idUsuario);
+            _repositorioAuditoria.Add(auditoria); 
         }
-
-        //TODO Auditoria
     }
 }

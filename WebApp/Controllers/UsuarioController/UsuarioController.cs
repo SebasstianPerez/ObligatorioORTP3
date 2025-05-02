@@ -23,6 +23,7 @@ namespace WebApp.Controllers.UsuarioController
             _cuGetUsuarios = cuGetUsuarios;
         }
 
+        [AdminAuth]
         public IActionResult Index()
         {
             var usuarios = _cuGetUsuarios.Ejecutar();
@@ -55,6 +56,7 @@ namespace WebApp.Controllers.UsuarioController
             }
         }
 
+        [Logged]
         public IActionResult Logout()
         {
             HttpContext.Session.Remove("UsuarioID");
@@ -95,6 +97,15 @@ namespace WebApp.Controllers.UsuarioController
             return View();
         }
 
-        //TODO CRUD Usuario
+        public IActionResult Edit()
+        {
+
+        }
+
+        [HttpPost]
+        public IActionResult Edit()
+        {
+            //TODO Editar usuario
+        }
     }
 }

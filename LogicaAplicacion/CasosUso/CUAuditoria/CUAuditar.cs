@@ -1,5 +1,6 @@
 ﻿using LogicaAplicacion.ICasosUso.ICUAuditoria;
 using LogicaNegocio.Entidades;
+using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,16 @@ namespace LogicaAplicacion.CasosUso.CUAuditoria
 {
     public class CUAuditar : ICUAuditar
     {
-        public void Ejecutar(string accion, DateTime fecha, Usuario usuario)
+        private readonly IRepositorioAuditoria _repositorioAuditoria;
+
+        public CUAuditar(IRepositorioAuditoria repositorioAuditoria)
         {
-            throw new NotImplementedException();
+            _repositorioAuditoria = repositorioAuditoria;
+        }
+
+        public void Ejecutar(string? accion, string? data, int logueadoId, string? entidad, int? entidadId)
+        {
+            _repositorioAuditoria.Add(new Auditoria(accion, data, logueadoId, entidad, entidadId));
         }
     }
 }

@@ -31,11 +31,10 @@ namespace DTOs.Mapper
 
         public static Usuario ToUsuario(DTOCreateRequest dto)
         {
-            //TODO PassHash with BCRYPT
-
-            
-            Usuario ret = new(new LogicaNegocio.VO.NombreCompleto(dto.Nombre, dto.Apellido), dto.Email, dto.Contrasena);
+            string passHashed = Utilities.Crypto.HashPasswordConBcrypt(dto.Contrasena, 12);
+            Usuario ret = new(new LogicaNegocio.VO.NombreCompleto(dto.Nombre, dto.Apellido), dto.Email, passHashed);
             return ret;
         }
      }
 }
+ 

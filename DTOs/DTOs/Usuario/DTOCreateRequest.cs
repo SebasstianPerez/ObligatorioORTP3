@@ -9,7 +9,7 @@ namespace DTOs.DTOs.Usuario
 {
     public class DTOCreateRequest
     {
-        [Required(ErrorMessage = "El nombre es obligatorio")]
+        [Required(ErrorMessage = "El nombre no puede ser vacio")]
         [StringLength(50, ErrorMessage = "El nombre no puede exceder los 50 caracteres")]
         [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "El nombre solo puede contener letras y espacios")]
         public string Nombre { get; set; }
@@ -18,9 +18,10 @@ namespace DTOs.DTOs.Usuario
         [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "El apellido solo puede contener letras y espacios")]
         public string Apellido { get; set; }
         [Required(ErrorMessage = "El email es obligatorio")]
-        [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "El email no es válido")]
+        //[RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "El email no es válido")]
+        [EmailAddress]
         public string Email { get; set; }
-        [Required(ErrorMessage = "La contraseña es obligatoria")]
+        [Required(ErrorMessage = "La contraseña no puede ser vacia")]
         [StringLength(100, ErrorMessage = "La contraseña debe tener al menos 8 caracteres", MinimumLength = 8)]
         [DataType(DataType.Password)]
         public string Contrasena { get; set; }

@@ -3,17 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35027.167
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{16945C16-D67E-4F86-8326-A94B7B69889D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WebApp\WebApp.csproj", "{16945C16-D67E-4F86-8326-A94B7B69889D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicaAplicacion", "LogicaAplicacion\LogicaAplicacion.csproj", "{A5C3A574-03BA-4876-848B-75C31AEBCA02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicaAplicacion", "LogicaAplicacion\LogicaAplicacion.csproj", "{A5C3A574-03BA-4876-848B-75C31AEBCA02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicaNegocio", "LogicaNegocio\LogicaNegocio.csproj", "{DEC7EF0F-0A07-4E2C-A181-C59EFA423F72}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicaNegocio", "LogicaNegocio\LogicaNegocio.csproj", "{DEC7EF0F-0A07-4E2C-A181-C59EFA423F72}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTOs", "DTOs\DTOs.csproj", "{D3DD86AF-E4B6-4F21-B6F8-536B77F57784}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTOs", "DTOs\DTOs.csproj", "{D3DD86AF-E4B6-4F21-B6F8-536B77F57784}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogicaAccesoDatos", "LogicaAccesoDatos\LogicaAccesoDatos.csproj", "{C2B307BF-A777-4FD2-B81A-6924F0AAC919}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogicaAccesoDatos", "LogicaAccesoDatos\LogicaAccesoDatos.csproj", "{C2B307BF-A777-4FD2-B81A-6924F0AAC919}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test_Database", "Test_Database\Test_Database.csproj", "{EA0374D3-13C3-47A8-9124-3080ABFBF7C4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test_Database", "Test_Database\Test_Database.csproj", "{EA0374D3-13C3-47A8-9124-3080ABFBF7C4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{A8706988-41F5-4318-A7F1-96B7843D19BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{EA0374D3-13C3-47A8-9124-3080ABFBF7C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA0374D3-13C3-47A8-9124-3080ABFBF7C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA0374D3-13C3-47A8-9124-3080ABFBF7C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8706988-41F5-4318-A7F1-96B7843D19BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8706988-41F5-4318-A7F1-96B7843D19BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8706988-41F5-4318-A7F1-96B7843D19BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8706988-41F5-4318-A7F1-96B7843D19BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

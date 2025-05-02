@@ -9,6 +9,6 @@ namespace LogicaAplicacion.ICasosUso.ICUAuditoria
 {
     public interface ICUAuditar
     {
-        void Ejecutar(string accion, DateTime fecha, Usuario usuario);
+        void Ejecutar(string? accion, string? data, int logueadoId, string? entidad, int? entidadId);
     }
 }

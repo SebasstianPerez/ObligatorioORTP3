@@ -3,6 +3,7 @@ using LogicaNegocio.Entidades;
 using LogicaNegocio.VO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Utilities;
 
 internal class Program
 {
@@ -31,7 +32,7 @@ internal class Program
             Usuario admin = new();
             admin.NombreCompleto = new NombreCompleto("Admin", "Admin");
             admin.Email = "admin";
-            admin.Contrasena = "admin";
+            admin.Contrasena = Crypto.HashPasswordConBcrypt(admin.Contrasena = "admin", 12);
             admin.Rol = "Admin";
 
             _context.Usuarios.Add(admin);

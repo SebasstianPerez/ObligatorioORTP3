@@ -21,6 +21,7 @@ namespace LogicaAccesoDatos
         public DbSet<Seguimiento> Seguimientos { get; set; }
         public DbSet<Urgente> Urgentes { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Auditoria> Auditorias { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -89,8 +90,6 @@ namespace LogicaAccesoDatos
             modelBuilder.Entity<Usuario>()
                 .HasIndex(c => c.Email)
                 .IsUnique();
-
-            
 
             modelBuilder.Entity<Seguimiento>()
                 .HasOne(u => u.Empleado)
