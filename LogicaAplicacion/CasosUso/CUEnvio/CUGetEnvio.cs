@@ -1,4 +1,5 @@
-﻿using LogicaAplicacion.ICasosUso.ICUEnvio;
+﻿using DTOs.DTOs.Envio;
+using LogicaAplicacion.ICasosUso.ICUEnvio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.CasosUso.CUEnvio
 {
-    public class CUVerDetalleEnvio : ICUVerDetalleEnvio
+    public class CUGetEnvio : ICUGetEnvio
     {
-        public DTOEnvio Ejecutar(int EnvioId)
+        public DTOGetAllEnvios Ejecutar(int EnvioId)
         {
             throw new NotImplementedException();
         }

@@ -4,7 +4,7 @@ using LogicaNegocio.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Filtros;
 
-namespace WebApp.Controllers.UsuarioController
+namespace WebApp.Controllers
 {
     public class UsuarioController : Controller
     {
@@ -17,7 +17,7 @@ namespace WebApp.Controllers.UsuarioController
         private readonly ICUGetDatosUsuario _cuGetDatosUsuario;
         private readonly ICUBajaUsuario _cuBajaUsuario;
 
-        public UsuarioController(ICULogin cuLogin, ICUAltaUsuario cUAltaUsuario, 
+        public UsuarioController(ICULogin cuLogin, ICUAltaUsuario cUAltaUsuario,
             ICUGetUsuarios cuGetUsuarios, ICUEditarUsuario cuEditarUsuario, ICUGetDatosUsuario cuGetDatosUsuario,
             ICUBajaUsuario cuBajaUsuario)
         {
@@ -50,12 +50,12 @@ namespace WebApp.Controllers.UsuarioController
             {
                 DTOLoginResponse dtoUsuario = _cuLogin.ValidarDatosLogin(dto);
 
-                HttpContext.Session.SetInt32("UsuarioID", (int)(dtoUsuario.ID));
+                HttpContext.Session.SetInt32("UsuarioID", dtoUsuario.ID);
                 HttpContext.Session.SetString("UsuarioRol", dtoUsuario.Rol);
 
                 return RedirectToAction("Index", "Home");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewBag.ErrorMessage = "Error al iniciar sesión: " + ex.Message;
                 return View();
@@ -97,7 +97,9 @@ namespace WebApp.Controllers.UsuarioController
 
                 ViewData["Message"] = "Usuario creado con éxito";
                 return RedirectToAction("Index");
-            } catch(Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 ViewBag.ErrorMsg = "Error al crear el usuario: " + ex.Message;
             }
 
@@ -130,7 +132,8 @@ namespace WebApp.Controllers.UsuarioController
                 ViewData["Message"] = "Usuario editado con éxito";
                 return RedirectToAction("Index");
 
-            } catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 ViewBag.ErrorMsg = "Error al editar el usuario: " + ex.Message;
                 return View();

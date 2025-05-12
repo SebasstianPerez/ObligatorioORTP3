@@ -24,11 +24,12 @@ namespace LogicaNegocio.Entidades
             DireccionPostal = direccionPostal;
             Latitud = latitud;
             Longitud = longitud;
+            Validar();
         }
 
         public Agencia()
         {
-
+            Validar();
         }
 
         public void Validar()

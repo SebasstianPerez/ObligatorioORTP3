@@ -1,5 +1,6 @@
 ﻿using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,12 @@ namespace LogicaAccesoDatos.Repositorios
         public Agencia findById(int id)
         {
             throw new NotImplementedException();
+        }
+
+        public Agencia findByNombre(string nombre)
+        {
+            Agencia agencia = _context.Agencias.FirstOrDefault(a => a.Nombre == nombre);
+            return agencia;
         }
 
         public List<Agencia> GetAll()

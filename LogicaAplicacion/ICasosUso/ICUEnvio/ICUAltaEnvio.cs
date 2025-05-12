@@ -9,6 +9,6 @@ namespace LogicaAplicacion.ICasosUso.ICUEnvio
 {
     public interface ICUAltaEnvio
     {
-        void Ejecutar(DTOAltaEnvio dto);
+        void Ejecutar(DTOAltaEnvioRequest dto);
     }
 }

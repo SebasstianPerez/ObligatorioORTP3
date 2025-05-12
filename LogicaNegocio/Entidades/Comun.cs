@@ -15,7 +15,7 @@ namespace LogicaNegocio.Entidades
             
         }
 
-        public Comun(string numTracking, Usuario empleado, Usuario cliente, double peso, List<Seguimiento> seguimiento, string tipoEnvio, Agencia agencia) : base(numTracking, empleado, cliente, peso, seguimiento, tipoEnvio)
+        public Comun(Usuario empleado, Usuario cliente, double peso, List<Seguimiento> seguimiento, string tipoEnvio, Agencia agencia) : base(empleado, cliente, peso, seguimiento, tipoEnvio)
         {
             agencia = agencia;
         }
