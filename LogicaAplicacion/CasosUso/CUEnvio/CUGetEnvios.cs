@@ -1,4 +1,5 @@
 ﻿using DTOs.DTOs.Envio;
+using DTOs.Mapper;
 using LogicaAccesoDatos.Repositorios;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
 using System;
@@ -19,22 +20,14 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
             _repositorioEnvio = repositorioEnvio;
         }
 
-        public List<DTOGetAllEnvios> Ejecutar()
+        public List<DTOGetEnvios> Ejecutar()
         {
-            List<DTOGetAllEnvios> Envios = new List<DTOGetAllEnvios>();
+            List<DTOGetEnvios> ret = new List<DTOGetEnvios>();
             var envios = _repositorioEnvio.GetAll();
-            foreach (var env in envios)
-            {
-                Envios.Add(new DTOGetAllEnvios()
-                {
-                    Id = env.Id,
-                    Destinatario = env.Destinatario,
-                    Direccion = env.Direccion,
-                    Telefono = env.Telefono,
-                    FechaEnvio = env.FechaEnvio,
-                    Estado = env.Estado
-                });
-            }
+
+            ret = EnvioMapper.ToListDTOEnvio(envios);
+
+            return ret;
         }
     }
 }

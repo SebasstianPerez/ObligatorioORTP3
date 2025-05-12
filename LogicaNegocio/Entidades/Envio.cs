@@ -13,7 +13,7 @@ namespace LogicaNegocio.Entidades
         public Usuario Empleado { get; set; }
         public Usuario Cliente { get; set; }
         public Double Peso { get; set; }
-        public Estado? Estado { get; set; }
+        public Estado Estado { get; set; }
 
         public List<Seguimiento> Seguimiento { get; set; }
         public string TipoEnvio { get; set; }

@@ -11,6 +11,15 @@ namespace DTOs.Mapper
 {
     public class EnvioMapper
     {
+        public static DTOGetEnvios ToDTOEnvio(Envio envio)
+        {
+            DTOGetEnvios ret = new DTOGetEnvios();
+
+            ret.Estado = envio.Estado;
+
+            //TODO castear Estado a String
+        }
+
         public static Envio ToEnvio(DTOAltaEnvioRequest dto, Usuario cliente, Usuario empleadoId)
         {
             Envio envio;
@@ -41,6 +50,26 @@ namespace DTOs.Mapper
             return envio;
 
         }
-    
+
+        public static List<DTOGetEnvios> ToListDTOEnvio(List<Envio> envios)
+        {
+            List<DTOGetEnvios> dto = new List<DTOGetEnvios>();
+
+            foreach (var env in envios)
+            {
+                string estado = env.Estado.ToString("D");
+
+                dto.Add(
+                    new DTOGetEnvios(
+
+                        env.TipoEnvio,
+                        env.NumeroTracking,
+                        env.Cliente.Email,
+                        env.Peso,
+                        estado
+                    ));
+            }
+            return dto;
+        }
     } 
 }

@@ -10,15 +10,12 @@ namespace WebApp.Controllers
         private readonly ICUAltaEnvio _cuAltaEnvio;
         private readonly ICUGetEnvios _cuGetEnvios;
         private readonly ICUGetEnvio _cuGetEnvio;
-        private readonly ICUEditarEnvio _cuEditarEnvio;
 
-        public EnvioController(ICUAltaEnvio cuAltaEnvio, ICUGetEnvios cuGetEnvios, ICUGetEnvio cuGetEnvio,
-            ICUEditarEnvio cuEditarEnvio)
+        public EnvioController(ICUAltaEnvio cuAltaEnvio, ICUGetEnvios cuGetEnvios, ICUGetEnvio cuGetEnvio)
         {
             _cuAltaEnvio = cuAltaEnvio;
             _cuGetEnvios = cuGetEnvios;
             _cuGetEnvio = cuGetEnvio;
-            _cuEditarEnvio = cuEditarEnvio;
         }
 
         public IActionResult Index()
@@ -27,32 +24,19 @@ namespace WebApp.Controllers
             return View(envios);
         }
 
-        [HttpGet]
-        public IActionResult AltaEnvio()
+        public IActionResult Create()
         {
-            return View();
+            DTOAltaEnvioRequest model = new DTOAltaEnvioRequest();
+
+            return View(model);
         }
 
         [HttpPost]
-        public IActionResult AltaEnvio()
+        public IActionResult Create(DTOAltaEnvioRequest dto)
         {
             try
             {
-                DTOAltaEnvioRequest envio = new DTOAltaEnvioRequest();
-                envio.TipoEnvio = Request.Form["TipoEnvio"];
-                envio.EmailCliente = Request.Form["EmailCliente"];
-                envio.Peso = Convert.ToDouble(Request.Form["Peso"]);
-
-                if(envio.TipoEnvio == "Comun")
-                {
-                    envio.AgenciaDestino = Request.Form["AgenciaUrgente"];
-                }
-                else if(envio.TipoEnvio == "Urgente")
-                {
-                    envio.DireccionPostal = Request.Form["DireccionPostal"];
-                }
-
-                _cuAltaEnvio.Ejecutar(envio);
+                _cuAltaEnvio.Ejecutar(dto);
 
                 ViewBag.Message = "Alta correcta";
                 return View();

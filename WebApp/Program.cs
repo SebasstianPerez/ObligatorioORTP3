@@ -38,6 +38,9 @@ namespace WebApp
             builder.Services.AddScoped<IRepositorioAuditoria, RepositorioAuditoria>();
 
             builder.Services.AddScoped<ICUAltaEnvio, CUAltaEnvio>();
+            builder.Services.AddScoped<ICUGetEnvio, CUGetEnvio>();
+            builder.Services.AddScoped<ICUGetEnvios, CUGetEnvios>();
+
             builder.Services.AddScoped<ICUAltaUsuario, CUAltaUsuario>();
             builder.Services.AddScoped<ICUEditarUsuario, CUEditarUsuario>();
             builder.Services.AddScoped<ICULogin, CULogin>();

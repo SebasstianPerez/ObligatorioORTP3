@@ -72,17 +72,14 @@ namespace LogicaAccesoDatos.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    NumeroTracking = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NumeroTracking = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmpleadoId = table.Column<int>(type: "int", nullable: false),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
                     Peso = table.Column<double>(type: "float", nullable: false),
-                    Estado = table.Column<int>(type: "int", nullable: true),
+                    Estado = table.Column<int>(type: "int", nullable: false),
                     TipoEnvio = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     agenciaId = table.Column<int>(type: "int", nullable: true),
-                    Calle = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NumeroPuerta = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Ciudad = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CodigoPostal = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DireccionPostal = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Eficiencia = table.Column<int>(type: "int", nullable: true),
                     HoraSalida = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },

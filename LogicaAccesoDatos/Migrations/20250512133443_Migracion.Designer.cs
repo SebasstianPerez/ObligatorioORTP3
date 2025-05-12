@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogicaAccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250502165715_Migracion")]
+    [Migration("20250512133443_Migracion")]
     partial class Migracion
     {
         /// <inheritdoc />
@@ -99,11 +99,10 @@ namespace LogicaAccesoDatos.Migrations
                     b.Property<int>("EmpleadoId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("Estado")
+                    b.Property<int>("Estado")
                         .HasColumnType("int");
 
                     b.Property<string>("NumeroTracking")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Peso")
@@ -200,10 +199,14 @@ namespace LogicaAccesoDatos.Migrations
                 {
                     b.HasBaseType("LogicaNegocio.Entidades.Envio");
 
+                    b.Property<string>("DireccionPostal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("Eficiencia")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("HoraSalida")
+                    b.Property<DateTime?>("HoraSalida")
                         .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("Urgente");
@@ -324,45 +327,6 @@ namespace LogicaAccesoDatos.Migrations
                         .IsRequired();
 
                     b.Navigation("agencia");
-                });
-
-            modelBuilder.Entity("LogicaNegocio.Entidades.Urgente", b =>
-                {
-                    b.OwnsOne("LogicaNegocio.VO.DireccionPostal", "DireccionPostal", b1 =>
-                        {
-                            b1.Property<int>("UrgenteId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Calle")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Calle");
-
-                            b1.Property<string>("Ciudad")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Ciudad");
-
-                            b1.Property<string>("CodigoPostal")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("CodigoPostal");
-
-                            b1.Property<string>("NumCalle")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("NumeroPuerta");
-
-                            b1.HasKey("UrgenteId");
-
-                            b1.ToTable("Envios");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UrgenteId");
-                        });
-
-                    b.Navigation("DireccionPostal")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("LogicaNegocio.Entidades.Envio", b =>
