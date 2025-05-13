@@ -45,7 +45,7 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
 
                 if (envio is Comun comun)
                 {
-                    Agencia agencia = _repositorioAgencia.findByNombre((string)dto.AgenciaNombre);
+                    Agencia agencia = _repositorioAgencia.findById((int)dto.AgenciaId);
                     comun.agencia = agencia;
                 }
 

@@ -3,9 +3,10 @@ using DTOs.DTOs.Usuario;
 using LogicaAplicacion.ICasosUso.ICUAgencia;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
 using LogicaAplicacion.ICasosUso.ICUUsuario;
-using LogicaNegocio.Entidades;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using WebApp.Filtros;
 using WebApp.Models;
 
 namespace WebApp.Controllers
@@ -31,18 +32,24 @@ namespace WebApp.Controllers
             return View(envios);
         }
 
+        [Logged]
         public IActionResult Create()
         {
-            DTOEnvio dto = new DTOEnvio();
             AltaEnvioViewModel vm = new AltaEnvioViewModel();
 
             foreach(var agencia in _cuGetAgencias.Ejecutar())
             {
                 SelectListItem sitem = new SelectListItem();
                 sitem.Text = agencia.Nombre;
-                sitem.Value = agencia.Nombre;
+                sitem.Value = agencia.Id.ToString();
                 vm.Agencias.Add(sitem); 
             }
+
+            vm.TipoEnvio = new List<SelectListItem>()
+            {
+                new SelectListItem("Comun", value: "Comun"),
+                new SelectListItem("Urgente", value: "Urgente")
+            };
             
             return View(vm);
         }
@@ -52,18 +59,18 @@ namespace WebApp.Controllers
         {
             try
             {
-                //TODO terminar controller envio create
                 vm.dtoEnvio.EmpleadoId = (int)HttpContext.Session.GetInt32("UsuarioID");
 
-                //_cuAltaEnvio.Ejecutar();
+                _cuAltaEnvio.Ejecutar(vm.dtoEnvio);
 
-                ViewBag.Message = "Alta correcta";
-                return View();
+                ViewData["Message"] = "Alta correcta";
+
+                return RedirectToAction("Create");
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMsg = ex.Message;
-                return View();
+                ViewData["Error"] = ex.Message;
+                return RedirectToAction("Create");
             }
         }
     }

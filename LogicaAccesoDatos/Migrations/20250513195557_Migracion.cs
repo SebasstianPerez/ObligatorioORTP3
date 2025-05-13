@@ -18,10 +18,7 @@ namespace LogicaAccesoDatos.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Calle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NumeroPuerta = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Ciudad = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CodigoPostal = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DireccionPostal = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Telefono = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Latitud = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Longitud = table.Column<string>(type: "nvarchar(max)", nullable: false)

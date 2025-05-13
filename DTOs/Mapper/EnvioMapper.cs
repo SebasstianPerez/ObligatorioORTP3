@@ -23,7 +23,7 @@ namespace DTOs.Mapper
 
             if (envio is Comun comun)
             {
-                ret.AgenciaNombre = comun.agencia.Nombre;
+                ret.AgenciaId = comun.agencia.Id;
             }
             else if (envio is Urgente urgente)
             {

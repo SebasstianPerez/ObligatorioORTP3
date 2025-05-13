@@ -19,28 +19,28 @@ internal class Program
 
             /////Usuarios
 
-            /*
+            
              Usuario u = new();
             u.NombreCompleto = new NombreCompleto("Juan", "Pérez");
             u.Email = "juan@gmail.com";
-            u.Contrasena = "1234";
+            u.Contrasena = Crypto.HashPasswordConBcrypt(u.Contrasena = "1234", 12);
             u.Rol = "Empleado";
 
             _context.Usuarios.Add(u);
             _context.SaveChanges();
-             */
+             
 
 
             Usuario u1 = new();
             u1.NombreCompleto = new NombreCompleto("Mario", "Pérez");
             u1.Email = "mario@gmail.com";
-            u1.Contrasena = "mario1234";
+            u1.Contrasena = Crypto.HashPasswordConBcrypt(u1.Contrasena = "mario1234", 12);
             u1.Rol = "Cliente";
 
             _context.Usuarios.Add(u1);
             _context.SaveChanges();
 
-            /*
+            
              Usuario admin = new();
             admin.NombreCompleto = new NombreCompleto("Admin", "Admin");
             admin.Email = "admin";
@@ -49,21 +49,19 @@ internal class Program
 
             _context.Usuarios.Add(admin);
             _context.SaveChanges();
-             */
-
-
+             
 
             //////Agencia
 
-            //Agencia agencia = new();
-            //agencia.Nombre = "Agencia 1";
-            //agencia.DireccionPostal = new DireccionPostal("Calle 1", "1", "Ciudad 1", "12345");
-            //agencia.Telefono = "123456789";
-            //agencia.Latitud = "12.345678";
-            //agencia.Longitud = "98.765432";
+            Agencia agencia = new();
+            agencia.Nombre = "Agencia1";
+            agencia.DireccionPostal = "12100";
+            agencia.Telefono = "123456789";
+            agencia.Latitud = "12.345678";
+            agencia.Longitud = "98.765432";
 
-            //_context.Agencias.Add(agencia);
-            //_context.SaveChanges();
+            _context.Agencias.Add(agencia);
+            _context.SaveChanges();
 
 
             //////Envio

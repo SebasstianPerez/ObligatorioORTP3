@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,7 +38,9 @@ namespace LogicaAccesoDatos.Repositorios
 
         public Agencia findById(int id)
         {
-            throw new NotImplementedException();
+            Agencia ret = new Agencia();
+            ret = _context.Agencias.FirstOrDefault(a => a.Id == id);
+            return ret;
         }
 
         public Agencia findByNombre(string nombre)

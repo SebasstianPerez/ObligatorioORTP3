@@ -9,10 +9,17 @@ namespace WebApp.Filtros
         {
 
             var userId = context.HttpContext.Session.GetString("UsuarioID");
+            var rol = context.HttpContext.Session.GetString("UsuarioRol");
 
             if (string.IsNullOrEmpty(userId))
                 context.Result = new RedirectToActionResult("Login", "Usuario", null);
 
+            if(!rol.Equals("Empleado") && !rol.Equals("Admin"))
+            {
+                //mensaje
+                context.Result = new RedirectToActionResult("Index", "Home", null);
+            }
+                
             //TODO Manejar el error de usuario no autorizado
 
             base.OnActionExecuting(context);

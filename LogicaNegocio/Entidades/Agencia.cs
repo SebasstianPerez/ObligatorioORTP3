@@ -25,11 +25,11 @@ namespace LogicaNegocio.Entidades
             Telefono = telefono;
             Latitud = latitud;
             Longitud = longitud;
+            Validar();
         }
 
         public Agencia()
         {
-            Validar();
         }
 
         public void Validar()

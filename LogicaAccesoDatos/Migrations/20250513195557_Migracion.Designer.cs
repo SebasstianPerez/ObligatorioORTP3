@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogicaAccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250512200804_Migracion")]
+    [Migration("20250513195557_Migracion")]
     partial class Migracion
     {
         /// <inheritdoc />
@@ -32,6 +32,10 @@ namespace LogicaAccesoDatos.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("DireccionPostal")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Latitud")
                         .IsRequired()
@@ -210,45 +214,6 @@ namespace LogicaAccesoDatos.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("Urgente");
-                });
-
-            modelBuilder.Entity("LogicaNegocio.Entidades.Agencia", b =>
-                {
-                    b.OwnsOne("LogicaNegocio.VO.DireccionPostal", "DireccionPostal", b1 =>
-                        {
-                            b1.Property<int>("AgenciaId")
-                                .HasColumnType("int");
-
-                            b1.Property<string>("Calle")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Calle");
-
-                            b1.Property<string>("Ciudad")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Ciudad");
-
-                            b1.Property<string>("CodigoPostal")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("CodigoPostal");
-
-                            b1.Property<string>("NumCalle")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("NumeroPuerta");
-
-                            b1.HasKey("AgenciaId");
-
-                            b1.ToTable("Agencias");
-
-                            b1.WithOwner()
-                                .HasForeignKey("AgenciaId");
-                        });
-
-                    b.Navigation("DireccionPostal")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("LogicaNegocio.Entidades.Envio", b =>

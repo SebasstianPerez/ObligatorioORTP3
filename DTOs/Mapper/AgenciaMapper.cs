@@ -28,6 +28,7 @@ namespace DTOs.Mapper
         {
             DTOAgencia ret = new DTOAgencia();
 
+            ret.Id = a.Id;
             ret.Nombre = a.Nombre;
             ret.Telefono = a.Telefono;
             ret.DireccionPostal = a.DireccionPostal;

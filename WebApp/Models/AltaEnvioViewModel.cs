@@ -7,17 +7,20 @@ namespace WebApp.Models
     {
         public DTOEnvio dtoEnvio { get; set; }
 
-        public List<SelectListItem> TipoEnvio = new List<SelectListItem>()
-        {
-            new SelectListItem("Urgente", "urgente"),
-            new SelectListItem("Comun", "comun")
+        public List<SelectListItem> TipoEnvio = new List<SelectListItem>();
 
-        };
+        public List<SelectListItem> Agencias = new List<SelectListItem>();
 
-        public List<SelectListItem> Agencias = new List<SelectListItem>()
+        public AltaEnvioViewModel(DTOEnvio dtoEnvio, List<SelectListItem> tipoEnvio, List<SelectListItem> agencias)
         {
-             new SelectListItem("DHL", "DHL"),
-             new SelectListItem("FedEx", "FedEx")
-        };
+            this.dtoEnvio = dtoEnvio;
+            TipoEnvio = tipoEnvio;
+            Agencias = agencias;
+        }
+
+        public AltaEnvioViewModel()
+        {
+            
+        }
     }
 }

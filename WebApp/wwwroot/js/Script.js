@@ -1,17 +1,26 @@
 ﻿window.onload = function () {
-    document.getElementById("tipoEnvioSelect").dispatchEvent(new Event("change"));
-};
+    var slcTipo = document.querySelector("#slcTipo");
+    var divAgencia = document.querySelector("#divAgencia");
+    var divDireccionPostal = document.querySelector("#divDireccionPostal");
 
-document.querySelectorById("tipoEnvioSelect").addEventListener("change", function () {
-    var selectedValue = this.value;
+    function actualizarVisibilidad() {
+        var selectedValue = slcTipo.options[slcTipo.selectedIndex].text;
 
-    document.getElementById("txtAgencia").style.display = "none";
-    document.getElementById("txtDireccionPostal").style.display = "none";
+        console.log("Selected value: " + selectedValue);
 
-    if (selectedValue === "1") {
-        document.getElementById("txtAgencia").style.display = "block";
-    } else if (selectedValue === "2") {
-        document.getElementById("txtDireccionPostal").style.display = "block";
+        divAgencia.style.display = "none";
+        divDireccionPostal.style.display = "none";
+
+        if (selectedValue === "Comun") {
+            divAgencia.style.display = "block";
+        } else if (selectedValue === "Urgente") {
+            divDireccionPostal.style.display = "block";
+        }
     }
 
-});
+    if (slcTipo) {
+        slcTipo.addEventListener("change", actualizarVisibilidad);
+
+        actualizarVisibilidad();
+    }
+};
