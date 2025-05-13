@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogicaAccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250513195557_Migracion")]
+    [Migration("20250513232828_Migracion")]
     partial class Migracion
     {
         /// <inheritdoc />
@@ -96,6 +96,9 @@ namespace LogicaAccesoDatos.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AgenciaId")
+                        .HasColumnType("int");
 
                     b.Property<int>("ClienteId")
                         .HasColumnType("int");
@@ -191,10 +194,7 @@ namespace LogicaAccesoDatos.Migrations
                 {
                     b.HasBaseType("LogicaNegocio.Entidades.Envio");
 
-                    b.Property<int>("agenciaId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("agenciaId");
+                    b.HasIndex("AgenciaId");
 
                     b.HasDiscriminator().HasValue("Comun");
                 });
@@ -287,9 +287,7 @@ namespace LogicaAccesoDatos.Migrations
                 {
                     b.HasOne("LogicaNegocio.Entidades.Agencia", "agencia")
                         .WithMany()
-                        .HasForeignKey("agenciaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AgenciaId");
 
                     b.Navigation("agencia");
                 });

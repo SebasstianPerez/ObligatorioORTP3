@@ -6,6 +6,7 @@ namespace DTOs.DTOs.Envio
 {
     public class DTOEnvio
     {
+        public int Id { get; set; }
         [Required]
         public string Tipo { get; set; }
 
@@ -14,7 +15,7 @@ namespace DTOs.DTOs.Envio
 
         [Required]
         [EmailAddress(ErrorMessage = "El formato del email no es válido")]
-        public string ClienteEmail { get; set; }
+        public string? ClienteEmail { get; set; }
 
         [Required]
         public int EmpleadoId { get; set; }

@@ -17,18 +17,23 @@ namespace WebApp.Controllers
         private readonly ICUGetEnvios _cuGetEnvios;
         private readonly ICUGetEnvio _cuGetEnvio;
         private readonly ICUGetAgencias _cuGetAgencias;
+        private readonly ICUGetEnviosEnProceso _cuGetEnviosEnProceso;
+        private readonly ICUFinalizarEnvio _cuFinalizarEnvio;
 
-        public EnvioController(ICUAltaEnvio cuAltaEnvio, ICUGetEnvios cuGetEnvios, ICUGetEnvio cuGetEnvio, ICUGetAgencias cuGetAgencias)
+        public EnvioController(ICUAltaEnvio cuAltaEnvio, ICUGetEnvios cuGetEnvios, ICUGetEnvio cuGetEnvio, ICUGetAgencias cuGetAgencias, ICUGetEnviosEnProceso cuGetEnviosEnProceso, ICUFinalizarEnvio cuFinalizarEnvio)
         {
             _cuAltaEnvio = cuAltaEnvio;
             _cuGetEnvios = cuGetEnvios;
             _cuGetEnvio = cuGetEnvio;
             _cuGetAgencias = cuGetAgencias;
+            _cuGetEnviosEnProceso = cuGetEnviosEnProceso;
+            _cuFinalizarEnvio = cuFinalizarEnvio;
         }
 
+        [Logged]
         public IActionResult Index()
         {
-            var envios = _cuGetEnvios.Ejecutar();
+            var envios = _cuGetEnviosEnProceso.Ejecutar();
             return View(envios);
         }
 
@@ -55,6 +60,7 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
+        [Logged]
         public IActionResult Create(AltaEnvioViewModel vm)
         {
             try
@@ -73,5 +79,67 @@ namespace WebApp.Controllers
                 return RedirectToAction("Create");
             }
         }
+
+        [Logged]
+        [HttpGet]
+        public IActionResult FinalizarEnvio(int id)
+        {
+            try
+            {
+                DTOEnvio envio = _cuGetEnvio.Ejecutar(id);
+                if(envio == null)
+                    throw new Exception("El envio no existe");
+                
+                return View(envio);
+            }
+            catch (Exception ex)
+            {
+                ViewData["Error"] = ex.Message;
+                return View();
+            }
+        }
+
+        [HttpPost]
+        [Logged]
+        public IActionResult FinalizarConfirmacion(int id)
+        {
+            try
+            {
+                var envio = _cuGetEnvio.Ejecutar(id);
+                if (envio == null)
+                    throw new Exception("El envio no existe");
+
+                _cuFinalizarEnvio.Ejecutar(id, (int)HttpContext.Session.GetInt32("UsuarioID"));
+                ViewData["Message"] = "Envio finalizado correctamente";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ViewData["Error"] = "Error al finalizar el envio: " + ex.Message;
+                return RedirectToAction("Index");
+            }
+        }
+        /*
+         public IActionResult Update(int idEnvio)
+        {
+            DTOEnvio envio = _cuGetEnvio.Ejecutar(idEnvio);
+
+            return View(envio);
+        }
+
+        [HttpPost]
+        [Logged]
+        public IActionResult Update()
+        {
+            try
+            {
+
+            }
+            catch ()
+            {
+
+            }
+        }
+         */
     }
 }

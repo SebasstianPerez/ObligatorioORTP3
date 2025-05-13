@@ -15,15 +15,17 @@ namespace DTOs.Mapper
         {
             DTOEnvio ret = new DTOEnvio();
 
+            ret.Id = envio.Id;
             ret.Estado = envio.Estado.ToString();
             ret.NumeroTracking = envio.NumeroTracking;
             ret.ClienteEmail = UsuarioMapper.ToDTOUsuario(envio.Cliente).Email;
             ret.EmpleadoId = envio.Empleado.Id;
+            ret.Tipo = envio.GetType().Name;
             ret.Peso = envio.Peso;
 
             if (envio is Comun comun)
             {
-                ret.AgenciaId = comun.agencia.Id;
+                ret.AgenciaId = comun.AgenciaId;
             }
             else if (envio is Urgente urgente)
             {
@@ -55,6 +57,7 @@ namespace DTOs.Mapper
             envio.NumeroTracking = envio.GenerarNumeroTracking();
             envio.Peso = dto.Peso;
             envio.Estado = global::Estado.EN_PROCESO;
+            envio.TipoEnvio = dto.Tipo;
 
             if(envio is Urgente urgente)
             {

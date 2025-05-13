@@ -47,6 +47,7 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
                 {
                     Agencia agencia = _repositorioAgencia.findById((int)dto.AgenciaId);
                     comun.agencia = agencia;
+                    comun.AgenciaId = agencia.Id;
                 }
 
                 _repositorioEnvio.Add(envio);

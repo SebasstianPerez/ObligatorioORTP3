@@ -74,8 +74,8 @@ namespace LogicaAccesoDatos.Migrations
                     ClienteId = table.Column<int>(type: "int", nullable: false),
                     Peso = table.Column<double>(type: "float", nullable: false),
                     Estado = table.Column<int>(type: "int", nullable: false),
+                    AgenciaId = table.Column<int>(type: "int", nullable: true),
                     TipoEnvio = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
-                    agenciaId = table.Column<int>(type: "int", nullable: true),
                     DireccionPostal = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Eficiencia = table.Column<int>(type: "int", nullable: true),
                     HoraSalida = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -84,11 +84,10 @@ namespace LogicaAccesoDatos.Migrations
                 {
                     table.PrimaryKey("PK_Envios", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Envios_Agencias_agenciaId",
-                        column: x => x.agenciaId,
+                        name: "FK_Envios_Agencias_AgenciaId",
+                        column: x => x.AgenciaId,
                         principalTable: "Agencias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Envios_Usuarios_ClienteId",
                         column: x => x.ClienteId,
@@ -132,9 +131,9 @@ namespace LogicaAccesoDatos.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Envios_agenciaId",
+                name: "IX_Envios_AgenciaId",
                 table: "Envios",
-                column: "agenciaId");
+                column: "AgenciaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Envios_ClienteId",

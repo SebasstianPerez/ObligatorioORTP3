@@ -14,6 +14,7 @@ namespace LogicaNegocio.Entidades
         public Usuario Cliente { get; set; }
         public Double Peso { get; set; }
         public Estado Estado { get; set; }
+        public int? AgenciaId { get; set; }
 
         public List<Seguimiento> Seguimiento { get; set; }
         public string TipoEnvio { get; set; }

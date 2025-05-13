@@ -15,8 +15,7 @@ namespace WebApp.Filtros
                 context.Result = new RedirectToActionResult("Login", "Usuario", null);
 
             if(!rol.Equals("Empleado") && !rol.Equals("Admin"))
-            {
-                //mensaje
+            {                
                 context.Result = new RedirectToActionResult("Index", "Home", null);
             }
                 
