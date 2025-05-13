@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTOs.DTOs.Envio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.ICasosUso.ICUEnvio
 {
-    public interface ICUVerDetalleEnvio
+    public interface ICUGetEnviosEnProceso
     {
-        DTOEnvio Ejecutar(int EnvioId);
+        public List<DTOEnvio> Ejecutar();
     }
 }

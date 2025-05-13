@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\Script.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\Script.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LogicaAplicacion\LogicaAplicacion.csproj" />
     <ProjectReference Include="..\LogicaNegocio\LogicaNegocio.csproj" />
   </ItemGroup>
@@ -14,6 +22,10 @@
   <ItemGroup>
     <Folder Include="Models\Usuario\" />
     <Folder Include="Views\Agencia\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\Script.js" />
   </ItemGroup>
 
   <ItemGroup>

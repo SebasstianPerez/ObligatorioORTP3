@@ -1,18 +1,62 @@
 ﻿using DTOs.DTOs.Envio;
+using DTOs.Mapper;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
+using LogicaNegocio.Entidades;
+using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace LogicaAplicacion.CasosUso.CUEnvio
 {
     public class CUAltaEnvio : ICUAltaEnvio
     {
-        public void Ejecutar(DTOAltaEnvio dto)
+        private readonly IRepositorioEnvio _repositorioEnvio;
+        private readonly IRepositorioUsuario _repositorioUsuario;
+        private readonly IRepositorioAgencia _repositorioAgencia;
+
+        public CUAltaEnvio(IRepositorioEnvio repositorioEnvio, IRepositorioUsuario repositorioUsuario, IRepositorioAgencia repositorioAgencia)
         {
-            throw new NotImplementedException();
+            _repositorioEnvio = repositorioEnvio;
+            _repositorioUsuario = repositorioUsuario;
+            _repositorioAgencia = repositorioAgencia;
+        }
+
+        public void Ejecutar(DTOEnvio dto)
+        {
+            try{
+                Usuario cliente = _repositorioUsuario.FindByEmail(dto.ClienteEmail);
+
+                if(cliente == null)
+                    throw new Exception("El cliente no existe");
+  
+                if(cliente.Rol != "Cliente")
+                    throw new Exception("El usuario destinatario no es un cliente");
+                
+                Usuario empleado = _repositorioUsuario.findById(dto.EmpleadoId);
+
+                if (empleado == null)
+                    throw new Exception("El empleado no existe");
+
+                Envio envio = EnvioMapper.ToEnvio(dto, cliente, empleado);
+
+                if (envio is Comun comun)
+                {
+                    Agencia agencia = _repositorioAgencia.findById((int)dto.AgenciaId);
+                    comun.agencia = agencia;
+                    comun.AgenciaId = agencia.Id;
+                }
+
+                _repositorioEnvio.Add(envio);
+            }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            
         }
     }
 }

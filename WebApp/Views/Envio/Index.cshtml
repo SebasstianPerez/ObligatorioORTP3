@@ -1,0 +1,63 @@
+﻿@model List<DTOs.DTOs.Envio.DTOEnvio>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+@{
+    <text>@ViewData["Message"]</text>
+    <text>@ViewData["Error"]</text>
+}
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].ClienteEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].NumeroTracking)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Peso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model[0].Estado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClienteEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NumeroTracking)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Peso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Finalizar", "FinalizarEnvio", new { id=item.Id})
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

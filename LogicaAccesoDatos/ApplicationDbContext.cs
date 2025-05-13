@@ -27,28 +27,6 @@ namespace LogicaAccesoDatos
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Agencia>()
-                .OwnsOne(a => a.DireccionPostal, n =>
-                    {
-                        n.Property(p => p.NumCalle).HasColumnName("NumeroPuerta");
-                        n.Property(p => p.Calle).HasColumnName("Calle");
-                        n.Property(p => p.Ciudad).HasColumnName("Ciudad");
-                        n.Property(p => p.CodigoPostal).HasColumnName("CodigoPostal");
-            
-                    }
-           );
-
-            modelBuilder.Entity<Urgente>()
-                .OwnsOne(a => a.DireccionPostal, n =>
-                {
-                    n.Property(p => p.NumCalle).HasColumnName("NumeroPuerta");
-                    n.Property(p => p.Calle).HasColumnName("Calle");
-                    n.Property(p => p.Ciudad).HasColumnName("Ciudad");
-                    n.Property(p => p.CodigoPostal).HasColumnName("CodigoPostal");
-
-                }
-           );
-
             modelBuilder.Entity<Usuario>()
                 .OwnsOne(a => a.NombreCompleto, n =>
                 {

@@ -1,0 +1,65 @@
+﻿@model WebApp.Models.AltaEnvioViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>AltaEnvioViewModel</h4>
+<p class="alert-danger">
+    @if (ViewData["Error"] != null)
+    {
+        <text>@ViewData["Error"]</text>
+    }
+
+    @if (ViewData["Message"] != null)
+    {
+        <text>@ViewData["Message"]</text>
+    }
+</p>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="@Model.dtoEnvio.Tipo" class="control-label">Tipo Envio</label>
+                <select asp-for="@Model.dtoEnvio.Tipo" class="form-control" asp-items="Model.TipoEnvio" id="slcTipo"></select>
+                <span asp-validation-for="@Model.dtoEnvio.Tipo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.dtoEnvio.ClienteEmail" class="control-label"></label>
+                <input asp-for="@Model.dtoEnvio.ClienteEmail" class="form-control" />
+                <span asp-validation-for="@Model.dtoEnvio.ClienteEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.dtoEnvio.Peso" class="control-label"></label>
+                <input asp-for="@Model.dtoEnvio.Peso" class="form-control" />
+                <span asp-validation-for="@Model.dtoEnvio.Peso" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="divDireccionPostal">
+                <label asp-for="@Model.dtoEnvio.DireccionPostal" class="control-label"></label>
+                <input asp-for="@Model.dtoEnvio.DireccionPostal" class="form-control" />
+                <span asp-validation-for="@Model.dtoEnvio.DireccionPostal" class="text-danger"></span>
+            </div>
+            <div class="form-group" id="divAgencia">
+                <label asp-for="@Model.dtoEnvio.AgenciaId" class="control-label"></label>
+                <select asp-for="@Model.dtoEnvio.AgenciaId" class="form-control" asp-items="Model.Agencias" ></select>
+                <span asp-validation-for="@Model.dtoEnvio.AgenciaId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="/js/Script.js"></script>
+}

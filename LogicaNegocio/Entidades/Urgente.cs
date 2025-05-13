@@ -9,16 +9,16 @@ namespace LogicaNegocio.Entidades
 {
     public class Urgente : Envio
     {
-        public DireccionPostal DireccionPostal { get; set; }
+        public string DireccionPostal { get; set; }
         public int? Eficiencia { get; set; }
-        public DateTime HoraSalida { get; set; }
+        public DateTime? HoraSalida { get; set; }
 
         public Urgente() : base()
         {
             
         }
 
-        public Urgente(string numTracking, Usuario empleado, Usuario cliente, double peso, List<Seguimiento> seguimiento, string tipoEnvio, DireccionPostal direccionPostal, int? eficiencia, DateTime horaSalida) : base(numTracking, empleado, cliente, peso, seguimiento, tipoEnvio)
+        public Urgente(Usuario empleado, Usuario cliente, double peso, List<Seguimiento> seguimiento, string tipoEnvio, string direccionPostal, int? eficiencia, DateTime? horaSalida) : base(empleado, cliente, peso, seguimiento, tipoEnvio)
         {
             DireccionPostal = direccionPostal;
         }

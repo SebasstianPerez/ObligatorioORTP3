@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DTOs.DTOs.Envio;
 
 namespace LogicaAplicacion.ICasosUso.ICUEnvio
 {
-    public interface ICUVerEnvios
+    public interface ICUGetEnvio
     {
-        List<DTOEnvio> Ejecutar();
+        DTOEnvio Ejecutar(int EnvioId);
     }
 }

@@ -16,9 +16,9 @@ namespace LogicaNegocio.Entidades
         public int EnvioId { get; set; }
         public int EmpleadoId { get; set; }
 
-        public Seguimiento(DateTime fecha, string? comentario, Usuario empleado, Envio envio)
+        public Seguimiento(string? comentario, Usuario empleado, Envio envio)
         {
-            Fecha = fecha;
+            Fecha = DateTime.Now;
             Comentario = comentario;
             Empleado = empleado;
             Envio = envio;

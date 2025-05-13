@@ -12,23 +12,24 @@ namespace LogicaNegocio.Entidades
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
-        public DireccionPostal DireccionPostal { get; set; }
+        public string DireccionPostal { get; set; }
         public string Telefono { get; set; }
         public string Latitud { get; set; }
         public string Longitud { get; set; }
 
-        public Agencia(string nombre, string telefono, DireccionPostal direccionPostal, string latitud, string longitud)
+        public Agencia(int id, string nombre, string direccionPostal, string telefono, string latitud, string longitud)
         {
+            Id = id;
             Nombre = nombre;
-            Telefono = telefono;
             DireccionPostal = direccionPostal;
+            Telefono = telefono;
             Latitud = latitud;
             Longitud = longitud;
+            Validar();
         }
 
         public Agencia()
         {
-
         }
 
         public void Validar()
