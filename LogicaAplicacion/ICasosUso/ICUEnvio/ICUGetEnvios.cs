@@ -9,6 +9,6 @@ namespace LogicaAplicacion.ICasosUso.ICUEnvio
 {
     public interface ICUGetEnvios
     {
-        List<DTOGetEnvios> Ejecutar();
+        List<DTOEnvio> Ejecutar();
     }
 }

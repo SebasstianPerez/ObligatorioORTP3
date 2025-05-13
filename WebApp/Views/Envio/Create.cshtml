@@ -1,4 +1,4 @@
-﻿@model DTOs.DTOs.Envio.DTOAltaEnvioRequest
+﻿@model WebApp.Models.AltaEnvioViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -6,31 +6,42 @@
 
 <h1>Create</h1>
 
-<h4>DTOAltaEnvioRequest</h4>
+<h4>AltaEnvioViewModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
             <div class="form-group">
-                <label asp-for="TipoEnvio" class="control-label"></label>
-                <input asp-for="TipoEnvio" class="form-control" />
+                <label asp-for="@Model.dtoEnvio.ClienteEmail" class="control-label"></label>
+                <input asp-for="@Model.dtoEnvio.ClienteEmail" class="form-control" />
+                <span asp-validation-for="@Model.dtoEnvio.ClienteEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.dtoEnvio.Peso" class="control-label"></label>
+                <input asp-for="@Model.dtoEnvio.Peso" class="form-control" />
+                <span asp-validation-for="@Model.dtoEnvio.Peso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.dtoEnvio.AgenciaNombre" class="control-label"></label>
+                <input asp-for="@Model.dtoEnvio.AgenciaNombre" class="form-control" />
+                <span asp-validation-for="@Model.dtoEnvio.AgenciaNombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.dtoEnvio.DireccionPostal" class="control-label"></label>
+                <input asp-for="@Model.dtoEnvio.DireccionPostal" class="form-control" />
+                <span asp-validation-for="@Model.dtoEnvio.DireccionPostal" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TipoEnvio" class="control-label">Tipo Envio</label>
+                <select asp-for="@Model.dtoEnvio.Tipo" class="form-control" asp-items="Model.TipoEnvio"></select>
                 <span asp-validation-for="TipoEnvio" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="EmailCliente" class="control-label"></label>
-                <input asp-for="EmailCliente" class="form-control" />
-                <span asp-validation-for="EmailCliente" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AgenciaDestino" class="control-label"></label>
-                <input asp-for="AgenciaDestino" class="form-control" />
-                <span asp-validation-for="AgenciaDestino" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Peso" class="control-label"></label>
-                <input asp-for="Peso" class="form-control" />
-                <span asp-validation-for="Peso" class="text-danger"></span>
+                <label asp-for="Agencias" class="control-label"></label>
+                <select asp-for="@Model.dtoEnvio.AgenciaNombre" class="form-control" asp-items="Model.Agencias"></select>
+                <span asp-validation-for="Agencias" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

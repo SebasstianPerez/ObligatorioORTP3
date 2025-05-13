@@ -48,7 +48,9 @@ namespace LogicaAccesoDatos.Repositorios
 
         public List<Agencia> GetAll()
         {
-            throw new NotImplementedException();
+            List<Agencia> ret = new List<Agencia>();
+            ret = _context.Agencias.ToList();
+            return ret;
         }
 
         public int Update(Agencia item)

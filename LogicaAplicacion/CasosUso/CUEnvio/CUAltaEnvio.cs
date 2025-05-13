@@ -1,33 +1,51 @@
 ﻿using DTOs.DTOs.Envio;
 using DTOs.Mapper;
-using LogicaAccesoDatos.Repositorios;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
 using LogicaNegocio.Entidades;
+using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace LogicaAplicacion.CasosUso.CUEnvio
 {
     public class CUAltaEnvio : ICUAltaEnvio
     {
-        private readonly RepositorioEnvio _repositorioEnvio;
-        private readonly RepositorioUsuario _repositorioUsuario;
-        private readonly RepositorioAgencia _repositorioAgencia;
+        private readonly IRepositorioEnvio _repositorioEnvio;
+        private readonly IRepositorioUsuario _repositorioUsuario;
+        private readonly IRepositorioAgencia _repositorioAgencia;
 
-        public void Ejecutar(DTOAltaEnvioRequest dto)
+        public CUAltaEnvio(IRepositorioEnvio repositorioEnvio, IRepositorioUsuario repositorioUsuario, IRepositorioAgencia repositorioAgencia)
+        {
+            _repositorioEnvio = repositorioEnvio;
+            _repositorioUsuario = repositorioUsuario;
+            _repositorioAgencia = repositorioAgencia;
+        }
+
+        public void Ejecutar(DTOEnvio dto)
         {
             try{
-                Usuario cliente = _repositorioUsuario.FindByEmail(dto.EmailCliente);
-                Usuario empleado = _repositorioUsuario.findById(dto.LogueadoId);
+                Usuario cliente = _repositorioUsuario.FindByEmail(dto.ClienteEmail);
+
+                if(cliente == null)
+                    throw new Exception("El cliente no existe");
+  
+                if(cliente.Rol != "Cliente")
+                    throw new Exception("El usuario destinatario no es un cliente");
+                
+                Usuario empleado = _repositorioUsuario.findById(dto.EmpleadoId);
+
+                if (empleado == null)
+                    throw new Exception("El empleado no existe");
 
                 Envio envio = EnvioMapper.ToEnvio(dto, cliente, empleado);
 
                 if (envio is Comun comun)
                 {
-                    Agencia agencia = _repositorioAgencia.findByNombre(dto.AgenciaDestino);
+                    Agencia agencia = _repositorioAgencia.findByNombre((string)dto.AgenciaNombre);
                     comun.agencia = agencia;
                 }
 

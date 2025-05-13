@@ -10,7 +10,7 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
 {
     public class CUEditarEnvio : ICUEditarEnvio
     {
-        public void Ejecutar(DTOAltaEnvioRequest dto)
+        public void Ejecutar(DTOEnvio dto)
         {
             throw new NotImplementedException();
         }

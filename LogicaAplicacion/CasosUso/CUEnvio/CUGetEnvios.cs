@@ -1,7 +1,7 @@
 ﻿using DTOs.DTOs.Envio;
 using DTOs.Mapper;
-using LogicaAccesoDatos.Repositorios;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
+using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,16 +13,16 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
     public class CUGetEnvios : ICUGetEnvios
     {
 
-        private readonly RepositorioEnvio _repositorioEnvio;
+        private readonly IRepositorioEnvio _repositorioEnvio;
 
-        public CUGetEnvios(RepositorioEnvio repositorioEnvio)
+        public CUGetEnvios(IRepositorioEnvio repositorioEnvio)
         {
             _repositorioEnvio = repositorioEnvio;
         }
 
-        public List<DTOGetEnvios> Ejecutar()
+        public List<DTOEnvio> Ejecutar()
         {
-            List<DTOGetEnvios> ret = new List<DTOGetEnvios>();
+            List<DTOEnvio> ret = new List<DTOEnvio>();
             var envios = _repositorioEnvio.GetAll();
 
             ret = EnvioMapper.ToListDTOEnvio(envios);

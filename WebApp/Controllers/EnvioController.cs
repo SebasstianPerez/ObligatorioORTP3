@@ -1,7 +1,12 @@
 ﻿using DTOs.DTOs.Envio;
+using DTOs.DTOs.Usuario;
+using LogicaAplicacion.ICasosUso.ICUAgencia;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
+using LogicaAplicacion.ICasosUso.ICUUsuario;
 using LogicaNegocio.Entidades;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using WebApp.Models;
 
 namespace WebApp.Controllers
 {
@@ -10,12 +15,14 @@ namespace WebApp.Controllers
         private readonly ICUAltaEnvio _cuAltaEnvio;
         private readonly ICUGetEnvios _cuGetEnvios;
         private readonly ICUGetEnvio _cuGetEnvio;
+        private readonly ICUGetAgencias _cuGetAgencias;
 
-        public EnvioController(ICUAltaEnvio cuAltaEnvio, ICUGetEnvios cuGetEnvios, ICUGetEnvio cuGetEnvio)
+        public EnvioController(ICUAltaEnvio cuAltaEnvio, ICUGetEnvios cuGetEnvios, ICUGetEnvio cuGetEnvio, ICUGetAgencias cuGetAgencias)
         {
             _cuAltaEnvio = cuAltaEnvio;
             _cuGetEnvios = cuGetEnvios;
             _cuGetEnvio = cuGetEnvio;
+            _cuGetAgencias = cuGetAgencias;
         }
 
         public IActionResult Index()
@@ -26,17 +33,29 @@ namespace WebApp.Controllers
 
         public IActionResult Create()
         {
-            DTOAltaEnvioRequest model = new DTOAltaEnvioRequest();
+            DTOEnvio dto = new DTOEnvio();
+            AltaEnvioViewModel vm = new AltaEnvioViewModel();
 
-            return View(model);
+            foreach(var agencia in _cuGetAgencias.Ejecutar())
+            {
+                SelectListItem sitem = new SelectListItem();
+                sitem.Text = agencia.Nombre;
+                sitem.Value = agencia.Nombre;
+                vm.Agencias.Add(sitem); 
+            }
+            
+            return View(vm);
         }
 
         [HttpPost]
-        public IActionResult Create(DTOAltaEnvioRequest dto)
+        public IActionResult Create(AltaEnvioViewModel vm)
         {
             try
             {
-                _cuAltaEnvio.Ejecutar(dto);
+                //TODO terminar controller envio create
+                vm.dtoEnvio.EmpleadoId = (int)HttpContext.Session.GetInt32("UsuarioID");
+
+                //_cuAltaEnvio.Ejecutar();
 
                 ViewBag.Message = "Alta correcta";
                 return View();

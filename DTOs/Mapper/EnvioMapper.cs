@@ -11,23 +11,37 @@ namespace DTOs.Mapper
 {
     public class EnvioMapper
     {
-        public static DTOGetEnvios ToDTOEnvio(Envio envio)
+        public static DTOEnvio ToDTOEnvio(Envio envio)
         {
-            DTOGetEnvios ret = new DTOGetEnvios();
+            DTOEnvio ret = new DTOEnvio();
 
-            ret.Estado = envio.Estado;
+            ret.Estado = envio.Estado.ToString();
+            ret.NumeroTracking = envio.NumeroTracking;
+            ret.ClienteEmail = UsuarioMapper.ToDTOUsuario(envio.Cliente).Email;
+            ret.EmpleadoId = envio.Empleado.Id;
+            ret.Peso = envio.Peso;
 
-            //TODO castear Estado a String
+            if (envio is Comun comun)
+            {
+                ret.AgenciaNombre = comun.agencia.Nombre;
+            }
+            else if (envio is Urgente urgente)
+            {
+                ret.DireccionPostal = urgente.DireccionPostal;
+            }
+
+            return ret;            
         }
 
-        public static Envio ToEnvio(DTOAltaEnvioRequest dto, Usuario cliente, Usuario empleadoId)
+        public static Envio ToEnvio(DTOEnvio dto, Usuario cliente, Usuario empleado)
         {
             Envio envio;
-            if (dto.TipoEnvio == "Urgente")
+
+            if (dto.Tipo == "Urgente")
             {
                 envio = new Urgente();
             }
-            else if (dto.TipoEnvio == "Comun")
+            else if (dto.Tipo == "Comun")
             {
                 envio = new Comun();
             } 
@@ -37,37 +51,28 @@ namespace DTOs.Mapper
             }
 
             envio.Cliente = cliente;
-            envio.Empleado = empleadoId;
-            envio.GenerarNumeroTracking();
+            envio.Empleado = empleado;
+            envio.NumeroTracking = envio.GenerarNumeroTracking();
             envio.Peso = dto.Peso;
             envio.Estado = global::Estado.EN_PROCESO;
 
             if(envio is Urgente urgente)
             {
                 urgente.DireccionPostal = dto.DireccionPostal;
-            } 
+            }
 
             return envio;
-
         }
 
-        public static List<DTOGetEnvios> ToListDTOEnvio(List<Envio> envios)
+        public static List<DTOEnvio> ToListDTOEnvio(List<Envio> envios)
         {
-            List<DTOGetEnvios> dto = new List<DTOGetEnvios>();
+            List<DTOEnvio> dto = new List<DTOEnvio>();
 
             foreach (var env in envios)
             {
-                string estado = env.Estado.ToString("D");
-
-                dto.Add(
-                    new DTOGetEnvios(
-
-                        env.TipoEnvio,
-                        env.NumeroTracking,
-                        env.Cliente.Email,
-                        env.Peso,
-                        estado
-                    ));
+                DTOEnvio dtoEnvio = ToDTOEnvio(env);
+                
+                dto.Add(dtoEnvio);
             }
             return dto;
         }

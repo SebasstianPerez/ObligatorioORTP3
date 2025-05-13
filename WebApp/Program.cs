@@ -10,6 +10,8 @@ using LogicaAplicacion.CasosUso.CUUsuaio;
 using LogicaAplicacion.CasosUso.CUUsuario;
 using LogicaAplicacion.ICasosUso.ICUAuditoria;
 using LogicaAplicacion.CasosUso.CUAuditoria;
+using LogicaAplicacion.CasosUso.CUAgencia;
+using LogicaAplicacion.ICasosUso.ICUAgencia;
 
 namespace WebApp
 {
@@ -31,8 +33,9 @@ namespace WebApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<IRepositorioAgencia, RepositorioAgencia>();
+
             builder.Services.AddScoped<IRepositorioEnvio, RepositorioEnvio>();
+            builder.Services.AddScoped<IRepositorioAgencia, RepositorioAgencia>();
             builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();
             builder.Services.AddScoped<IRepositorioSeguimiento, RepositorioSeguimiento>();
             builder.Services.AddScoped<IRepositorioAuditoria, RepositorioAuditoria>();
@@ -40,6 +43,8 @@ namespace WebApp
             builder.Services.AddScoped<ICUAltaEnvio, CUAltaEnvio>();
             builder.Services.AddScoped<ICUGetEnvio, CUGetEnvio>();
             builder.Services.AddScoped<ICUGetEnvios, CUGetEnvios>();
+
+            builder.Services.AddScoped<ICUGetAgencias, CUGetAgencias>();
 
             builder.Services.AddScoped<ICUAltaUsuario, CUAltaUsuario>();
             builder.Services.AddScoped<ICUEditarUsuario, CUEditarUsuario>();
