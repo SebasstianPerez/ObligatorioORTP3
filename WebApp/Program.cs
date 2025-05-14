@@ -12,6 +12,8 @@ using LogicaAplicacion.ICasosUso.ICUAuditoria;
 using LogicaAplicacion.CasosUso.CUAuditoria;
 using LogicaAplicacion.CasosUso.CUAgencia;
 using LogicaAplicacion.ICasosUso.ICUAgencia;
+using LogicaAplicacion.ICasosUso.ICUSeguimiento;
+using LogicaAplicacion.CasosUso.CUSeguimiento;
 
 namespace WebApp
 {
@@ -45,6 +47,8 @@ namespace WebApp
             builder.Services.AddScoped<ICUGetEnvios, CUGetEnvios>();
             builder.Services.AddScoped<ICUGetEnviosEnProceso, CUGetEnviosEnProceso>();
             builder.Services.AddScoped<ICUFinalizarEnvio, CUFinalizarEnvio>();
+
+            builder.Services.AddScoped<ICUAgregarSeguimiento, CUAgregarSeguimiento>();
 
             builder.Services.AddScoped<ICUGetAgencias, CUGetAgencias>();
 

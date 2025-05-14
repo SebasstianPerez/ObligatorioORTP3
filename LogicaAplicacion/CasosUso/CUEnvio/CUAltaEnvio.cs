@@ -1,5 +1,6 @@
 ﻿using DTOs.DTOs.Envio;
 using DTOs.Mapper;
+using LogicaAplicacion.CasosUso.CUSeguimiento;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
@@ -32,9 +33,6 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
 
                 if(cliente == null)
                     throw new Exception("El cliente no existe");
-  
-                if(cliente.Rol != "Cliente")
-                    throw new Exception("El usuario destinatario no es un cliente");
                 
                 Usuario empleado = _repositorioUsuario.findById(dto.EmpleadoId);
 
@@ -49,8 +47,9 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
                     comun.agencia = agencia;
                     comun.AgenciaId = agencia.Id;
                 }
-
+                envio.agregarSeguimiento("Ingresado en agencia de origen");
                 _repositorioEnvio.Add(envio);
+                
             }
             catch(Exception ex)
             {

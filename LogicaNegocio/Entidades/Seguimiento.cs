@@ -12,8 +12,8 @@ namespace LogicaNegocio.Entidades
         public DateTime Fecha { get; set; }
         public string? Comentario { get; set; }
         public Envio Envio { get; set; }
-        public Usuario Empleado { get; set; }
         public int EnvioId { get; set; }
+        public Usuario Empleado { get; set; }
         public int EmpleadoId { get; set; }
 
         public Seguimiento(string? comentario, Usuario empleado, Envio envio)

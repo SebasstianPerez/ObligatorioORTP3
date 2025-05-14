@@ -77,8 +77,8 @@ namespace LogicaAccesoDatos.Migrations
                     AgenciaId = table.Column<int>(type: "int", nullable: true),
                     TipoEnvio = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
                     DireccionPostal = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Eficiencia = table.Column<int>(type: "int", nullable: true),
-                    HoraSalida = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    Eficiencia = table.Column<bool>(type: "bit", nullable: true),
+                    FechaSalida = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {

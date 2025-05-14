@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LogicaAccesoDatos.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250513232828_Migracion")]
+    [Migration("20250514172744_Migracion")]
     partial class Migracion
     {
         /// <inheritdoc />
@@ -207,10 +207,10 @@ namespace LogicaAccesoDatos.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Eficiencia")
-                        .HasColumnType("int");
+                    b.Property<bool?>("Eficiencia")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTime?>("HoraSalida")
+                    b.Property<DateTime?>("FechaSalida")
                         .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("Urgente");

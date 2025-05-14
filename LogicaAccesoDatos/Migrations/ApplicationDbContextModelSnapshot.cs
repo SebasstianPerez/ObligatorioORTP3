@@ -204,10 +204,10 @@ namespace LogicaAccesoDatos.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Eficiencia")
-                        .HasColumnType("int");
+                    b.Property<bool?>("Eficiencia")
+                        .HasColumnType("bit");
 
-                    b.Property<DateTime?>("HoraSalida")
+                    b.Property<DateTime?>("FechaSalida")
                         .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("Urgente");
