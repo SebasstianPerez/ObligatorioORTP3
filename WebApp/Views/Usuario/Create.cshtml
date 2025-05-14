@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Create";
+    var error = ViewData["Error"] as string;
 }
 
 <h1>Create</h1>
@@ -48,6 +49,13 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+@if (!string.IsNullOrEmpty(error))
+{
+    <div class="alert alert-danger" role="alert">
+        @error
+    </div>
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

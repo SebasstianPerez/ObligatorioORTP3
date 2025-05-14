@@ -100,10 +100,9 @@ namespace WebApp.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMsg = "Error al crear el usuario: " + ex.Message;
+                ViewData["Error"] = "Error al crear el usuario: " + ex.Message;
+                return View();
             }
-
-            return View();
         }
 
         [AdminAuth]
@@ -113,7 +112,7 @@ namespace WebApp.Controllers
             return View(usuario);
         }
 
-        [HttpPut]
+        [HttpPost]
         [AdminAuth]
         public IActionResult Edit(DTOEditarUsuarioRequest dto)
         {

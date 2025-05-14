@@ -2,22 +2,16 @@
 
 @{
     ViewData["Title"] = "Create";
+    
+    var error = ViewData["Error"] as string;
 }
 
 <h1>Create</h1>
 
 <h4>AltaEnvioViewModel</h4>
-<p class="alert-danger">
-    @if (ViewData["Error"] != null)
-    {
-        <text>@ViewData["Error"]</text>
-    }
 
-    @if (ViewData["Message"] != null)
-    {
-        <text>@ViewData["Message"]</text>
-    }
-</p>
+
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -58,6 +52,13 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+@if (!string.IsNullOrEmpty(error))
+{
+    <div class="alert alert-danger" role="alert">
+        @error
+    </div>
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

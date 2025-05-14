@@ -28,25 +28,34 @@ namespace LogicaAccesoDatos.Repositorios
 
         public void Delete(Usuario item)
         {
-            _context.Usuarios.Remove(item);
+            Usuario u = _context.Usuarios.FirstOrDefault(p => p.Id == item.Id);
+            u.Activo = false;
             _context.SaveChanges();
         }
 
         public List<Usuario> GetAll()
         {
-            List<Usuario> usuarios = _context.Usuarios.ToList();
+            List<Usuario> usuarios = 
+                _context.Usuarios
+                .Where(p => p.Activo == true)
+                .ToList();
             return usuarios;
         }
 
         public Usuario FindByEmail(string email)
         {
-            Usuario u = _context.Usuarios.FirstOrDefault(p => p.Email == email);
+            Usuario u = 
+                _context.Usuarios
+                .FirstOrDefault(p => p.Email == email);
             return u;
         }
 
         public Usuario findById(int id)
         {
-            Usuario u = _context.Usuarios.FirstOrDefault(p => p.Id == id);
+            Usuario u = 
+                _context.Usuarios
+                .Where(p => p.Activo == true)
+                .FirstOrDefault(p => p.Id == id);
             return u;
         }
 

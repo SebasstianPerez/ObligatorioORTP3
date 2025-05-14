@@ -31,7 +31,7 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
             try{
                 Usuario cliente = _repositorioUsuario.FindByEmail(dto.ClienteEmail);
 
-                if(cliente == null)
+                if(cliente == null || !cliente.Activo)
                     throw new Exception("El cliente no existe");
                 
                 Usuario empleado = _repositorioUsuario.findById(dto.EmpleadoId);
@@ -44,6 +44,9 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
                 if (envio is Comun comun)
                 {
                     Agencia agencia = _repositorioAgencia.findById((int)dto.AgenciaId);
+                    if (agencia == null)
+                        throw new Exception("La agencia no existe");
+
                     comun.agencia = agencia;
                     comun.AgenciaId = agencia.Id;
                 }

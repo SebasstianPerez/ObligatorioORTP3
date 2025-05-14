@@ -40,23 +40,19 @@ namespace WebApp.Controllers
         [Logged]
         public IActionResult Create()
         {
-            AltaEnvioViewModel vm = new AltaEnvioViewModel();
-
-            foreach(var agencia in _cuGetAgencias.Ejecutar())
+            try
             {
-                SelectListItem sitem = new SelectListItem();
-                sitem.Text = agencia.Nombre;
-                sitem.Value = agencia.Id.ToString();
-                vm.Agencias.Add(sitem); 
+                AltaEnvioViewModel vm = ConstruirAltaEnvioViewModel();
+
+                return View(vm);
             }
-
-            vm.TipoEnvio = new List<SelectListItem>()
+            catch(Exception ex)
             {
-                new SelectListItem("Comun", value: "Comun"),
-                new SelectListItem("Urgente", value: "Urgente")
-            };
-            
-            return View(vm);
+                AltaEnvioViewModel vm = ConstruirAltaEnvioViewModel();
+
+                ViewData["Error"] = ex.Message;
+                return View(vm);
+            }
         }
 
         [HttpPost]
@@ -75,10 +71,36 @@ namespace WebApp.Controllers
             }
             catch (Exception ex)
             {
+                
+                AltaEnvioViewModel vm1 = ConstruirAltaEnvioViewModel();
+
                 ViewData["Error"] = ex.Message;
-                return RedirectToAction("Create");
+                return View(vm1);
             }
         }
+
+        private AltaEnvioViewModel ConstruirAltaEnvioViewModel()
+        {
+            AltaEnvioViewModel vm = new AltaEnvioViewModel();
+
+            foreach (var agencia in _cuGetAgencias.Ejecutar())
+            {
+                vm.Agencias.Add(new SelectListItem
+                {
+                    Text = agencia.Nombre,
+                    Value = agencia.Id.ToString()
+                });
+            }
+
+            vm.TipoEnvio = new List<SelectListItem>
+            {
+                new SelectListItem("Comun", value: "Comun"),
+                new SelectListItem("Urgente", value: "Urgente")
+            };
+
+            return vm;
+        }
+
 
         [Logged]
         [HttpGet]

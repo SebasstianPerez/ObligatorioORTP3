@@ -15,9 +15,11 @@ namespace LogicaNegocio.Entidades
         public string Email { get; set; }
         public string Contrasena { get; set; }
         public string Rol { get; set; }
+        public bool Activo { get; set; }
 
         public Usuario() {
-            
+            Rol = "Empleado";
+            Activo = true;
         }
 
         public Usuario(NombreCompleto nombreCompleto, string email, string contrasena)
@@ -26,6 +28,7 @@ namespace LogicaNegocio.Entidades
             Email = email;
             Contrasena = contrasena;
             Rol = "Empleado";
+            Activo = true;
             Validar();
         }
 
