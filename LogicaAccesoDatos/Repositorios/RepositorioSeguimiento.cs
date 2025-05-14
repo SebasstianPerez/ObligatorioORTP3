@@ -10,9 +10,18 @@ namespace LogicaAccesoDatos.Repositorios
 {
     public class RepositorioSeguimiento : IRepositorioSeguimiento
     {
+        private ApplicationDbContext _context;
+
+        public RepositorioSeguimiento(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public int Add(Seguimiento item)
         {
-            throw new NotImplementedException();
+            _context.Add(item);
+            _context.SaveChanges();
+            return item.Id;
         }
 
         public void Delete(Seguimiento item)

@@ -41,11 +41,6 @@ namespace LogicaAccesoDatos
                 .HasDiscriminator<string>("TipoEnvio")
                 .HasValue<Comun>("Comun")
                 .HasValue<Urgente>("Urgente");
-            
-            modelBuilder.Entity<Envio>()
-                .HasMany(e => e.Seguimiento)
-                .WithOne(s => s.Envio)
-                .HasForeignKey(s => s.EnvioId);
 
             modelBuilder.Entity<Envio>()
                 .HasOne(e => e.Empleado)
@@ -60,10 +55,18 @@ namespace LogicaAccesoDatos
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Seguimiento>()
-               .HasOne(s => s.Empleado)
-               .WithMany()
-               .HasForeignKey(s => s.EmpleadoId)
-               .OnDelete(DeleteBehavior.Restrict);
+                .HasOne(s => s.Empleado)
+                .WithMany()
+                .HasForeignKey(s => s.EmpleadoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Envio>()
+                .HasMany(e => e.Seguimiento)
+                .WithOne(s => s.Envio)
+                .HasForeignKey(s => s.EnvioId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+
 
             modelBuilder.Entity<Usuario>()
                 .HasIndex(c => c.Email)

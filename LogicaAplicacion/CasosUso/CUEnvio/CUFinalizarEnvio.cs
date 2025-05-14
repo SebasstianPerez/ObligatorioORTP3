@@ -1,4 +1,6 @@
-﻿using LogicaAplicacion.ICasosUso.ICUEnvio;
+﻿using LogicaAplicacion.CasosUso.CUSeguimiento;
+using LogicaAplicacion.ICasosUso.ICUEnvio;
+using LogicaAplicacion.ICasosUso.ICUSeguimiento;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
@@ -21,23 +23,17 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
         public void Ejecutar(int idEnvio, int LogueadoId)
         {
             Envio envio = _repositorioEnvio.findById(idEnvio);
+
             if (envio == null)
                 throw new Exception("El envio no existe");
             
             if (envio.Estado == Estado.FINALIZADO)
                 throw new Exception("El envio ya esta FINALIZADO");
+
             else
             {
-                envio.Estado = Estado.FINALIZADO;
+                envio.FinalizarEnvio();
                 _repositorioEnvio.Update(envio);
-                /*
-                 envio.Seguimiento.Add(new Seguimiento()
-                {
-                    Comentario = Estado.FINALIZADO.ToString(),
-                    EmpleadoId = LogueadoId,
-                    Envio = envio
-                });
-                 */
             }
         }
     }
