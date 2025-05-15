@@ -51,10 +51,15 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
-            <td>
-                @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Finalizar", "FinalizarEnvio", new { id=item.Id})
-            </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-primary">
+                        <i class="fas fa-edit"></i> Detalles
+                    </a>
+                    <a asp-action="FinalizarEnvio" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                        <i class="fas fa-trash-alt"></i> Finalizar
+                    </a>
+
+                </td>
         </tr>
 }
     </tbody>
