@@ -1,10 +1,10 @@
 ﻿@model List<DTOs.DTOs.Envio.DTOEnvio>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Envios";
 }
 
-<h1>Index</h1>
+<h1>Envios</h1>
 @{
     <text>@ViewData["Message"]</text>
     <text>@ViewData["Error"]</text>
@@ -52,9 +52,7 @@
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Detalles", "Details", new { id = item.Id }) |
                 @Html.ActionLink("Finalizar", "FinalizarEnvio", new { id=item.Id})
             </td>
         </tr>

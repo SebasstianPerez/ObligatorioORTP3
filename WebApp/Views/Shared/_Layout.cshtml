@@ -42,6 +42,15 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Usuario" asp-action="Login">Login</a>
                             </li>
                         }
+
+                        @if (Context.Session.GetString("UsuarioRol") != null)
+                        {
+                            <li class="nav-item">
+                                <form asp-controller="Usuario" asp-action="Logout" method="post" onsubmit="return confirm('¿Estás seguro que deseas cerrar sesión?');" style="display:inline;">
+                                    <button type="submit" class="btn btn-link text-danger" style="padding:0;">Logout</button>
+                                </form>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

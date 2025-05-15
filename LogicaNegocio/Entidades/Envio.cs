@@ -42,7 +42,7 @@ namespace LogicaNegocio.Entidades
         {
             Guid guid = Guid.NewGuid();
             string tracking = guid.ToString();
-            tracking += DateTime.Now.ToString("ddMM") + Id;
+            tracking += DateTime.Now.ToString("ddMM");
             return tracking;
         }
 

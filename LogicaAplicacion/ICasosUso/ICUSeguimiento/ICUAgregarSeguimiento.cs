@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTOs.DTOs.Envio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace LogicaAplicacion.ICasosUso.ICUSeguimiento
 {
     public interface ICUAgregarSeguimiento
     {
-        void Ejecutar(int idEnvio, int idEmpleado, string comentario);
+        void Ejecutar(DTOSeguimiento dto);
     }
 }

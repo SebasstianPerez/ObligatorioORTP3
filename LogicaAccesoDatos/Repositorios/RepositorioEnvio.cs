@@ -36,6 +36,7 @@ namespace LogicaAccesoDatos.Repositorios
             Envio envio = _context.Envios
                 .Include(e => e.Cliente)
                 .Include(e => e.Empleado)
+                .Include(e => e.Seguimiento)
                 .FirstOrDefault(p => p.Id == id);
             return envio;
         }
@@ -46,6 +47,7 @@ namespace LogicaAccesoDatos.Repositorios
             ret = _context.Envios
                 .Include(e => e.Cliente)
                 .Include(e => e.Empleado)
+                .Include(e => e.Seguimiento)
                 .ToList();
             return ret;
         }

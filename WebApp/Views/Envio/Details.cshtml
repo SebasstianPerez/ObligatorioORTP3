@@ -1,0 +1,68 @@
+﻿@model WebApp.Models.DetailEnvioViewModel
+
+@{
+    ViewData["Title"] = "Detalles del Envío";
+}
+
+<h1>Detalles del Envío</h1>
+
+@if (ViewData["Error"] != null)
+{
+    <div class="alert alert-danger">@ViewData["Error"]</div>
+}
+
+@if (ViewData["Message"] != null)
+{
+    <div class="alert alert-success">@ViewData["Message"]</div>
+}
+
+<!-- Datos del Envío -->
+<div>
+    <h4>Datos del Envío</h4>
+    <p><strong>Tipo de Envío:</strong> @Model.envio.Tipo</p>
+    <p><strong>Cliente:</strong> @Model.envio.ClienteEmail</p>
+    <p><strong>Tracking:</strong> @Model.envio.NumeroTracking</p>
+    <p><strong>Peso:</strong> @Model.envio.Peso</p>
+    <p><strong>Estado Actual:</strong> @Model.envio.Estado</p>
+</div>
+
+<hr />
+
+<!-- Formulario para agregar seguimiento -->
+<h4>Agregar Seguimiento</h4>
+<form asp-action="Details" method="post">
+    <input type="hidden" name="IdEnvio" value="@Model.envio.Id" />
+
+    <div class="form-group">
+        <label for="Comentario">Comentario</label>
+        <textarea class="form-control" name="Comentario" id="Comentario" rows="3"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Agregar</button>
+</form>
+
+<hr />
+
+<!-- Lista de Seguimientos -->
+<h4>Historial de Seguimientos</h4>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha</th>
+            <th>Comentario</th>
+            <th>Empleado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var seguimiento in Model.seguimientos)
+        {
+            <tr>
+                <td>@(seguimiento.Fecha?.ToString("dd/MM/yyyy HH:mm") ?? "-")</td>
+                <td>@seguimiento.Comentario</td>
+                <td>@seguimiento.IdEmpleado</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

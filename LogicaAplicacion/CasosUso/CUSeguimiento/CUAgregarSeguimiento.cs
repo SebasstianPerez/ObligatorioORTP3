@@ -1,4 +1,5 @@
-﻿using LogicaAplicacion.ICasosUso.ICUSeguimiento;
+﻿using DTOs.DTOs.Envio;
+using LogicaAplicacion.ICasosUso.ICUSeguimiento;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
@@ -13,22 +14,28 @@ namespace LogicaAplicacion.CasosUso.CUSeguimiento
     {
         private readonly IRepositorioSeguimiento _repositorioSeguimiento;
         private readonly IRepositorioEnvio _repositorioEnvio;
+        private readonly IRepositorioUsuario _repositorioUsuario;
 
-        public void Ejecutar(int idEnvio, int idEmpleado, string comentario)
+        public CUAgregarSeguimiento(IRepositorioSeguimiento repositorioSeguimiento, IRepositorioEnvio repositorioEnvio, IRepositorioUsuario repositorioUsuario)
         {
-            Envio envio = _repositorioEnvio.findById(idEnvio);
+            _repositorioSeguimiento = repositorioSeguimiento;
+            _repositorioEnvio = repositorioEnvio;
+            _repositorioUsuario = repositorioUsuario;
+        }
+
+        public void Ejecutar(DTOSeguimiento dto)
+        {
+            Envio envio = _repositorioEnvio.findById(dto.IdEnvio);
             if (envio == null) {
                 throw new Exception("El envio no existe");
             }
             
-            Usuario empleado = envio.Empleado;
+            Usuario empleado = _repositorioUsuario.findById(dto.IdEmpleado);
             if (empleado == null) {
                 throw new Exception("El empleado no existe");
             }
 
-            _repositorioSeguimiento.Add(new Seguimiento(comentario, empleado, envio));
-
-
+            _repositorioSeguimiento.Add(new Seguimiento(dto.Comentario, empleado, envio));
         }
     }
 }

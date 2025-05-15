@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace DTOs.DTOs.Envio
 {
-    public class DTOAltaSeguimiento
+    public class DTOSeguimiento
     {
-        [Required]
-        public DateTime Fecha { get; set; }
-
         [Required]
         [StringLength(500, ErrorMessage = "El comentario no puede exceder los 500 caracteres.")]
         [MinLength(10, ErrorMessage = "El comentario debe tener al menos 10 caracteres.")]
@@ -24,5 +21,19 @@ namespace DTOs.DTOs.Envio
 
         [Required]
         public int IdEmpleado { get; set; }
+        public DateTime? Fecha { get; set; }
+
+        public DTOSeguimiento(string comentario, int idEnvio, int idEmpleado, DateTime? fecha)
+        {
+            Comentario = comentario;
+            IdEnvio = idEnvio;
+            IdEmpleado = idEmpleado;
+            Fecha = fecha;
+        }
+
+        public DTOSeguimiento()
+        {
+            
+        }
     }
 }

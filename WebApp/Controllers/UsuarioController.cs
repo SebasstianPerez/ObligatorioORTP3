@@ -63,12 +63,20 @@ namespace WebApp.Controllers
         }
 
         [Logged]
+        [HttpPost]
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("UsuarioID");
-            HttpContext.Session.Remove("UsuarioRol");
+            try
+            {
+                HttpContext.Session.Clear();
 
-            return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Home");
+            }
+            catch(Exception ex)
+            {
+                ViewData["Error"] = "No se pudo cerrar sesion";
+                return RedirectToAction("Login");
+            }
         }
 
         [AdminAuth]
