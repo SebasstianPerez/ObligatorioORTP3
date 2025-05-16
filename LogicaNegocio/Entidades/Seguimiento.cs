@@ -33,7 +33,7 @@ namespace LogicaNegocio.Entidades
         public void Validar()
         {
             if (string.IsNullOrWhiteSpace(Comentario))
-                throw new ArgumentException("El comentario no puede ser nulo ni vacío.", nameof(Comentario));
+                throw new ArgumentNullException("El comentario no puede ser nulo ni vacío.", nameof(Comentario));
 
             if (Envio == null)
                 throw new ArgumentNullException(nameof(Envio), "El envío no puede ser nulo.");

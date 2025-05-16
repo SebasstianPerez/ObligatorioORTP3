@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LogicaNegocio.CustomExceptions
+namespace LogicaNegocio.CustomExceptions.Usuario
 {
     public class UsuarioNoEncontradoException : Exception
     {
         public UsuarioNoEncontradoException()
         {
-            
+
         }
 
         public UsuarioNoEncontradoException(string message) : base(message) { }

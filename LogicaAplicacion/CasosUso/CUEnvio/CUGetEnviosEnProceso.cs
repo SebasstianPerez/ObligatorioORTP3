@@ -1,6 +1,7 @@
 ﻿using DTOs.DTOs.Envio;
 using DTOs.Mapper;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
+using LogicaNegocio.CustomExceptions.Envio;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -24,6 +25,10 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
         {
             List<DTOEnvio> ret = new List<DTOEnvio>();
             var envios = _repositorioEnvio.GetEnviosEnProceso();
+
+            if (envios == null)
+                throw new EnvioNoExisteException("No hay envios disponibles");
+
             ret = EnvioMapper.ToListDTOEnvio(envios);
 
             return ret;

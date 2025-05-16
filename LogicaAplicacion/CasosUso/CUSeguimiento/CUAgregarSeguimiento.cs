@@ -1,5 +1,8 @@
 ﻿using DTOs.DTOs.Envio;
 using LogicaAplicacion.ICasosUso.ICUSeguimiento;
+using LogicaNegocio.CustomExceptions;
+using LogicaNegocio.CustomExceptions.Envio;
+using LogicaNegocio.CustomExceptions.Usuario;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
@@ -27,12 +30,12 @@ namespace LogicaAplicacion.CasosUso.CUSeguimiento
         {
             Envio envio = _repositorioEnvio.findById(dto.IdEnvio);
             if (envio == null) {
-                throw new Exception("El envio no existe");
+                throw new EnvioNoExisteException("El envio no existe");
             }
             
             Usuario empleado = _repositorioUsuario.findById(dto.IdEmpleado);
             if (empleado == null) {
-                throw new Exception("El empleado no existe");
+                throw new UsuarioNoEncontradoException("El empleado no existe");
             }
 
             _repositorioSeguimiento.Add(new Seguimiento(dto.Comentario, empleado.Id, envio));

@@ -1,6 +1,8 @@
 ﻿using DTOs.DTOs.Usuario;
 using DTOs.Mapper;
 using LogicaAplicacion.ICasosUso.ICUUsuario;
+using LogicaNegocio.CustomExceptions;
+using LogicaNegocio.CustomExceptions.Usuario;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
@@ -24,6 +26,9 @@ namespace LogicaAplicacion.CasosUso.CUUsuario
         {
             List<DTOUsuario> ret = new();
             List<Usuario> usuarios = _repositorioUsuario.GetAll();
+
+            if (usuarios == null)
+                throw new UsuarioNoEncontradoException("No hay usuarios disponibles");
 
             ret = UsuarioMapper.ToListDTOUsuario(usuarios);
 

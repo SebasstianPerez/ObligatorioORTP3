@@ -1,4 +1,4 @@
-﻿namespace LogicaNegocio.CustomExceptions
+﻿namespace LogicaNegocio.CustomExceptions.Usuario
 {
     [Serializable]
     public class NombreNoValidoException : Exception

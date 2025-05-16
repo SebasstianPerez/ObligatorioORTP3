@@ -47,10 +47,10 @@ namespace LogicaNegocio.Entidades
         public void Validar()
         {
             if (string.IsNullOrWhiteSpace(DireccionPostal))
-                throw new ArgumentException("La dirección postal no puede estar vacía.", nameof(DireccionPostal));
+                throw new ArgumentNullException("La dirección postal no puede estar vacía.", nameof(DireccionPostal));
 
             if (FechaSalida == null)
-                throw new ArgumentException("La fecha de salida no puede ser nula.", nameof(FechaSalida));
+                throw new ArgumentNullException("La fecha de salida no puede ser nula.", nameof(FechaSalida));
 
             if (FechaSalida > DateTime.Now)
                 throw new ArgumentException("La fecha de salida no puede ser futura.", nameof(FechaSalida));

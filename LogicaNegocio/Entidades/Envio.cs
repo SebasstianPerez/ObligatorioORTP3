@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LogicaNegocio.CustomExceptions;
+using LogicaNegocio.CustomExceptions.UsuarioException;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -57,10 +59,10 @@ namespace LogicaNegocio.Entidades
         public void agregarSeguimiento(string comentario, int? idEmpleado)
         {
             if (string.IsNullOrWhiteSpace(comentario))
-                throw new Exception("Comentario inválido");
+                throw new ArgumentNullException("Comentario no puede ser nulo");
 
             if (idEmpleado == null)
-                throw new Exception("No hay empleado asignado para seguimiento");
+                throw new ArgumentNullException("No hay empleado asignado para seguimiento");
             
 
             this.Seguimiento.Add(new Seguimiento(comentario, (int)idEmpleado, this));
@@ -73,13 +75,13 @@ namespace LogicaNegocio.Entidades
                 throw new ArgumentNullException(nameof(Empleado), "Empleado no puede ser nulo.");
 
             if (Empleado.Rol != "Empleado" && Empleado.Rol != "Admin")
-                throw new ArgumentException("El usuario asignado debe tener rol 'Empleado' o 'Admin'.", nameof(Empleado));
+                throw new UsuarioNoAutorizadoException("El usuario asignado debe tener rol 'Empleado' o 'Admin'.");
 
             if (Cliente == null)
                 throw new ArgumentNullException(nameof(Cliente), "Cliente no puede ser nulo.");
 
             if (Cliente.Rol != "Cliente")
-                throw new ArgumentException("El destinatario debe tener rol 'Cliente'.", nameof(Cliente));
+                throw new UsuarioNoAutorizadoException("El destinatario debe tener rol 'Cliente'.");
 
             if (Peso <= 0)
                 throw new ArgumentException("El peso debe ser mayor a 0.", nameof(Peso));

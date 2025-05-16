@@ -2,6 +2,7 @@
 using DTOs.Mapper;
 using LogicaAplicacion.ICasosUso.ICUUsuario;
 using LogicaNegocio.CustomExceptions;
+using LogicaNegocio.CustomExceptions.Usuario;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
 using System;

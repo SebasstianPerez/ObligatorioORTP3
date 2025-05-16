@@ -2,6 +2,7 @@
 using LogicaAplicacion.CasosUso.CUSeguimiento;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
 using LogicaAplicacion.ICasosUso.ICUSeguimiento;
+using LogicaNegocio.CustomExceptions.Envio;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
@@ -28,10 +29,10 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
                 Envio envio = _repositorioEnvio.findById(dto.EnvioId);
 
                 if (envio == null)
-                    throw new Exception("El envio no existe");
+                    throw new EnvioNoExisteException("El envio no existe");
 
                 if (envio.Estado == Estado.FINALIZADO)
-                    throw new Exception("El envio ya esta FINALIZADO");
+                    throw new EnvioFinalizadoException("El envio ya esta FINALIZADO");
 
                 else
                 {

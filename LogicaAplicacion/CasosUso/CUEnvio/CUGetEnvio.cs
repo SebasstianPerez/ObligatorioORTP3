@@ -1,6 +1,7 @@
 ﻿using DTOs.DTOs.Envio;
 using DTOs.Mapper;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
+using LogicaNegocio.CustomExceptions.Envio;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
@@ -24,6 +25,9 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
         public DTOEnvio Ejecutar(int EnvioId)
         {
             Envio envio = _repositorioEnvio.findById(EnvioId);
+
+            if (envio == null)
+                throw new EnvioNoExisteException("El envio no existe");
 
             DTOEnvio ret = EnvioMapper.ToDTOEnvio(envio);
 

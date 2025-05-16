@@ -47,6 +47,29 @@ namespace LogicaAccesoDatos.Repositorios
             return envio;
         }
 
+        public Envio findByNroTracking(string nroTracking)
+        {
+            if (string.IsNullOrEmpty(nroTracking) || nroTracking.Length > 8)
+                return null;
+
+            Envio envio = _context.Envios
+                .Include(e => e.Cliente)
+                .Include(e => e.Empleado)
+                .Include(e => e.Seguimiento)
+                .Where(e => e.Estado == Estado.EN_PROCESO)
+                .FirstOrDefault(p =>
+                    p.NumeroTracking != null &&
+                    p.NumeroTracking.EndsWith(nroTracking)
+                );
+
+            if (envio is Comun comun)
+            {
+                _context.Entry(comun).Reference(e => e.agencia).Load();
+            }
+
+            return envio;
+        }
+
 
         public List<Envio> GetAll()
         {

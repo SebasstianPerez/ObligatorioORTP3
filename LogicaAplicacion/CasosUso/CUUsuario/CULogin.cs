@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LogicaNegocio.CustomExceptions;
+using LogicaNegocio.CustomExceptions.Usuario;
 
 namespace LogicaAplicacion.CasosUso.CUUsuaio
 {
@@ -27,7 +29,7 @@ namespace LogicaAplicacion.CasosUso.CUUsuaio
                 Usuario usuario = _repositorioUsuario.FindByEmail(dto.Email);
 
                 if (usuario is null)
-                    throw new Exception("Email no encontrado");                
+                    throw new UsuarioNoEncontradoException("Email no encontrado");                
 
                 if (!Crypto.VerifyPasswordConBcrypt(dto.Contrasena, usuario.Contrasena))
                     throw new Exception("Contraeña invalida");

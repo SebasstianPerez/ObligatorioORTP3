@@ -1,6 +1,7 @@
 ﻿using DTOs.DTOs.Agencia;
 using DTOs.Mapper;
 using LogicaAplicacion.ICasosUso.ICUAgencia;
+using LogicaNegocio.CustomExceptions.Envio;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,12 @@ namespace LogicaAplicacion.CasosUso.CUAgencia
         {
             List<DTOAgencia> ret = new List<DTOAgencia>();
 
-            ret = AgenciaMapper.ToListDTOAgencia(_repositorioAgencia.GetAll());
+            var agencias = _repositorioAgencia.GetAll();
+
+            if (agencias == null)
+                throw new AgenciaNoEncontradaException("No hay agencias disponibles");
+
+            ret = AgenciaMapper.ToListDTOAgencia(agencias);
 
             return ret;
         }

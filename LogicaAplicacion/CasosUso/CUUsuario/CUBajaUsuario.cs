@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using DTOs.DTOs.Usuario;
+using LogicaNegocio.CustomExceptions.Usuario;
 
 namespace LogicaAplicacion.CasosUso.CUUsuaio
 {
