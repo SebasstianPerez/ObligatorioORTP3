@@ -35,7 +35,7 @@ namespace LogicaAplicacion.CasosUso.CUSeguimiento
                 throw new Exception("El empleado no existe");
             }
 
-            _repositorioSeguimiento.Add(new Seguimiento(dto.Comentario, empleado, envio));
+            _repositorioSeguimiento.Add(new Seguimiento(dto.Comentario, empleado.Id, envio));
         }
     }
 }

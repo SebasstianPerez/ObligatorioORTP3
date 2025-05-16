@@ -40,9 +40,14 @@
         </form>
     </div>
 </div>
-<p class="alert-danger">
-    @ViewBag.ErrorMsg
-</p>
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @ViewBag.Error
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

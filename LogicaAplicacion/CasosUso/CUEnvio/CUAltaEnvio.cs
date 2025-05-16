@@ -50,7 +50,7 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
                     comun.agencia = agencia;
                     comun.AgenciaId = agencia.Id;
                 }
-                envio.agregarSeguimiento("Ingresado en agencia de origen");
+                envio.agregarSeguimiento("Ingresado en agencia de origen", empleado.Id);
                 _repositorioEnvio.Add(envio);
                 
             }

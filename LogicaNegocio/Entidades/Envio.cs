@@ -21,21 +21,21 @@ namespace LogicaNegocio.Entidades
         public List<Seguimiento> Seguimiento { get; set; }
         public string TipoEnvio { get; set; }
 
-        public Envio(Usuario empleado, Usuario cliente,double peso, List<Seguimiento> seguimiento, string tipoEnvio)
+        public Envio(Usuario empleado, Usuario cliente,double peso, string tipoEnvio)
         {
             Empleado = empleado;
             Cliente = cliente;
             Peso = peso;
             Estado = global::Estado.EN_PROCESO;
-            Seguimiento = seguimiento;
             TipoEnvio = tipoEnvio;
             Seguimiento = new List<Seguimiento>();
-            agregarSeguimiento("Ingresado en agencia de origen");
+            agregarSeguimiento("Ingresado en agencia de origen", null);
         }
 
         public Envio()
         {
             Seguimiento = new List<Seguimiento>();
+            Estado = Estado.EN_PROCESO;
         }
 
         public string GenerarNumeroTracking()
@@ -46,36 +46,46 @@ namespace LogicaNegocio.Entidades
             return tracking;
         }
 
-        public virtual void FinalizarEnvio()
+        public virtual void FinalizarEnvio(int idEmpleado)
         {
             //Correccion de finalizar envio con polimorfismo
-            Estado = global::Estado.FINALIZADO;
+            Estado = Estado.FINALIZADO;
             
-            agregarSeguimiento("Envio Finalizado");
+            agregarSeguimiento("Envio Finalizado", idEmpleado);
         }
 
-        public void agregarSeguimiento(string comentario)
+        public void agregarSeguimiento(string comentario, int? idEmpleado)
         {
-            if (comentario is null)
-            {
-                throw new Exception("Comentario invalido");
-            }
+            if (string.IsNullOrWhiteSpace(comentario))
+                throw new Exception("Comentario inválido");
 
-            this.Seguimiento.Add(new Seguimiento(comentario, Empleado, this));
+            if (idEmpleado == null)
+                throw new Exception("No hay empleado asignado para seguimiento");
+            
+
+            this.Seguimiento.Add(new Seguimiento(comentario, (int)idEmpleado, this));
         }
+
 
         public void Validar()
         {
-            if (Empleado == null) throw new ArgumentNullException(nameof(Empleado), "Empleado no puede ser nulo.");
+            if (Empleado == null)
+                throw new ArgumentNullException(nameof(Empleado), "Empleado no puede ser nulo.");
+
             if (Empleado.Rol != "Empleado" && Empleado.Rol != "Admin")
-                throw new Exception("El usuario asignado debe tener rol 'Empleado' o 'Admin'.");
+                throw new ArgumentException("El usuario asignado debe tener rol 'Empleado' o 'Admin'.", nameof(Empleado));
 
-            if (Cliente == null) throw new ArgumentNullException(nameof(Cliente), "Cliente no puede ser nulo.");
-            if (Cliente.Rol != "Cliente") throw new Exception("El destinatario debe ser un cliente.");
+            if (Cliente == null)
+                throw new ArgumentNullException(nameof(Cliente), "Cliente no puede ser nulo.");
 
-            if (Peso <= 0) throw new Exception("El peso debe ser mayor a 0.");
+            if (Cliente.Rol != "Cliente")
+                throw new ArgumentException("El destinatario debe tener rol 'Cliente'.", nameof(Cliente));
 
-            if (string.IsNullOrWhiteSpace(TipoEnvio)) throw new Exception("El tipo de envío no puede estar vacío.");
+            if (Peso <= 0)
+                throw new ArgumentException("El peso debe ser mayor a 0.", nameof(Peso));
+
+            if (string.IsNullOrWhiteSpace(TipoEnvio))
+                throw new ArgumentException("El tipo de envío no puede estar vacío.", nameof(TipoEnvio));
         }
     }
 }

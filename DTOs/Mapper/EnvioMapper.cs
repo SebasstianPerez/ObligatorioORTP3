@@ -27,6 +27,11 @@ namespace DTOs.Mapper
             if (envio is Comun comun)
             {
                 ret.AgenciaId = comun.AgenciaId;
+
+                if(comun.agencia != null)
+                {
+                    ret.AgenciaNombre = comun.agencia.Nombre;
+                }
             }
             else if (envio is Urgente urgente)
             {
@@ -45,7 +50,7 @@ namespace DTOs.Mapper
                 DTOSeguimiento dto = new DTOSeguimiento();
                 dto.Comentario = s.Comentario;
                 dto.Fecha = s.Fecha;
-                dto.IdEmpleado = s.Empleado.Id;
+                dto.IdEmpleado = s.EmpleadoId;
 
                 ret.Add(dto);
             }

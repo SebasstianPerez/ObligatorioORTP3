@@ -30,6 +30,7 @@ namespace DTOs.DTOs.Envio
         public List<DTOSeguimiento>? Seguimientos { get; set; } = new List<DTOSeguimiento>();
 
         public int? AgenciaId { get; set; }
+        public string? AgenciaNombre { get; set; }
         public string? DireccionPostal { get; set; }
 
         public DTOEnvio()

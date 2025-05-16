@@ -18,7 +18,6 @@ namespace DTOs.DTOs.Usuario
         [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "El apellido solo puede contener letras y espacios")]
         public string Apellido { get; set; }
         [Required(ErrorMessage = "El email es obligatorio")]
-        //[RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "El email no es válido")]
         [EmailAddress]
         public string Email { get; set; }
         [Required(ErrorMessage = "La contraseña no puede ser vacia")]

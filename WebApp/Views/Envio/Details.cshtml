@@ -22,6 +22,13 @@
     <p><strong>Tipo de Envío:</strong> @Model.envio.Tipo</p>
     <p><strong>Cliente:</strong> @Model.envio.ClienteEmail</p>
     <p><strong>Tracking:</strong> @Model.envio.NumeroTracking</p>
+    @if(Model.envio.Tipo == "Comun")
+    {
+        <p><strong>Agencia Destino:</strong> @Model.envio.AgenciaNombre</p>
+    }
+    else if(Model.envio.Tipo == "Urgente"){
+        <p><strong>Dirección Postal:</strong> @Model.envio.DireccionPostal</p>
+    }
     <p><strong>Peso:</strong> @Model.envio.Peso</p>
     <p><strong>Estado Actual:</strong> @Model.envio.Estado</p>
 </div>

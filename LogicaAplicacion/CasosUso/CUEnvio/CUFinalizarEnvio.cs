@@ -1,4 +1,5 @@
-﻿using LogicaAplicacion.CasosUso.CUSeguimiento;
+﻿using DTOs.DTOs.Envio;
+using LogicaAplicacion.CasosUso.CUSeguimiento;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
 using LogicaAplicacion.ICasosUso.ICUSeguimiento;
 using LogicaNegocio.Entidades;
@@ -20,21 +21,29 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
             _repositorioEnvio = repositorioEnvio;
         }
 
-        public void Ejecutar(int idEnvio, int LogueadoId)
+        public void Ejecutar(DTOFinalizarEnvio dto)
         {
-            Envio envio = _repositorioEnvio.findById(idEnvio);
-
-            if (envio == null)
-                throw new Exception("El envio no existe");
-            
-            if (envio.Estado == Estado.FINALIZADO)
-                throw new Exception("El envio ya esta FINALIZADO");
-
-            else
+            try
             {
-                envio.FinalizarEnvio();
-                _repositorioEnvio.Update(envio);
+                Envio envio = _repositorioEnvio.findById(dto.EnvioId);
+
+                if (envio == null)
+                    throw new Exception("El envio no existe");
+
+                if (envio.Estado == Estado.FINALIZADO)
+                    throw new Exception("El envio ya esta FINALIZADO");
+
+                else
+                {
+                    envio.FinalizarEnvio(dto.LogueadoId);
+                    _repositorioEnvio.Update(envio);
+                }
             }
+            catch(Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+            
         }
     }
 }

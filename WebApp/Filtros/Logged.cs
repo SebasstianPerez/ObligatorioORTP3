@@ -19,8 +19,6 @@ namespace WebApp.Filtros
                 context.Result = new RedirectToActionResult("Index", "Home", null);
             }
                 
-            //TODO Manejar el error de usuario no autorizado
-
             base.OnActionExecuting(context);
         }
     }

@@ -24,13 +24,8 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
         public DTOEnvio Ejecutar(int EnvioId)
         {
             Envio envio = _repositorioEnvio.findById(EnvioId);
-            DTOEnvio ret = EnvioMapper.ToDTOEnvio(envio);
 
-            if (envio.Seguimiento != null)
-            {
-                foreach (var s in envio.Seguimiento)
-                    Console.WriteLine(s.Comentario); // o lo que tengas
-            }
+            DTOEnvio ret = EnvioMapper.ToDTOEnvio(envio);
 
             return ret;
         }

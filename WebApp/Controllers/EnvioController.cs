@@ -69,9 +69,9 @@ namespace WebApp.Controllers
 
                 _cuAltaEnvio.Ejecutar(vm.dtoEnvio);
 
-                ViewData["Message"] = "Alta correcta";
+                TempData["Message"] = "Alta correcta";
 
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
@@ -135,7 +135,11 @@ namespace WebApp.Controllers
                 if (envio == null)
                     throw new Exception("El envio no existe");
 
-                _cuFinalizarEnvio.Ejecutar(id, (int)HttpContext.Session.GetInt32("UsuarioID"));
+                DTOFinalizarEnvio dto = new DTOFinalizarEnvio();
+                dto.EnvioId = id;
+                dto.LogueadoId = (int)HttpContext.Session.GetInt32("UsuarioID");
+
+                _cuFinalizarEnvio.Ejecutar(dto);
                 ViewData["Message"] = "Envio finalizado correctamente";
                 return RedirectToAction("Index");
             }
@@ -181,7 +185,7 @@ namespace WebApp.Controllers
                 _cuAgregarSeguimiento.Ejecutar(dto);
 
                 ViewData["Message"] = "Seguimiento agregado correctamente";
-                return RedirectToAction("Details", new { id = dto.IdEnvio });
+                return RedirectToAction("Details", dto.IdEnvio);
             }
             catch (Exception ex)
             {

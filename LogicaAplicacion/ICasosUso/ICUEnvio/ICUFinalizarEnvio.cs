@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DTOs.DTOs.Envio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace LogicaAplicacion.ICasosUso.ICUEnvio
 {
     public interface ICUFinalizarEnvio
     {
-        void Ejecutar(int idEnvio, int LogueadoId);
+        void Ejecutar(DTOFinalizarEnvio dto);
     }
 }

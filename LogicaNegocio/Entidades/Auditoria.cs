@@ -25,6 +25,29 @@ namespace LogicaNegocio.Entidades
             LogueadoId = logueadoId;
             Entidad = entidad;
             EntidadId = entidadId;
+            Validar();
         }
+
+        public Auditoria()
+        {
+            
+        }
+
+        public void Validar()
+        {
+            if (string.IsNullOrWhiteSpace(Accion))
+                throw new ArgumentException("La acción no puede estar vacía.", nameof(Accion));
+
+            if (string.IsNullOrWhiteSpace(Entidad))
+                throw new ArgumentException("La entidad no puede estar vacía.", nameof(Entidad));
+
+            if (EntidadId == null || EntidadId <= 0)
+                throw new ArgumentException("El ID de la entidad debe ser un número positivo.", nameof(EntidadId));
+
+            if (LogueadoId <= 0)
+                throw new ArgumentException("El ID del usuario logueado debe ser un número positivo.", nameof(LogueadoId));
+        }
+
+
     }
 }

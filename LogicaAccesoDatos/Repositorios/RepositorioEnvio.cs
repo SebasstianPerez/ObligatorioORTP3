@@ -38,8 +38,15 @@ namespace LogicaAccesoDatos.Repositorios
                 .Include(e => e.Empleado)
                 .Include(e => e.Seguimiento)
                 .FirstOrDefault(p => p.Id == id);
+
+            if (envio is Comun comun)
+            {
+                _context.Entry(comun).Reference(e => e.agencia).Load();
+            }
+
             return envio;
         }
+
 
         public List<Envio> GetAll()
         {

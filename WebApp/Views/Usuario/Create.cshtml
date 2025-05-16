@@ -40,22 +40,17 @@
     </div>
 </div>
 
-<p>
-    @ViewBag.msg
-</p>
-<p>
-        @ViewBag.ErrorMsg
-</p>
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @ViewBag.Error
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-@if (!string.IsNullOrEmpty(error))
-{
-    <div class="alert alert-danger" role="alert">
-        @error
-    </div>
-}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
