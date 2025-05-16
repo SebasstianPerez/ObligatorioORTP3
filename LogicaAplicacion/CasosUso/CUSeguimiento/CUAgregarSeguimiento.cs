@@ -28,12 +28,12 @@ namespace LogicaAplicacion.CasosUso.CUSeguimiento
 
         public void Ejecutar(DTOSeguimiento dto)
         {
-            Envio envio = _repositorioEnvio.findById(dto.IdEnvio);
+            Envio envio = _repositorioEnvio.findById(dto.EnvioId);
             if (envio == null) {
                 throw new EnvioNoExisteException("El envio no existe");
             }
             
-            Usuario empleado = _repositorioUsuario.findById(dto.IdEmpleado);
+            Usuario empleado = _repositorioUsuario.findById(dto.EmpleadoId);
             if (empleado == null) {
                 throw new UsuarioNoEncontradoException("El empleado no existe");
             }

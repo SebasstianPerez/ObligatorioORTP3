@@ -50,7 +50,7 @@ namespace DTOs.Mapper
                 DTOSeguimiento dto = new DTOSeguimiento();
                 dto.Comentario = s.Comentario;
                 dto.Fecha = s.Fecha;
-                dto.IdEmpleado = s.EmpleadoId;
+                dto.EmpleadoId = s.EmpleadoId;
 
                 ret.Add(dto);
             }

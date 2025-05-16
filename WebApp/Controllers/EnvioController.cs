@@ -174,22 +174,22 @@ namespace WebApp.Controllers
         {
             try
             {
-                dto.IdEmpleado = (int)HttpContext.Session.GetInt32("UsuarioID");
+                dto.EmpleadoId = (int)HttpContext.Session.GetInt32("UsuarioID");
 
                 if (dto.Comentario == null || dto.Comentario == "")
                     throw new Exception("El comentario no puede estar vacio");
 
-                if (dto.IdEmpleado == 0)
+                if (dto.EmpleadoId == 0)
                     throw new Exception("El id del empleado no puede ser 0");
 
                 _cuAgregarSeguimiento.Ejecutar(dto);
 
                 ViewData["Message"] = "Seguimiento agregado correctamente";
-                return RedirectToAction("Details", dto.IdEnvio);
+                return RedirectToAction("Details", dto.EnvioId);
             }
             catch (Exception ex)
             {
-                DetailEnvioViewModel vm =  CrearDetailVM(dto.IdEnvio);
+                DetailEnvioViewModel vm =  CrearDetailVM(dto.EnvioId);
                 
                 ViewData["Error"] = ex.Message;
                 return View(vm);

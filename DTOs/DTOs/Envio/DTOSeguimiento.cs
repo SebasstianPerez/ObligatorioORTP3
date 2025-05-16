@@ -17,17 +17,17 @@ namespace DTOs.DTOs.Envio
         public string Comentario { get; set; }
 
         [Required]
-        public int IdEnvio { get; set; }
+        public int EnvioId { get; set; }
 
         [Required]
-        public int IdEmpleado { get; set; }
+        public int EmpleadoId { get; set; }
         public DateTime? Fecha { get; set; }
 
-        public DTOSeguimiento(string comentario, int idEnvio, int idEmpleado, DateTime? fecha)
+        public DTOSeguimiento(string comentario, int envioId, int empleadoId, DateTime? fecha)
         {
             Comentario = comentario;
-            IdEnvio = idEnvio;
-            IdEmpleado = idEmpleado;
+            EnvioId = envioId;
+            EmpleadoId = empleadoId;
             Fecha = fecha;
         }
 
