@@ -150,6 +150,7 @@ namespace WebApp.Controllers
 
         [AdminAuth]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             try

@@ -35,7 +35,7 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
                 Usuario cliente = _repositorioUsuario.FindByEmail(dto.ClienteEmail);
 
                 if(cliente == null || !cliente.Activo)
-                    throw new UsuarioNoEncontradoException("El cliente no existe");
+                    throw new UsuarioNoEncontradoException("Email no valido");
                 
                 Usuario empleado = _repositorioUsuario.findById(dto.EmpleadoId);
 

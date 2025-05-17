@@ -4,9 +4,20 @@
     ViewData["Title"] = "Envios";
 }
 
-@{
-    <text>@ViewData["Message"]</text>
-    <text>@ViewData["Error"]</text>
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
 }
 
 <div class="card shadow mb-4">
@@ -60,10 +71,31 @@
                                 <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-primary">
                                     <i class="fas fa-edit"></i> Detalles
                                 </a>
-                                <a asp-action="FinalizarEnvio" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmModal-@item.Id">
                                     <i class="fas fa-trash-alt"></i> Finalizar
-                                </a>
+                                </button>
 
+                                <div class="modal fade" id="confirmModal-@item.Id" tabindex="-1" aria-labelledby="confirmModalLabel-@item.Id" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <form method="post" action="@Url.Action("FinalizarConfirmacion", "Envio", new { id = item.Id })">
+                                            @Html.AntiForgeryToken()
+
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-danger text-white">
+                                                    <h5 class="modal-title" id="confirmModalLabel-@item.Id">Finalizar Envío</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>¿Estás seguro de que deseas finalizar este envío?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-danger">Confirmar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     }

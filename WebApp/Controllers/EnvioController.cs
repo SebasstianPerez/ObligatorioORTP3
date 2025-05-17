@@ -54,7 +54,7 @@ namespace WebApp.Controllers
             {
                 AltaEnvioViewModel vm = ConstruirAltaEnvioViewModel();
 
-                ViewData["Error"] = ex.Message;
+                TempData["Error"] = ex.Message;
                 return View(vm);
             }
         }
@@ -78,7 +78,7 @@ namespace WebApp.Controllers
                 
                 AltaEnvioViewModel vm1 = ConstruirAltaEnvioViewModel();
 
-                ViewData["Error"] = ex.Message;
+                TempData["Error"] = ex.Message;
                 return View(vm1);
             }
         }
@@ -120,13 +120,14 @@ namespace WebApp.Controllers
             }
             catch (Exception ex)
             {
-                ViewData["Error"] = ex.Message;
+                TempData["Error"] = ex.Message;
                 return View();
             }
         }
 
         [HttpPost]
         [Logged]
+        [ValidateAntiForgeryToken]
         public IActionResult FinalizarConfirmacion(int id)
         {
             try
@@ -140,12 +141,12 @@ namespace WebApp.Controllers
                 dto.LogueadoId = (int)HttpContext.Session.GetInt32("UsuarioID");
 
                 _cuFinalizarEnvio.Ejecutar(dto);
-                ViewData["Message"] = "Envio finalizado correctamente";
+                TempData["Message"] = "Envio finalizado correctamente";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                ViewData["Error"] = "Error al finalizar el envio: " + ex.Message;
+                TempData["Error"] = "Error al finalizar el envio: " + ex.Message;
                 return RedirectToAction("Index");
             }
         }
@@ -184,14 +185,14 @@ namespace WebApp.Controllers
 
                 _cuAgregarSeguimiento.Ejecutar(dto);
 
-                ViewData["Message"] = "Seguimiento agregado correctamente";
+                TempData["Message"] = "Seguimiento agregado correctamente";
                 return RedirectToAction("Details", dto.EnvioId);
             }
             catch (Exception ex)
             {
                 DetailEnvioViewModel vm =  CrearDetailVM(dto.EnvioId);
                 
-                ViewData["Error"] = ex.Message;
+                TempData["Error"] = ex.Message;
                 return View(vm);
             }
         }

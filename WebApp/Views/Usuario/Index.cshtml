@@ -65,9 +65,34 @@
                                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">
                                     <i class="fas fa-edit"></i> Editar
                                 </a>
-                                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
-                                    <i class="fas fa-trash-alt"></i> Eliminar
-                                </a>
+                                <button type="button"
+                                        class="btn btn-danger btn-sm"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#confirmModal-@item.Id">
+                                    Eliminar
+                                </button>
+
+                                <div class="modal fade" id="confirmModal-@item.Id" tabindex="-1" aria-labelledby="confirmModalLabel-@item.Id" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <form method="post" action="@Url.Action("DeleteConfirmed", "Usuario", new { id = item.Id })">
+                                            @Html.AntiForgeryToken()
+
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-danger text-white">
+                                                    <h5 class="modal-title" id="confirmModalLabel-@item.Id">Eliminar</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>¿Estás seguro de que deseas eliminar el usuario?</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                    <button type="submit" class="btn btn-danger">Confirmar</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     }

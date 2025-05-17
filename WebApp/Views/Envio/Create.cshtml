@@ -2,11 +2,17 @@
 
 @{
     ViewData["Title"] = "Crear Envio";
-    
-    var error = ViewData["Error"] as string;
 }
 
 <h1>Crear Envio</h1>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
 
 <hr />
 <div class="row">
@@ -48,14 +54,6 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
-@if (!string.IsNullOrEmpty(error))
-{
-    <div class="alert alert-danger" role="alert">
-        @error
-    </div>
-}
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="/js/Script.js"></script>
