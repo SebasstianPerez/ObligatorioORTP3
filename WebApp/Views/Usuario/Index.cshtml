@@ -63,12 +63,13 @@
                             </td>
                             <td>
                                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-edit"></i> Editar
+                                    <i class="fas fa-edit"></i>Editar
                                 </a>
                                 <button type="button"
                                         class="btn btn-danger btn-sm"
                                         data-bs-toggle="modal"
                                         data-bs-target="#confirmModal-@item.Id">
+                                    <i class="fas fa-trash"></i>
                                     Eliminar
                                 </button>
 

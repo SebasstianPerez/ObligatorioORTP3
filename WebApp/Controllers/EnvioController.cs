@@ -163,8 +163,8 @@ namespace WebApp.Controllers
             } 
             catch (Exception ex)
             {
-                ViewData["Error"] = ex.Message;
-                return View();
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Index");
             }
             
         }
@@ -186,7 +186,9 @@ namespace WebApp.Controllers
                 _cuAgregarSeguimiento.Ejecutar(dto);
 
                 TempData["Message"] = "Seguimiento agregado correctamente";
-                return RedirectToAction("Details", dto.EnvioId);
+
+                DetailEnvioViewModel vm = CrearDetailVM(dto.EnvioId);
+                return View(vm);
             }
             catch (Exception ex)
             {
