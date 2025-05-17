@@ -12,22 +12,24 @@ namespace LogicaNegocio.Entidades
         public string DireccionPostal { get; set; }
         public Boolean? Eficiencia { get; set; }
         public DateTime? FechaSalida { get; set; }
-        //martillar cuando se crea
 
         public Urgente() : base()
         {
             FechaSalida = DateTime.Now;
         }
 
-        public Urgente(Usuario empleado, Usuario cliente, double peso, List<Seguimiento> seguimiento, string tipoEnvio, string direccionPostal, int? eficiencia) : base(empleado, cliente, peso, seguimiento, tipoEnvio)
+        public Urgente(Usuario empleado, Usuario cliente, double peso, string tipoEnvio, string direccionPostal) : base(empleado, cliente, peso, tipoEnvio)
         {
             DireccionPostal = direccionPostal;
             FechaSalida = DateTime.Now;
+            Estado = Estado.EN_PROCESO;
+            NumeroTracking = GenerarNumeroTracking();
+            Validar();
         }
 
-        public override void FinalizarEnvio()
+        public override void FinalizarEnvio(int idEmpleado)
         {
-            base.FinalizarEnvio();
+            base.FinalizarEnvio(idEmpleado);
 
             DateTime fechaFinal = Seguimiento.Last().Fecha;
             TimeSpan duracion = new TimeSpan(0, 24, 0, 0, 0);
@@ -42,5 +44,17 @@ namespace LogicaNegocio.Entidades
                 Eficiencia = false;
             }
         }
+        public void Validar()
+        {
+            if (string.IsNullOrWhiteSpace(DireccionPostal))
+                throw new ArgumentNullException("La dirección postal no puede estar vacía.", nameof(DireccionPostal));
+
+            if (FechaSalida == null)
+                throw new ArgumentNullException("La fecha de salida no puede ser nula.", nameof(FechaSalida));
+
+            if (FechaSalida > DateTime.Now)
+                throw new ArgumentException("La fecha de salida no puede ser futura.", nameof(FechaSalida));
+        }
+
     }
 }

@@ -1,10 +1,11 @@
 ﻿@model DTOs.DTOs.Usuario.DTOCreateRequest
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear usuario";
+    var error = ViewData["Error"] as string;
 }
 
-<h1>Create</h1>
+<h1>Crear usuario</h1>
 
 <h4>Usuario</h4>
 <hr />
@@ -39,12 +40,14 @@
     </div>
 </div>
 
-<p>
-    @ViewBag.msg
-</p>
-<p>
-        @ViewBag.ErrorMsg
-</p>
+@if (!string.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @ViewBag.Error
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+
 <div>
     <a asp-action="Index">Back to List</a>
 </div>

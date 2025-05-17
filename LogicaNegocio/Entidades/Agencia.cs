@@ -1,4 +1,5 @@
 ﻿using LogicaNegocio.CustomExceptions;
+using LogicaNegocio.CustomExceptions.Usuario;
 using LogicaNegocio.VO;
 using System;
 using System.Collections.Generic;
@@ -34,48 +35,23 @@ namespace LogicaNegocio.Entidades
 
         public void Validar()
         {
-            if (Nombre == null || Nombre == "")
-            {
-                throw new NombreNoValidoException();
-            }
+            if (string.IsNullOrWhiteSpace(Nombre))
+                throw new NombreNoValidoException("El nombre no puede estar vacío.");
 
             if (Nombre.Length < 3)
-            {
-                throw new NombreNoValidoException();
-            }
+                throw new NombreNoValidoException("El nombre debe tener al menos 3 caracteres.");
 
-            if (Telefono == null || Telefono == "")
-            {
-                throw new TelefonoNoValidoException();
-            }
+            if (string.IsNullOrWhiteSpace(Telefono))
+                throw new TelefonoNoValidoException("El teléfono no puede estar vacío.");
 
             if (Telefono.Length < 8)
-            {
-                throw new TelefonoNoValidoException();
-            }
+                throw new TelefonoNoValidoException("El teléfono debe tener al menos 8 caracteres.");
 
-            if (Latitud == null || Latitud == "")
-            {
-                throw new DireccionNoValidoException();
-            }
+            if (string.IsNullOrWhiteSpace(Latitud))
+                throw new DireccionNoValidoException("La latitud no puede estar vacía.");
 
-            //if (Latitud.Length < ...)
-            //{
-            //    throw new DireccionNoValidoException();
-            //}
-
-            if (Longitud == null || Longitud == "")
-            {
-                throw new DireccionNoValidoException();
-            }
-
-            //if (Logitud.Length < ...)
-            //{
-            //    throw new DireccionNoValidoException();
-            //}
-
-
-            //TODO Exepcions
+            if (string.IsNullOrWhiteSpace(Longitud))
+                throw new DireccionNoValidoException("La longitud no puede estar vacía.");
         }
     }
 }

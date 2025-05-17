@@ -1,23 +1,19 @@
 ﻿@model WebApp.Models.AltaEnvioViewModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Envio";
 }
 
-<h1>Create</h1>
+<h1>Crear Envio</h1>
 
-<h4>AltaEnvioViewModel</h4>
-<p class="alert-danger">
-    @if (ViewData["Error"] != null)
-    {
-        <text>@ViewData["Error"]</text>
-    }
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
 
-    @if (ViewData["Message"] != null)
-    {
-        <text>@ViewData["Message"]</text>
-    }
-</p>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -58,7 +54,6 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
-
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script src="/js/Script.js"></script>

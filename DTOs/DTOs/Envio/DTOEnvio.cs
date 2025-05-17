@@ -1,4 +1,5 @@
 ﻿using DTOs.DTOs.Usuario;
+using LogicaNegocio.Entidades;
 using LogicaNegocio.VO;
 using System.ComponentModel.DataAnnotations;
 
@@ -26,7 +27,10 @@ namespace DTOs.DTOs.Envio
 
         public string Estado { get; set; }
 
+        public List<DTOSeguimiento>? Seguimientos { get; set; } = new List<DTOSeguimiento>();
+
         public int? AgenciaId { get; set; }
+        public string? AgenciaNombre { get; set; }
         public string? DireccionPostal { get; set; }
 
         public DTOEnvio()
@@ -34,13 +38,16 @@ namespace DTOs.DTOs.Envio
             
         }
 
-        public DTOEnvio(string numeroTracking, string clienteEmail, int empleadoId, double peso, string estado, int? agenciaId, string? direccionPostal)
+        public DTOEnvio(int id, string tipo, string numeroTracking, string? clienteEmail, int empleadoId, double peso, string estado, List<DTOSeguimiento>? seguimientos, int? agenciaId, string? direccionPostal)
         {
+            Id = id;
+            Tipo = tipo;
             NumeroTracking = numeroTracking;
             ClienteEmail = clienteEmail;
             EmpleadoId = empleadoId;
             Peso = peso;
             Estado = estado;
+            Seguimientos = seguimientos;
             AgenciaId = agenciaId;
             DireccionPostal = direccionPostal;
         }

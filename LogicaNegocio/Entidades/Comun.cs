@@ -15,9 +15,19 @@ namespace LogicaNegocio.Entidades
             
         }
 
-        public Comun(Usuario empleado, Usuario cliente, double peso, List<Seguimiento> seguimiento, string tipoEnvio, Agencia agencia) : base(empleado,cliente, peso, seguimiento, tipoEnvio)
+        public Comun(Usuario empleado, Usuario cliente, double peso, string tipoEnvio, Agencia agencia) : base(empleado,cliente, peso, tipoEnvio)
         {
             agencia = agencia;
+            Estado = Estado.EN_PROCESO;
+            NumeroTracking = GenerarNumeroTracking();
+            agregarSeguimiento("Ingresado en agencia de origen", EmpleadoId);
+            Validar();
+        }
+
+        public void Validar()
+        {
+            if (agencia == null)
+                throw new ArgumentException("La agencia no puede estar vacía.", nameof(agencia));
         }
     }
 }

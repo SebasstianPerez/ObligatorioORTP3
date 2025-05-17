@@ -1,0 +1,86 @@
+﻿@model WebApp.Models.DetailEnvioViewModel
+
+@{
+    ViewData["Title"] = "Detalles del Envío";
+}
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["Error"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+    </div>
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h2 class="m-0 text-primary">Datos del Envío</h2>
+    </div>
+    <div class="card-body">
+        <p><strong>Tipo:</strong> @Model.envio.Tipo</p>
+        <p><strong>Cliente:</strong> @Model.envio.ClienteEmail</p>
+        <p><strong>Tracking:</strong> @Model.envio.NumeroTracking</p>
+        @if (Model.envio.Tipo == "Comun")
+        {
+            <p><strong>Agencia Destino:</strong> @Model.envio.AgenciaNombre</p>
+        }
+        else if (Model.envio.Tipo == "Urgente")
+        {
+            <p><strong>Dirección Postal:</strong> @Model.envio.DireccionPostal</p>
+        }
+        <p><strong>Peso:</strong> @Model.envio.Peso</p>
+        <p><strong>Estado:</strong> @Model.envio.Estado</p>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h4 class="m-0">Agregar Seguimiento</h4>
+    </div>
+    <div class="card-body">
+        <form asp-action="Details" method="post">
+            <input type="hidden" name="EnvioId" value="@Model.envio.Id"/>
+            <div class="mb-3">
+                <label for="Comentario" class="form-label">Comentario</label>
+                <textarea class="form-control" name="Comentario" id="Comentario" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar</button>
+        </form>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header">
+        <h4 class="m-0">Historial de Seguimientos</h4>
+    </div>
+    <div class="card-body table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Comentario</th>
+                    <th>Empleado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var seguimiento in Model.seguimientos)
+                {
+                    <tr>
+                        <td>@(seguimiento.Fecha?.ToString("dd/MM/yyyy HH:mm") ?? "-")</td>
+                        <td>@seguimiento.Comentario</td>
+                        <td>@seguimiento.EmpleadoId</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary">Volver</a>

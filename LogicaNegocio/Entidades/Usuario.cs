@@ -15,9 +15,11 @@ namespace LogicaNegocio.Entidades
         public string Email { get; set; }
         public string Contrasena { get; set; }
         public string Rol { get; set; }
+        public bool Activo { get; set; }
 
         public Usuario() {
-            
+            Rol = "Empleado";
+            Activo = true;
         }
 
         public Usuario(NombreCompleto nombreCompleto, string email, string contrasena)
@@ -26,34 +28,35 @@ namespace LogicaNegocio.Entidades
             Email = email;
             Contrasena = contrasena;
             Rol = "Empleado";
+            Activo = true;
             Validar();
         }
 
         public void Validar()
         {
             if (string.IsNullOrEmpty(Email))
-                throw new Exception("El email no puede estar vacío");
+                throw new ArgumentNullException("El email no puede estar vacío");
 
             if (!Regex.IsMatch(Email, @"^[\w\.-]+@[\w\.-]+\.\w{2,6}$"))
-                throw new Exception("El email debe ir con formato correcto");
+                throw new ArgumentException("El email debe ir con formato correcto");
 
             if (string.IsNullOrEmpty(Contrasena))
-                throw new Exception("La contraseña no puede estar vacía");
+                throw new ArgumentNullException("La contraseña no puede estar vacía");
 
             if (Contrasena.Length < 8)
-                throw new Exception("La contraseña debe tener 8 o mas caracteres");
+                throw new ArgumentException("La contraseña debe tener 8 o mas caracteres");
 
             if (!Contrasena.Any(char.IsUpper))
-                throw new Exception("La contraseña debe tener una mayuscula");
+                throw new ArgumentException("La contraseña debe tener una mayuscula");
 
             if (!Contrasena.Any(char.IsLower))
-                throw new Exception("La contraseña debe tener una minuscula");
+                throw new ArgumentException("La contraseña debe tener una minuscula");
 
             if(!Contrasena.Any(char.IsDigit))
-                throw new Exception("La contraseña debe tener un numero");
+                throw new ArgumentException("La contraseña debe tener un numero");
 
             if (!Regex.IsMatch(Contrasena, @"[@$!%*?&]"))
-                Console.WriteLine("La contraseña debe contener al menos un carácter especial (@$!%*?&)");
+                throw new ArgumentException("La contraseña debe contener al menos un carácter especial (@$!%*?&)");
         }
     }
 }

@@ -22,10 +22,16 @@ namespace DTOs.Mapper
             ret.EmpleadoId = envio.Empleado.Id;
             ret.Tipo = envio.GetType().Name;
             ret.Peso = envio.Peso;
+            ret.Seguimientos = ToListDtoSeguimiento(envio.Seguimiento).ToList();
 
             if (envio is Comun comun)
             {
                 ret.AgenciaId = comun.AgenciaId;
+
+                if(comun.agencia != null)
+                {
+                    ret.AgenciaNombre = comun.agencia.Nombre;
+                }
             }
             else if (envio is Urgente urgente)
             {
@@ -33,6 +39,23 @@ namespace DTOs.Mapper
             }
 
             return ret;            
+        }
+
+        public static List<DTOSeguimiento> ToListDtoSeguimiento(List<Seguimiento> seguimientos)
+        {
+            List<DTOSeguimiento> ret = new List<DTOSeguimiento>();
+
+            foreach (var s in seguimientos)
+            {
+                DTOSeguimiento dto = new DTOSeguimiento();
+                dto.Comentario = s.Comentario;
+                dto.Fecha = s.Fecha;
+                dto.EmpleadoId = s.EmpleadoId;
+
+                ret.Add(dto);
+            }
+
+            return ret;
         }
 
         public static Envio ToEnvio(DTOEnvio dto, Usuario cliente, Usuario empleado)

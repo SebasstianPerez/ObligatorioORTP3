@@ -2,6 +2,9 @@
 using DTOs.Mapper;
 using LogicaAplicacion.CasosUso.CUSeguimiento;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
+using LogicaNegocio.CustomExceptions;
+using LogicaNegocio.CustomExceptions.Envio;
+using LogicaNegocio.CustomExceptions.Usuario;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
@@ -31,23 +34,26 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
             try{
                 Usuario cliente = _repositorioUsuario.FindByEmail(dto.ClienteEmail);
 
-                if(cliente == null)
-                    throw new Exception("El cliente no existe");
+                if(cliente == null || !cliente.Activo)
+                    throw new UsuarioNoEncontradoException("Email no valido");
                 
                 Usuario empleado = _repositorioUsuario.findById(dto.EmpleadoId);
 
                 if (empleado == null)
-                    throw new Exception("El empleado no existe");
+                    throw new UsuarioNoEncontradoException("El empleado no existe");
 
                 Envio envio = EnvioMapper.ToEnvio(dto, cliente, empleado);
 
                 if (envio is Comun comun)
                 {
                     Agencia agencia = _repositorioAgencia.findById((int)dto.AgenciaId);
+                    if (agencia == null)
+                        throw new AgenciaNoEncontradaException("No se ha encontrado la agencia");
+
                     comun.agencia = agencia;
                     comun.AgenciaId = agencia.Id;
                 }
-                envio.agregarSeguimiento("Ingresado en agencia de origen");
+                envio.agregarSeguimiento("Ingresado en agencia de origen", empleado.Id);
                 _repositorioEnvio.Add(envio);
                 
             }

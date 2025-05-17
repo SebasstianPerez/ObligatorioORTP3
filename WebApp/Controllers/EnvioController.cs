@@ -2,7 +2,9 @@
 using DTOs.DTOs.Usuario;
 using LogicaAplicacion.ICasosUso.ICUAgencia;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
+using LogicaAplicacion.ICasosUso.ICUSeguimiento;
 using LogicaAplicacion.ICasosUso.ICUUsuario;
+using LogicaNegocio.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,8 +21,9 @@ namespace WebApp.Controllers
         private readonly ICUGetAgencias _cuGetAgencias;
         private readonly ICUGetEnviosEnProceso _cuGetEnviosEnProceso;
         private readonly ICUFinalizarEnvio _cuFinalizarEnvio;
+        private readonly ICUAgregarSeguimiento _cuAgregarSeguimiento;
 
-        public EnvioController(ICUAltaEnvio cuAltaEnvio, ICUGetEnvios cuGetEnvios, ICUGetEnvio cuGetEnvio, ICUGetAgencias cuGetAgencias, ICUGetEnviosEnProceso cuGetEnviosEnProceso, ICUFinalizarEnvio cuFinalizarEnvio)
+        public EnvioController(ICUAltaEnvio cuAltaEnvio, ICUGetEnvios cuGetEnvios, ICUGetEnvio cuGetEnvio, ICUGetAgencias cuGetAgencias, ICUGetEnviosEnProceso cuGetEnviosEnProceso, ICUFinalizarEnvio cuFinalizarEnvio, ICUAgregarSeguimiento cuAgregarSeguimiento)
         {
             _cuAltaEnvio = cuAltaEnvio;
             _cuGetEnvios = cuGetEnvios;
@@ -28,6 +31,7 @@ namespace WebApp.Controllers
             _cuGetAgencias = cuGetAgencias;
             _cuGetEnviosEnProceso = cuGetEnviosEnProceso;
             _cuFinalizarEnvio = cuFinalizarEnvio;
+            _cuAgregarSeguimiento = cuAgregarSeguimiento;
         }
 
         [Logged]
@@ -40,23 +44,19 @@ namespace WebApp.Controllers
         [Logged]
         public IActionResult Create()
         {
-            AltaEnvioViewModel vm = new AltaEnvioViewModel();
-
-            foreach(var agencia in _cuGetAgencias.Ejecutar())
+            try
             {
-                SelectListItem sitem = new SelectListItem();
-                sitem.Text = agencia.Nombre;
-                sitem.Value = agencia.Id.ToString();
-                vm.Agencias.Add(sitem); 
+                AltaEnvioViewModel vm = ConstruirAltaEnvioViewModel();
+
+                return View(vm);
             }
-
-            vm.TipoEnvio = new List<SelectListItem>()
+            catch(Exception ex)
             {
-                new SelectListItem("Comun", value: "Comun"),
-                new SelectListItem("Urgente", value: "Urgente")
-            };
-            
-            return View(vm);
+                AltaEnvioViewModel vm = ConstruirAltaEnvioViewModel();
+
+                TempData["Error"] = ex.Message;
+                return View(vm);
+            }
         }
 
         [HttpPost]
@@ -69,16 +69,42 @@ namespace WebApp.Controllers
 
                 _cuAltaEnvio.Ejecutar(vm.dtoEnvio);
 
-                ViewData["Message"] = "Alta correcta";
+                TempData["Message"] = "Alta correcta";
 
-                return RedirectToAction("Create");
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                ViewData["Error"] = ex.Message;
-                return RedirectToAction("Create");
+                
+                AltaEnvioViewModel vm1 = ConstruirAltaEnvioViewModel();
+
+                TempData["Error"] = ex.Message;
+                return View(vm1);
             }
         }
+
+        private AltaEnvioViewModel ConstruirAltaEnvioViewModel()
+        {
+            AltaEnvioViewModel vm = new AltaEnvioViewModel();
+
+            foreach (var agencia in _cuGetAgencias.Ejecutar())
+            {
+                vm.Agencias.Add(new SelectListItem
+                {
+                    Text = agencia.Nombre,
+                    Value = agencia.Id.ToString()
+                });
+            }
+
+            vm.TipoEnvio = new List<SelectListItem>
+            {
+                new SelectListItem("Comun", value: "Comun"),
+                new SelectListItem("Urgente", value: "Urgente")
+            };
+
+            return vm;
+        }
+
 
         [Logged]
         [HttpGet]
@@ -94,13 +120,14 @@ namespace WebApp.Controllers
             }
             catch (Exception ex)
             {
-                ViewData["Error"] = ex.Message;
+                TempData["Error"] = ex.Message;
                 return View();
             }
         }
 
         [HttpPost]
         [Logged]
+        [ValidateAntiForgeryToken]
         public IActionResult FinalizarConfirmacion(int id)
         {
             try
@@ -109,37 +136,88 @@ namespace WebApp.Controllers
                 if (envio == null)
                     throw new Exception("El envio no existe");
 
-                _cuFinalizarEnvio.Ejecutar(id, (int)HttpContext.Session.GetInt32("UsuarioID"));
-                ViewData["Message"] = "Envio finalizado correctamente";
+                DTOFinalizarEnvio dto = new DTOFinalizarEnvio();
+                dto.EnvioId = id;
+                dto.LogueadoId = (int)HttpContext.Session.GetInt32("UsuarioID");
+
+                _cuFinalizarEnvio.Ejecutar(dto);
+                TempData["Message"] = "Envio finalizado correctamente";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                ViewData["Error"] = "Error al finalizar el envio: " + ex.Message;
+                TempData["Error"] = "Error al finalizar el envio: " + ex.Message;
                 return RedirectToAction("Index");
             }
         }
-        /*
-         public IActionResult Update(int idEnvio)
-        {
-            DTOEnvio envio = _cuGetEnvio.Ejecutar(idEnvio);
 
-            return View(envio);
+        
+         [Logged]
+         public IActionResult Details(int id)
+        {
+            try
+            {
+                DetailEnvioViewModel vm = CrearDetailVM(id);
+
+                return View(vm);
+            } 
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Index");
+            }
+            
         }
 
         [HttpPost]
         [Logged]
-        public IActionResult Update()
+        public IActionResult Details(DTOSeguimiento dto)
         {
             try
             {
+                dto.EmpleadoId = (int)HttpContext.Session.GetInt32("UsuarioID");
 
+                if (dto.Comentario == null || dto.Comentario == "")
+                    throw new Exception("El comentario no puede estar vacio");
+
+                if (dto.EmpleadoId == 0)
+                    throw new Exception("El id del empleado no puede ser 0");
+
+                _cuAgregarSeguimiento.Ejecutar(dto);
+
+                TempData["Message"] = "Seguimiento agregado correctamente";
+
+                DetailEnvioViewModel vm = CrearDetailVM(dto.EnvioId);
+                return View(vm);
             }
-            catch ()
+            catch (Exception ex)
             {
-
+                DetailEnvioViewModel vm =  CrearDetailVM(dto.EnvioId);
+                
+                TempData["Error"] = ex.Message;
+                return View(vm);
             }
         }
-         */
+
+        public DetailEnvioViewModel CrearDetailVM(int idEnvio)
+        {
+            try
+            {
+                DTOEnvio envio = _cuGetEnvio.Ejecutar(idEnvio);
+
+                DetailEnvioViewModel vm = new DetailEnvioViewModel();
+                vm.envio = envio;
+                vm.seguimientos = envio.Seguimientos;
+
+                return vm;
+            }
+            catch(Exception ex)
+            {
+                ViewData["Error"] = ex.Message;
+                return null;
+            }
+        }
+
+
     }
 }

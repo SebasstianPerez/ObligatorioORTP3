@@ -1,6 +1,5 @@
 ﻿using DTOs.DTOs.Usuario;
 using LogicaAplicacion.ICasosUso.ICUUsuario;
-using LogicaNegocio.Entidades;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Filtros;
 
@@ -53,22 +52,32 @@ namespace WebApp.Controllers
                 HttpContext.Session.SetInt32("UsuarioID", dtoUsuario.ID);
                 HttpContext.Session.SetString("UsuarioRol", dtoUsuario.Rol);
 
+                TempData["Message"] = "Logueado correctamente";
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Error al iniciar sesión: " + ex.Message;
+                ViewBag.Error = "Error al iniciar sesión: " + ex.Message;
                 return View();
             }
         }
 
         [Logged]
+        [HttpPost]
         public IActionResult Logout()
         {
-            HttpContext.Session.Remove("UsuarioID");
-            HttpContext.Session.Remove("UsuarioRol");
+            try
+            {
+                HttpContext.Session.Clear();
 
-            return RedirectToAction("Index", "Home");
+                TempData["Message"] = "Sesión cerrada correctamente";
+                return RedirectToAction("Index", "Home");
+            }
+            catch(Exception ex)
+            {
+                TempData["Error"] = "No se pudo cerrar sesion";
+                return RedirectToAction("Login");
+            }
         }
 
         [AdminAuth]
@@ -80,30 +89,25 @@ namespace WebApp.Controllers
         }
 
         [HttpPost]
+        [Logged]
         public IActionResult Create(DTOCreateRequest dto)
         {
             try
             {
-                int? logId = HttpContext.Session.GetInt32("UsuarioID");
-                if (logId == null)
-                {
-                    ViewBag.ErrorMessage = "No se ha iniciado sesión";
-                    return RedirectToAction("Index", "Home");
-                }
+                int logId = (int)HttpContext.Session.GetInt32("UsuarioID");
 
-                dto.LogueadoId = (int)logId;
+                dto.LogueadoId = logId;
 
                 _cUAltaUsuario.Ejecutar(dto);
 
-                ViewData["Message"] = "Usuario creado con éxito";
+                TempData["Message"] = "Usuario creado con éxito";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                ViewBag.ErrorMsg = "Error al crear el usuario: " + ex.Message;
+                ViewData["Error"] = "Error al crear el usuario: " + ex.Message;
+                return View();
             }
-
-            return View();
         }
 
         [AdminAuth]
@@ -113,23 +117,18 @@ namespace WebApp.Controllers
             return View(usuario);
         }
 
-        [HttpPut]
+        [HttpPost]
         [AdminAuth]
         public IActionResult Edit(DTOEditarUsuarioRequest dto)
         {
             try
             {
-                int? logeadoId = HttpContext.Session.GetInt32("UsuarioID");
-                if (logeadoId == null)
-                {
-                    ViewData["ErrorMessage"] = "No se ha iniciado sesión";
-                    return RedirectToAction("Index", "Home");
-                }
+                int logeadoId = (int)HttpContext.Session.GetInt32("UsuarioID");
 
-                dto.loguadoId = (int)logeadoId;
+                dto.loguadoId = logeadoId;
                 _cuEditarUsuario.Ejecutar(dto);
 
-                ViewData["Message"] = "Usuario editado con éxito";
+                TempData["Message"] = "Usuario editado con éxito";
                 return RedirectToAction("Index");
 
             }
@@ -144,13 +143,14 @@ namespace WebApp.Controllers
         [AdminAuth]
         public IActionResult Delete(int id)
         {
-            var item = _cuGetDatosUsuario.Ejecutar(id);
-            return View(item); // Mostrás una vista de confirmación
+            DTOUsuario aBorrar = _cuGetDatosUsuario.Ejecutar(id);
+            return View(aBorrar);
         }
 
 
         [AdminAuth]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult DeleteConfirmed(int id)
         {
             try
@@ -162,12 +162,12 @@ namespace WebApp.Controllers
 
                 _cuBajaUsuario.Ejecutar(dto);
 
-                ViewData["Message"] = "Usuario eliminado con éxito";
+                TempData["Message"] = "Usuario eliminado con éxito";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                ViewData["Error"] = "Error al eliminar al usuario: " + ex.Message;
+                TempData["Error"] = "Error al eliminar al usuario: " + ex.Message;
                 return RedirectToAction("Index");
             }
         }

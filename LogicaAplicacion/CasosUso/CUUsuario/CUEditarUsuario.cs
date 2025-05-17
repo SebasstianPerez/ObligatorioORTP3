@@ -1,6 +1,8 @@
 ﻿using DTOs.Mapper;
 using LogicaAccesoDatos.Repositorios;
 using LogicaAplicacion.ICasosUso.ICUUsuario;
+using LogicaNegocio.CustomExceptions;
+using LogicaNegocio.CustomExceptions.Usuario;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
 using System;
@@ -28,7 +30,7 @@ namespace LogicaAplicacion.CasosUso.CUUsuaio
             Usuario antiguo = _repositorioUsuario.findById(dto.Id);
 
             if (antiguo is null)
-                throw new Exception("El usuario no existe");
+                throw new UsuarioNoEncontradoException("El usuario no existe");
 
             Usuario nuevo = UsuarioMapper.ToUsuarioEdit(dto, antiguo);
             int nuevoId = _repositorioUsuario.Update(nuevo);

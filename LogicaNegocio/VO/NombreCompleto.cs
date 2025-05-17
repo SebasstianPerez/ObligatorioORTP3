@@ -1,4 +1,5 @@
 ﻿using LogicaNegocio.CustomExceptions;
+using LogicaNegocio.CustomExceptions.Usuario;
 using System;
 using System.Collections.Generic;
 using System.Linq;
