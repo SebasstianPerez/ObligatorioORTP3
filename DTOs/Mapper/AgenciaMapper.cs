@@ -32,8 +32,8 @@ namespace DTOs.Mapper
             ret.Nombre = a.Nombre;
             ret.Telefono = a.Telefono;
             ret.DireccionPostal = a.DireccionPostal;
-            ret.Latitud = a.Latitud;
-            ret.Longitud = a.Longitud;
+            ret.Latitud = a.Ubicacion.Latitud;
+            ret.Longitud = a.Ubicacion.Longitud;
 
             return ret;
         }

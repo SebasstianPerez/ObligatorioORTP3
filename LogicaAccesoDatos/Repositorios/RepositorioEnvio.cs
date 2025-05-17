@@ -93,11 +93,6 @@ namespace LogicaAccesoDatos.Repositorios
             return ret;
         }
 
-        public List<Seguimiento> GetSeguimientos()
-        {
-            throw new NotImplementedException();
-        }
-
         public int Update(Envio item)
         {
             _context.Update(item);

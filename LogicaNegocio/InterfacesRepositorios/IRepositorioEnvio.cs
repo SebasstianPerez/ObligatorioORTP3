@@ -9,8 +9,6 @@ namespace LogicaNegocio.InterfacesRepositorios
 {
     public interface IRepositorioEnvio : IRepositorio<Envio>
     {
-        List<Seguimiento> GetSeguimientos();
-
         public Envio findByNroTracking(string nroTracking);
 
         List<Envio> GetEnviosEnProceso();

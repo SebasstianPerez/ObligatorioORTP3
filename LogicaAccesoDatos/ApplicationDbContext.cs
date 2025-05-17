@@ -34,7 +34,13 @@ namespace LogicaAccesoDatos
                     n.Property(p => p.Apellido).HasColumnName("Apellido");
                 });
 
-            
+            modelBuilder.Entity<Agencia>()
+                .OwnsOne(a => a.Ubicacion, n =>
+                {
+                    n.Property(p => p.Latitud).HasColumnName("Latitud");
+                    n.Property(p => p.Longitud).HasColumnName("Longitud");
+                });
+
 
             //Envio
             modelBuilder.Entity<Envio>()

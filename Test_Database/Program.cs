@@ -86,8 +86,11 @@ internal class Program
                     Nombre = $"Agencia{i}",
                     DireccionPostal = $"12{i:0000}",  
                     Telefono = $"12345678{i}",             
-                    Latitud = (12.3 + i * 0.01).ToString("F6"),
-                    Longitud = (98.7 - i * 0.01).ToString("F6")
+                    Ubicacion = new Ubicacion
+                    {
+                        Latitud = (12.3 + i * 0.01).ToString("F6"),
+                        Longitud = (98.7 - i * 0.01).ToString("F6")
+                    }
                 };
                 agencias.Add(agencia);
             }

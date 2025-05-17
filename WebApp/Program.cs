@@ -44,7 +44,6 @@ namespace WebApp
 
             builder.Services.AddScoped<ICUAltaEnvio, CUAltaEnvio>();
             builder.Services.AddScoped<ICUGetEnvio, CUGetEnvio>();
-            builder.Services.AddScoped<ICUGetEnvios, CUGetEnvios>();
             builder.Services.AddScoped<ICUGetEnviosEnProceso, CUGetEnviosEnProceso>();
             builder.Services.AddScoped<ICUFinalizarEnvio, CUFinalizarEnvio>();
 

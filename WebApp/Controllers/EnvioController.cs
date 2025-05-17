@@ -16,17 +16,15 @@ namespace WebApp.Controllers
     public class EnvioController : Controller
     {
         private readonly ICUAltaEnvio _cuAltaEnvio;
-        private readonly ICUGetEnvios _cuGetEnvios;
         private readonly ICUGetEnvio _cuGetEnvio;
         private readonly ICUGetAgencias _cuGetAgencias;
         private readonly ICUGetEnviosEnProceso _cuGetEnviosEnProceso;
         private readonly ICUFinalizarEnvio _cuFinalizarEnvio;
         private readonly ICUAgregarSeguimiento _cuAgregarSeguimiento;
 
-        public EnvioController(ICUAltaEnvio cuAltaEnvio, ICUGetEnvios cuGetEnvios, ICUGetEnvio cuGetEnvio, ICUGetAgencias cuGetAgencias, ICUGetEnviosEnProceso cuGetEnviosEnProceso, ICUFinalizarEnvio cuFinalizarEnvio, ICUAgregarSeguimiento cuAgregarSeguimiento)
+        public EnvioController(ICUAltaEnvio cuAltaEnvio, ICUGetEnvio cuGetEnvio, ICUGetAgencias cuGetAgencias, ICUGetEnviosEnProceso cuGetEnviosEnProceso, ICUFinalizarEnvio cuFinalizarEnvio, ICUAgregarSeguimiento cuAgregarSeguimiento)
         {
             _cuAltaEnvio = cuAltaEnvio;
-            _cuGetEnvios = cuGetEnvios;
             _cuGetEnvio = cuGetEnvio;
             _cuGetAgencias = cuGetAgencias;
             _cuGetEnviosEnProceso = cuGetEnviosEnProceso;

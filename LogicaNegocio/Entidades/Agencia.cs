@@ -15,17 +15,15 @@ namespace LogicaNegocio.Entidades
         public string Nombre { get; set; }
         public string DireccionPostal { get; set; }
         public string Telefono { get; set; }
-        public string Latitud { get; set; }
-        public string Longitud { get; set; }
+        public Ubicacion Ubicacion { get; set; } = new Ubicacion();
 
-        public Agencia(int id, string nombre, string direccionPostal, string telefono, string latitud, string longitud)
+        public Agencia(int id, string nombre, string direccionPostal, string telefono, Ubicacion ubicacion)
         {
             Id = id;
             Nombre = nombre;
             DireccionPostal = direccionPostal;
             Telefono = telefono;
-            Latitud = latitud;
-            Longitud = longitud;
+            Ubicacion = ubicacion;
             Validar();
         }
 
@@ -47,10 +45,10 @@ namespace LogicaNegocio.Entidades
             if (Telefono.Length < 8)
                 throw new TelefonoNoValidoException("El teléfono debe tener al menos 8 caracteres.");
 
-            if (string.IsNullOrWhiteSpace(Latitud))
+            if (string.IsNullOrWhiteSpace(Ubicacion.Latitud))
                 throw new DireccionNoValidoException("La latitud no puede estar vacía.");
 
-            if (string.IsNullOrWhiteSpace(Longitud))
+            if (string.IsNullOrWhiteSpace(Ubicacion.Longitud))
                 throw new DireccionNoValidoException("La longitud no puede estar vacía.");
         }
     }
