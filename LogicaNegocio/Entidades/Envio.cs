@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LogicaNegocio.Entidades
 {
-    public class Envio
+    public abstract class Envio 
     {
         public int Id { get; set; }
         public string? NumeroTracking { get; set; }

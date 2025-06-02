@@ -15,6 +15,9 @@ namespace DTOs.Mapper
         {
             DTOEnvio ret = new DTOEnvio();
 
+            if(envio is null) return null;
+            
+
             ret.Id = envio.Id;
             ret.Estado = envio.Estado.ToString();
             ret.NumeroTracking = envio.NumeroTracking;
