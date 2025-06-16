@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ClientAPI.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class AuthController : Controller
     {
         private readonly ICULogin _cuLogin;
