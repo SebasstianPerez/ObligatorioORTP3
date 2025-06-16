@@ -1,5 +1,6 @@
 ﻿using DTOs.DTOs.Envio;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClientAPI.Controllers
@@ -16,6 +17,7 @@ namespace ClientAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Cliente")]
         public IActionResult GetEnvio([FromQuery] string nroTracking)
         {
             try

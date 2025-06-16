@@ -2,7 +2,9 @@
 using LogicaAccesoDatos;
 using LogicaAccesoDatos.Repositorios;
 using LogicaAplicacion.CasosUso.CUEnvio;
+using LogicaAplicacion.CasosUso.CUUsuaio;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
+using LogicaAplicacion.ICasosUso.ICUUsuario;
 using LogicaNegocio.InterfacesRepositorios;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -43,8 +45,10 @@ namespace ClientAPI
 
             // Add services to the container.
             builder.Services.AddScoped<IRepositorioEnvio, RepositorioEnvio>();
+            builder.Services.AddScoped<IRepositorioUsuario, RepositorioUsuario>();  
 
             builder.Services.AddScoped<ICUGetEnvioTracking, CUGetEnvioTracking>();
+            builder.Services.AddScoped<ICULogin, CULogin>();
 
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

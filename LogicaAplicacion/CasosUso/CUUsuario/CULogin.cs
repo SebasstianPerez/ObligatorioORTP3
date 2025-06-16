@@ -38,6 +38,7 @@ namespace LogicaAplicacion.CasosUso.CUUsuaio
                 DTOLoginResponse ret = new();
                 ret.ID = usuario.Id;
                 ret.Rol = usuario.Rol;
+                ret.Email = usuario.Email;
 
                 return ret;
             }
