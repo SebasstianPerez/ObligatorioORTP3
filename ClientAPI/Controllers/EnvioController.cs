@@ -1,5 +1,6 @@
 ﻿using DTOs.DTOs.Envio;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ClientAPI.Controllers
@@ -16,6 +17,7 @@ namespace ClientAPI.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Cliente")]
         public IActionResult GetEnvio([FromQuery] string nroTracking)
         {
             try
@@ -23,15 +25,14 @@ namespace ClientAPI.Controllers
                 DTOEnvio dto = _cuGetEnvioTracking.Ejecutar(nroTracking);
 
                 if (dto == null)
-                {
-                    return NotFound("El envio no existe");
-                }
+                    return StatusCode(404, "Envio no encontrado");
+                
 
                 return Ok(dto);
             }
-            catch (Exception ex)
+            catch (Exception e)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, e);
             }
         }
     }

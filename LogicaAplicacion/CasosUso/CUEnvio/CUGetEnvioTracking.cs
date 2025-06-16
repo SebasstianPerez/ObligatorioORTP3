@@ -27,17 +27,7 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
                 throw new NumeroTrackingInvalidoException("El número de tracking no puede ser nulo o vacío");
             }
 
-            if(nroTracking.Length != 8)
-            {
-                throw new NumeroTrackingInvalidoException("El numero de tracking debe tener 8 caracteres");
-            }
-
             Envio envio = _repositorioEnvio.findByNroTracking(nroTracking);
-
-            if (envio == null)
-            {
-                throw new EnvioNoExisteException("Envio no encontrado");
-            }
 
             DTOEnvio ret = EnvioMapper.ToDTOEnvio(envio);
 
