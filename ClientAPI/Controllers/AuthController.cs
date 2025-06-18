@@ -1,5 +1,8 @@
 ﻿using DTOs.DTOs.Usuario;
+using LogicaAplicacion.CasosUso.CUUsuario;
 using LogicaAplicacion.ICasosUso.ICUUsuario;
+using LogicaNegocio.CustomExceptions.Usuario;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -14,11 +17,13 @@ namespace ClientAPI.Controllers
     {
         private readonly ICULogin _cuLogin;
         private readonly IConfiguration _config;
+        private readonly ICUCambiarContrasena _cuCambiarContrasena;
 
-        public AuthController(IConfiguration config, ICULogin cuLogin)
+        public AuthController(IConfiguration config, ICULogin cuLogin, ICUCambiarContrasena cuCambiarContrasena)
         {
             _cuLogin = cuLogin;
             _config = config;
+            _cuCambiarContrasena = cuCambiarContrasena;
         }
 
         [HttpGet]
@@ -61,6 +66,31 @@ namespace ClientAPI.Controllers
             }
         }
 
-        
+        [Authorize(Roles = "Cliente")]
+        [HttpPost("passChange")]
+        public IActionResult CambiarContrasena([FromBody] DTOCambiarContrasena dto)
+        {
+            try
+            {
+                _cuCambiarContrasena.Ejecutar(dto);
+                return Ok("Contraseña cambiada correctamente.");
+            }
+            catch (UsuarioNoEncontradoException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (ContrasenaIncorrectaException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ArgumentException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
