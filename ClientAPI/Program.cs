@@ -21,8 +21,8 @@ namespace ClientAPI
             var builder = WebApplication.CreateBuilder(args);
 
             //JWT
-            //La clave debe ser almacenada en el json, o en el sistema operativo cuando esté
-            //en producción. PONER EN APPSETTINGS
+            //La clave debe ser almacenada en el json, o en el sistema operativo cuando estÃ©
+            //en producciÃ³n. PONER EN APPSETTINGS
             string clave = builder.Configuration.GetValue<String>("ClaveToken");
             
             var claveCodificada = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(clave));
@@ -52,7 +52,8 @@ namespace ClientAPI
             builder.Services.AddScoped<ICUCambiarContrasena, CUCambiarContrasena>();
             builder.Services.AddScoped<ICUGetEnvioTracking, CUGetEnvioTracking>();
             builder.Services.AddScoped<ICULogin, CULogin>();
-            
+            builder.Services.AddScoped<ICUGetEnviosCliente, CUGetEnviosCliente>();
+          
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();

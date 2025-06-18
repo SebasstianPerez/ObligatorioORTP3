@@ -32,9 +32,8 @@ namespace LogicaAplicacion.CasosUso.CUUsuaio
                     throw new UsuarioNoEncontradoException("Email no encontrado");                
 
                 if (!Crypto.VerifyPasswordConBcrypt(dto.Contrasena, usuario.Contrasena))
-                    throw new Exception("Contraeña invalida");
+                    throw new Exception("Contraseña invalida");
 
-                //devolver dto con id y rol para el cliente
                 DTOLoginResponse ret = new();
                 ret.ID = usuario.Id;
                 ret.Rol = usuario.Rol;

@@ -99,5 +99,14 @@ namespace LogicaAccesoDatos.Repositorios
             _context.SaveChanges();
             return item.Id;
         }
+
+        public List<Envio> FindByClienteEmail(String email)
+        {
+            return _context.Envios
+                .Where(e => e.Cliente.Email == email && e.Estado == Estado.EN_PROCESO)
+                .Include(e => e.Seguimiento)
+                .Include(e => e.Cliente)
+                .ToList();
+        }
     }
 }

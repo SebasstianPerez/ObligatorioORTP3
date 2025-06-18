@@ -22,7 +22,7 @@ namespace DTOs.Mapper
             ret.Estado = envio.Estado.ToString();
             ret.NumeroTracking = envio.NumeroTracking;
             ret.ClienteEmail = UsuarioMapper.ToDTOUsuario(envio.Cliente).Email;
-            ret.EmpleadoId = envio.Empleado.Id;
+            ret.EmpleadoId = envio.EmpleadoId;
             ret.Tipo = envio.GetType().Name;
             ret.Peso = envio.Peso;
             ret.Seguimientos = ToListDtoSeguimiento(envio.Seguimiento).ToList();
