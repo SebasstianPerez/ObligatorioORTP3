@@ -1,7 +1,9 @@
 ﻿using DTOs.DTOs.Envio;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
+using LogicaNegocio.CustomExceptions.Envio;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace ClientAPI.Controllers
 {
@@ -10,10 +12,14 @@ namespace ClientAPI.Controllers
     public class EnvioController : ControllerBase
     {
         private readonly ICUGetEnvioTracking _cuGetEnvioTracking;
+        private readonly ICUGetEnviosCliente _cuGetEnviosCliente;
+        private readonly IConfiguration _config;
 
-        public EnvioController(ICUGetEnvioTracking cuGetEnvioTracking)
+        public EnvioController(ICUGetEnvioTracking cuGetEnvioTracking, ICUGetEnviosCliente cuGetEnviosCliente, IConfiguration config)
         {
             _cuGetEnvioTracking = cuGetEnvioTracking;
+            _cuGetEnviosCliente = cuGetEnviosCliente;
+            _config = config;
         }
 
         [HttpGet]
@@ -33,6 +39,27 @@ namespace ClientAPI.Controllers
             catch (Exception e)
             {
                 return StatusCode(500, e);
+            }
+        }
+
+        [HttpGet("GetEnvios")]
+        [Authorize(Roles = "Cliente")]
+        public IActionResult GetEnvios()
+        {
+            try
+            {
+                String email = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+                List<DTOEnvio> envios = _cuGetEnviosCliente.Ejecutar(email);
+
+                return Ok(envios);
+            } catch(ClienteEnvioNullException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Error de servidor");
             }
         }
     }

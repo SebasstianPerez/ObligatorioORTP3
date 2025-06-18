@@ -12,5 +12,7 @@ namespace LogicaNegocio.InterfacesRepositorios
         public Envio findByNroTracking(string nroTracking);
 
         List<Envio> GetEnviosEnProceso();
+
+        List<Envio> FindByClienteEmail(String email);
     }
 }
