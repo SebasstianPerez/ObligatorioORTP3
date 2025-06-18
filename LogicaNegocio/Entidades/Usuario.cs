@@ -1,4 +1,5 @@
-﻿using LogicaNegocio.VO;
+﻿using LogicaNegocio.CustomExceptions.Usuario;
+using LogicaNegocio.VO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,23 +41,20 @@ namespace LogicaNegocio.Entidades
             if (!Regex.IsMatch(Email, @"^[\w\.-]+@[\w\.-]+\.\w{2,6}$"))
                 throw new ArgumentException("El email debe ir con formato correcto");
 
-            if (string.IsNullOrEmpty(Contrasena))
-                throw new ArgumentNullException("La contraseña no puede estar vacía");
-
-            if (Contrasena.Length < 8)
-                throw new ArgumentException("La contraseña debe tener 8 o mas caracteres");
+            if (Contrasena.Length < 8 || string.IsNullOrEmpty(Contrasena))
+                throw new ContrasenaIncorrectaException("La contraseña debe tener 8 o mas caracteres");
 
             if (!Contrasena.Any(char.IsUpper))
-                throw new ArgumentException("La contraseña debe tener una mayuscula");
+                throw new ContrasenaIncorrectaException("La contraseña debe tener una mayuscula");
 
             if (!Contrasena.Any(char.IsLower))
-                throw new ArgumentException("La contraseña debe tener una minuscula");
+                throw new ContrasenaIncorrectaException("La contraseña debe tener una minuscula");
 
             if(!Contrasena.Any(char.IsDigit))
                 throw new ArgumentException("La contraseña debe tener un numero");
 
-            if (!Regex.IsMatch(Contrasena, @"[@$!%*?&]"))
-                throw new ArgumentException("La contraseña debe contener al menos un carácter especial (@$!%*?&)");
+            if (!Regex.IsMatch(Contrasena, @"[@$!%*?&.]"))
+                throw new ContrasenaIncorrectaException("La contraseña debe contener al menos un carácter especial (@$!%*?&)");
         }
     }
 }
