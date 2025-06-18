@@ -104,8 +104,9 @@ namespace LogicaAccesoDatos.Repositorios
         {
             return _context.Envios
                 .Where(e => e.Cliente.Email == email && e.Estado == Estado.EN_PROCESO)
-                .Include(e => e.Seguimiento)
                 .Include(e => e.Cliente)
+                .Include(e => e.Seguimiento)
+                .OrderBy(e => e.Seguimiento.FirstOrDefault().Fecha)
                 .ToList();
         }
     }
