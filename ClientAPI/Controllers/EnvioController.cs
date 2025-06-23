@@ -1,5 +1,6 @@
 ﻿using DTOs.DTOs.Envio;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
+using LogicaNegocio.CustomExceptions;
 using LogicaNegocio.CustomExceptions.Envio;
 using LogicaNegocio.CustomExceptions.Usuario;
 using Microsoft.AspNetCore.Authorization;
@@ -40,11 +41,11 @@ namespace ClientAPI.Controllers
             {
                 DTOEnvio dto = _cuGetEnvioTracking.Ejecutar(nroTracking);
 
-                if (dto == null)
-                    return StatusCode(404, "Envio no encontrado");
-
-
                 return Ok(dto);
+            }
+            catch(EnvioNoExisteException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception e)
             {
@@ -87,6 +88,14 @@ namespace ClientAPI.Controllers
                 return Ok(envios);
             }
             catch (EnvioNoExisteException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch(FechaInvalidaException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch(ArgumentException ex)
             {
                 return BadRequest(ex.Message);
             }
