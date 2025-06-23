@@ -9,6 +9,6 @@ namespace LogicaAplicacion.ICasosUso.ICUEnvio
 {
     public interface ICUGetEnviosClientePorFecha
     {
-        List<DTOEnvio> Ejecutar(String email, DateTime fecha1, DateTime fecha2);
+        List<DTOEnvio> Ejecutar(String email, Estado? estado, DateTime fecha1, DateTime fecha2);
     }
 }
