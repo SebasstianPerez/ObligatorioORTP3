@@ -16,5 +16,7 @@ namespace LogicaNegocio.InterfacesRepositorios
         List<Envio> FindByClienteEmail(String email);
 
         List<Envio> GetEnviosClientePorFecha(String email, DateTime fecha1, DateTime fecha2);
+
+        List<Envio> GetEnviosClientePorComentario(String email, string comentario);
     }
 }
