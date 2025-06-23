@@ -109,5 +109,16 @@ namespace LogicaAccesoDatos.Repositorios
                 .OrderBy(e => e.Seguimiento.FirstOrDefault().Fecha)
                 .ToList();
         }
+
+        public List<Envio> GetEnviosClientePorFecha(string email, DateTime fecha1, DateTime fecha2)
+        {
+            return _context.Envios
+                .Where(e => e.Cliente.Email == email && e.Estado == Estado.EN_PROCESO
+                && e.Seguimiento.FirstOrDefault().Fecha.Date > fecha1.Date && e.Seguimiento.FirstOrDefault().Fecha.Date < fecha2.Date.AddDays(1))
+                .Include(e => e.Cliente)
+                .Include(e => e.Seguimiento)
+                .OrderBy(e => e.NumeroTracking)
+                .ToList();
+        }
     }
 }
