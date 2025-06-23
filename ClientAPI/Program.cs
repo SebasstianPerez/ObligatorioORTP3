@@ -54,6 +54,7 @@ namespace ClientAPI
             builder.Services.AddScoped<ICULogin, CULogin>();
             builder.Services.AddScoped<ICUGetEnviosCliente, CUGetEnviosCliente>();
             builder.Services.AddScoped<ICUGetEnviosClientePorFecha, CUGetEnviosClientePorFecha>();
+            builder.Services.AddScoped<ICUGetEnviosPorComentario, CUGetEnviosPorComentario>();
           
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

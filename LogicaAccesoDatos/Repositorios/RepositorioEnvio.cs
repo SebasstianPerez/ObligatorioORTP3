@@ -120,5 +120,15 @@ namespace LogicaAccesoDatos.Repositorios
                 .OrderBy(e => e.NumeroTracking)
                 .ToList();
         }
+
+        public List<Envio> GetEnviosClientePorComentario(string email, string comentario)
+        {
+            return _context.Envios
+                .Where(e => e.Cliente.Email == email && e.Estado == Estado.EN_PROCESO 
+                && e.Seguimiento.FirstOrDefault().Comentario.ToLower().Contains(comentario))
+                .Include(e => e.Cliente)
+                .Include(e => e.Seguimiento)
+                .ToList();
+        }
     }
 }
