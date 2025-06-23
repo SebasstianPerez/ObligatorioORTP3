@@ -31,6 +31,9 @@ namespace LogicaAplicacion.CasosUso.CUEnvio
 
             DTOEnvio ret = EnvioMapper.ToDTOEnvio(envio);
 
+            if(ret == null)
+                throw new EnvioNoExisteException("No se encontró un envío con el número de tracking proporcionado.");
+
             return ret;
         }
     }

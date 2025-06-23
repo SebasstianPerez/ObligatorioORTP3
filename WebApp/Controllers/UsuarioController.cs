@@ -1,5 +1,6 @@
 ﻿using DTOs.DTOs.Usuario;
 using LogicaAplicacion.ICasosUso.ICUUsuario;
+using LogicaNegocio.CustomExceptions.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Filtros;
 
@@ -54,6 +55,11 @@ namespace WebApp.Controllers
 
                 TempData["Message"] = "Logueado correctamente";
                 return RedirectToAction("Index", "Home");
+            }
+            catch(ContrasenaIncorrectaException ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
             }
             catch (Exception ex)
             {

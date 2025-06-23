@@ -60,6 +60,10 @@ namespace ClientAPI.Controllers
 
                 return Ok(new { Token = jwt });
             }
+            catch(ContrasenaIncorrectaException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
