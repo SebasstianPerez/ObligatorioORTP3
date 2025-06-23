@@ -110,13 +110,21 @@ namespace LogicaAccesoDatos.Repositorios
                 .ToList();
         }
 
-        public List<Envio> GetEnviosClientePorFecha(string email, DateTime fecha1, DateTime fecha2)
+        public List<Envio> GetEnviosClientePorFecha(string email, Estado? estado, DateTime fecha1, DateTime fecha2)
         {
-            return _context.Envios
-                .Where(e => e.Cliente.Email == email && e.Estado == Estado.EN_PROCESO
-                && e.Seguimiento.FirstOrDefault().Fecha.Date > fecha1.Date && e.Seguimiento.FirstOrDefault().Fecha.Date < fecha2.Date.AddDays(1))
+           var ret = _context.Envios
                 .Include(e => e.Cliente)
                 .Include(e => e.Seguimiento)
+                .Where(e => e.Cliente.Email == email
+                && e.Seguimiento.FirstOrDefault().Fecha.Date > fecha1.Date
+                && e.Seguimiento.FirstOrDefault().Fecha.Date < fecha2.Date.AddDays(1));
+
+            if (estado != null)
+            {
+                ret = ret.Where(e => e.Estado == estado);
+            } 
+
+            return ret
                 .OrderBy(e => e.NumeroTracking)
                 .ToList();
         }

@@ -34,7 +34,6 @@ namespace ClientAPI.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Cliente")]
         public IActionResult GetEnvio([FromQuery] string nroTracking)
         {
             try
@@ -77,13 +76,13 @@ namespace ClientAPI.Controllers
 
         [HttpGet("GetPorFecha")]
         [Authorize(Roles = "Cliente")]
-        public IActionResult GetEnviosPorFecha(DateTime fechaInicio, [FromQuery] DateTime fechaFin)
+        public IActionResult GetEnviosPorFecha(DateTime fechaInicio, [FromQuery] DateTime fechaFin, Estado? estado)
         {
             try
             {
                 String email = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
-                List<DTOEnvio> envios = _cuGetEnviosClientePorFecha.Ejecutar(email, fechaInicio, fechaFin);
+                List<DTOEnvio> envios = _cuGetEnviosClientePorFecha.Ejecutar(email, estado, fechaInicio, fechaFin);
 
                 return Ok(envios);
             }
