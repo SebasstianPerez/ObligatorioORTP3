@@ -1,4 +1,5 @@
-﻿using DTOs.DTOs.Envio;
+﻿using DTOs.DTOs;
+using DTOs.DTOs.Envio;
 using LogicaAplicacion.ICasosUso.ICUEnvio;
 using LogicaNegocio.CustomExceptions;
 using LogicaNegocio.CustomExceptions.Envio;
@@ -15,25 +16,19 @@ namespace ClientAPI.Controllers
     public class EnvioController : ControllerBase
     {
         private readonly ICUGetEnvioTracking _cuGetEnvioTracking;
-        private readonly ICUGetEnviosCliente _cuGetEnviosCliente;
-        private readonly ICUGetEnviosClientePorFecha _cuGetEnviosClientePorFecha;
-        private readonly ICUGetEnviosPorComentario _cuGetEnviosPorComentario;
+        private readonly ICUGetEnviosClienteFiltrado _cuGetEnviosCliente;
         private readonly IConfiguration _config;
 
         public EnvioController(ICUGetEnvioTracking cuGetEnvioTracking,
-            ICUGetEnviosCliente cuGetEnviosCliente,
-            IConfiguration config,
-            ICUGetEnviosPorComentario cuGetEnviosPorComentario,
-            ICUGetEnviosClientePorFecha cuGetEnviosClientePorFecha)
+            ICUGetEnviosClienteFiltrado cuGetEnviosCliente,
+            IConfiguration config)
         {
             _cuGetEnvioTracking = cuGetEnvioTracking;
             _cuGetEnviosCliente = cuGetEnviosCliente;
-            _cuGetEnviosClientePorFecha = cuGetEnviosClientePorFecha;
-            _cuGetEnviosPorComentario = cuGetEnviosPorComentario;
             _config = config;
         }
 
-        [HttpGet]
+        [HttpGet("GetEnvio")]
         public IActionResult GetEnvio([FromQuery] string nroTracking)
         {
             try
@@ -52,15 +47,19 @@ namespace ClientAPI.Controllers
             }
         }
 
-        [HttpGet("GetEnvios")]
+        [HttpGet]
         [Authorize(Roles = "Cliente")]
-        public IActionResult GetEnvios()
+        public IActionResult Index([FromQuery]DTOFiltro? dto)
         {
             try
             {
+                dto ??= new DTOFiltro();
+
                 String email = HttpContext.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
 
-                List<DTOEnvio> envios = _cuGetEnviosCliente.Ejecutar(email);
+                dto.Email = email;
+
+                DTOPaginado<DTOEnvio> envios = _cuGetEnviosCliente.Ejecutar(dto);
 
                 return Ok(envios);
             }
@@ -74,6 +73,8 @@ namespace ClientAPI.Controllers
             }
         }
 
+        /*
+         
         [HttpGet("GetPorFecha")]
         [Authorize(Roles = "Cliente")]
         public IActionResult GetEnviosPorFecha(DateTime fechaInicio, [FromQuery] DateTime fechaFin, Estado? estado)
@@ -133,5 +134,6 @@ namespace ClientAPI.Controllers
                 return StatusCode(500, "Error de servidor");
             }
         }
+         */
     }
 }

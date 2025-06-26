@@ -1,4 +1,6 @@
-﻿using DTOs.DTOs.Envio;
+﻿using DTOs.DTOs;
+using DTOs.DTOs.Envio;
+using LogicaNegocio.Core;
 using LogicaNegocio.Entidades;
 using LogicaNegocio.VO;
 using System;
@@ -104,6 +106,16 @@ namespace DTOs.Mapper
                 dto.Add(dtoEnvio);
             }
             return dto;
+        }
+
+        public static DTOPaginado<DTOEnvio> ToListPaginacion(PaginacionResultado<Envio> paginacionResultado)
+        {
+            DTOPaginado<DTOEnvio> ret = new DTOPaginado<DTOEnvio>();
+
+            ret.Items = paginacionResultado.Items.Select(e => EnvioMapper.ToDTOEnvio(e)).ToList();
+            ret.TotalItems = paginacionResultado.TotalItems;
+
+            return ret;
         }
     } 
 }

@@ -1,4 +1,5 @@
-﻿using LogicaNegocio.Entidades;
+﻿using LogicaNegocio.Core;
+using LogicaNegocio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,6 @@ namespace LogicaNegocio.InterfacesRepositorios
 
         List<Envio> GetEnviosEnProceso();
 
-        List<Envio> FindByClienteEmail(String email);
-
-        List<Envio> GetEnviosClientePorFecha(String email, Estado? estado, DateTime fecha1, DateTime fecha2);
-
-        List<Envio> GetEnviosClientePorComentario(String email, string comentario);
+        PaginacionResultado<Envio> GetEnviosCliente(string email, DateTime? fecha1, DateTime? fecha2, string? estado, string? comentario, int page, int pageSize);
     }
 }

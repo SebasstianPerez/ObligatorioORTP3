@@ -1,4 +1,5 @@
-﻿using LogicaNegocio.Entidades;
+﻿using LogicaNegocio.Core;
+using LogicaNegocio.Entidades;
 using LogicaNegocio.InterfacesRepositorios;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -56,7 +57,6 @@ namespace LogicaAccesoDatos.Repositorios
                 .Include(e => e.Cliente)
                 .Include(e => e.Empleado)
                 .Include(e => e.Seguimiento)
-                .Where(e => e.Estado == Estado.EN_PROCESO)
                 .FirstOrDefault(p =>
                     p.NumeroTracking != null &&
                     p.NumeroTracking.EndsWith(nroTracking)
@@ -82,6 +82,57 @@ namespace LogicaAccesoDatos.Repositorios
             return ret;
         }
 
+        public PaginacionResultado<Envio> GetEnviosCliente(
+            string email, 
+            DateTime? fecha1, 
+            DateTime? fecha2, 
+            string? estado, 
+            string? comentario, 
+            int page, 
+            int pageSize)
+        {
+            var query = _context.Envios.AsQueryable();
+
+            query = query
+                .Include(e => e.Cliente)
+                .Include(e => e.Empleado)
+                .Include(e => e.Seguimiento)
+                .Where(e => e.Cliente.Email == email);
+
+            if (fecha1.HasValue && fecha2.HasValue)
+            {
+                query = query.Where(e => e.Seguimiento.Min(s => s.Fecha) >= fecha1 && e.Seguimiento.Min(s => s.Fecha) <= fecha2);
+            }
+            else if (fecha1.HasValue)
+            {
+                query = query.Where(e => e.Seguimiento.Min(s => s.Fecha) >= fecha1);
+            }
+            else if (fecha2.HasValue)
+            {
+                query = query.Where(e => e.Seguimiento.Min(s => s.Fecha) <= fecha2);
+            }
+
+            if (!string.IsNullOrWhiteSpace(estado) && Enum.TryParse<Estado>(estado, out var estadoEnum))
+                query = query.Where(e => e.Estado == estadoEnum);
+
+            if (!string.IsNullOrWhiteSpace(comentario))
+                query = query.Where(e => e.Seguimiento.Any(s => s.Comentario.Contains(comentario)));
+
+            int totalItems = query.Count();
+
+            var items = query 
+                .OrderByDescending(e => e.Seguimiento.Min(s => s.Fecha))
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+
+            return new PaginacionResultado<Envio>
+            {
+                Items = items,
+                TotalItems = totalItems
+            };
+        }
+
         public List<Envio> GetEnviosEnProceso()
         {
             List<Envio> ret = new List<Envio> ();
@@ -100,43 +151,6 @@ namespace LogicaAccesoDatos.Repositorios
             return item.Id;
         }
 
-        public List<Envio> FindByClienteEmail(String email)
-        {
-            return _context.Envios
-                .Where(e => e.Cliente.Email == email && e.Estado == Estado.EN_PROCESO)
-                .Include(e => e.Cliente)
-                .Include(e => e.Seguimiento)
-                .OrderBy(e => e.Seguimiento.FirstOrDefault().Fecha)
-                .ToList();
-        }
 
-        public List<Envio> GetEnviosClientePorFecha(string email, Estado? estado, DateTime fecha1, DateTime fecha2)
-        {
-           var ret = _context.Envios
-                .Include(e => e.Cliente)
-                .Include(e => e.Seguimiento)
-                .Where(e => e.Cliente.Email == email
-                && e.Seguimiento.FirstOrDefault().Fecha.Date > fecha1.Date
-                && e.Seguimiento.FirstOrDefault().Fecha.Date < fecha2.Date.AddDays(1));
-
-            if (estado != null)
-            {
-                ret = ret.Where(e => e.Estado == estado);
-            } 
-
-            return ret
-                .OrderBy(e => e.NumeroTracking)
-                .ToList();
-        }
-
-        public List<Envio> GetEnviosClientePorComentario(string email, string comentario)
-        {
-            return _context.Envios
-                .Where(e => e.Cliente.Email == email && e.Estado == Estado.EN_PROCESO 
-                && e.Seguimiento.FirstOrDefault().Comentario.ToLower().Contains(comentario))
-                .Include(e => e.Cliente)
-                .Include(e => e.Seguimiento)
-                .ToList();
-        }
     }
 }
