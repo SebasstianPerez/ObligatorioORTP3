@@ -1,4 +1,5 @@
-﻿using DTOs.DTOs.Envio;
+﻿using DTOs.DTOs;
+using DTOs.DTOs.Envio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace LogicaAplicacion.ICasosUso.ICUEnvio
 {
-    public interface ICUGetEnviosCliente
+    public interface ICUGetEnviosClienteFiltrado
     {
-        List<DTOEnvio> Ejecutar(String email);
+        DTOPaginado<DTOEnvio> Ejecutar(DTOFiltro? dto);
     }
 }
